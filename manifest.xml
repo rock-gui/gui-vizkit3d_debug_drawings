@@ -14,6 +14,6 @@
   <depend package="dummy-dependency-n-1" />
   <depend package="dummy-dependency-n" />
   -->
-  <depend package="vizkit3d" />
-  <depend package="osgViz" />
+  <depend package="gui/vizkit3d" />
+  <depend package="gui/osgviz/osgviz" />
 </package>

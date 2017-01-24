@@ -1,7 +1,9 @@
 rock_library(vizkit3dDebugDrawings
-    SOURCES Dummy.cpp
-    HEADERS Dummy.hpp)
-
-rock_executable(vizkit3dDebugDrawings_bin Main.cpp
-    DEPS vizkit3dDebugDrawings)
+    SOURCES
+        DrawingManager.cpp
+    HEADERS 
+        DebugDrawing.h
+        Drawing.h
+        DrawingManager.h
+    DEPS_PKGCONFIG vizkit3d osgViz)
 
