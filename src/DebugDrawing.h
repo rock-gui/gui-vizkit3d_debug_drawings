@@ -17,7 +17,7 @@
         auto prim = fac->createRingNode(radius, height, thickness); \
         prim->setPosition(posX, posY, posZ); \
         prim->setOrientation(rotX, rotY, rotZ, rotW); \
-        vizkti3dDebugDrawings::DrawingManager::instance()->addPrimitive(drawingName, prim); \
+        vizkit3dDebugDrawings::DrawingManager::instance()->addPrimitive(drawingName, prim); \
     } while(false)
 
 //#endif
