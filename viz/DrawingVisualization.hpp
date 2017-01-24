@@ -9,7 +9,7 @@
 namespace vizkit3d
 {
     class DrawingVisualization
-        : public vizkit3d::Vizkit3DPlugin<vizkti3dDebugDrawings::Drawing>
+        : public vizkit3d::Vizkit3DPlugin<vizkit3dDebugDrawings::Drawing>
         , boost::noncopyable
     {
     Q_OBJECT
@@ -17,13 +17,13 @@ namespace vizkit3d
         DrawingVisualization();
         ~DrawingVisualization();
 
-    Q_INVOKABLE void updateData(vizkti3dDebugDrawings::Drawing const &sample)
-    {vizkit3d::Vizkit3DPlugin<vizkti3dDebugDrawings::Drawing>::updateData(sample);}
+    Q_INVOKABLE void updateData(vizkit3dDebugDrawings::Drawing const &sample)
+    {vizkit3d::Vizkit3DPlugin<vizkit3dDebugDrawings::Drawing>::updateData(sample);}
 
     protected:
         virtual osg::ref_ptr<osg::Node> createMainNode();
         virtual void updateMainNode(osg::Node* node);
-        virtual void updateDataIntern(vizkti3dDebugDrawings::Drawing const& plan);
+        virtual void updateDataIntern(vizkit3dDebugDrawings::Drawing const& plan);
         
     private:
         struct Data;

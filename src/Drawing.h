@@ -4,7 +4,7 @@
 #include <osg/ref_ptr>
 #include <osgViz/Object.h>
 
-namespace vizkti3dDebugDrawings
+namespace vizkit3dDebugDrawings
 {
     /**A named collection of drawables */
     class Drawing

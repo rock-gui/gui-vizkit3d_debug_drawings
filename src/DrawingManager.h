@@ -12,7 +12,7 @@ namespace osgviz
     class Object;
 }
 
-namespace vizkti3dDebugDrawings
+namespace vizkit3dDebugDrawings
 {   
     class DrawingManager
     {

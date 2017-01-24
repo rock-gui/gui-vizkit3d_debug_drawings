@@ -4,7 +4,7 @@
 using namespace vizkit3d;
 
 struct DrawingVisualization::Data {
-    vizkti3dDebugDrawings::Drawing data;
+    vizkit3dDebugDrawings::Drawing data;
 };
 
 
@@ -34,7 +34,7 @@ void DrawingVisualization::updateMainNode(osg::Node* node)
     }
 }
 
-void DrawingVisualization::updateDataIntern(vizkti3dDebugDrawings::Drawing const& value)
+void DrawingVisualization::updateDataIntern(vizkit3dDebugDrawings::Drawing const& value)
 {
     p->data = value;
 }

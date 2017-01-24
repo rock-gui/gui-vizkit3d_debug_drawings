@@ -6,7 +6,7 @@
 #include <vector>
 #include <osgViz/Object.h>
 
-namespace vizkti3dDebugDrawings
+namespace vizkit3dDebugDrawings
 {
     struct DrawingManager::PImpl
     {
@@ -52,7 +52,7 @@ namespace vizkti3dDebugDrawings
         
         //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
         QMetaObject::invokeMethod(p->plugins[drawingName], "updateData", Qt::DirectConnection,
-                                  Q_ARG(vizkti3dDebugDrawings::Drawing, d));
+                                  Q_ARG(vizkit3dDebugDrawings::Drawing, d));
     }
     
     void DrawingManager::removeDrawing(const std::string& drawingName)
