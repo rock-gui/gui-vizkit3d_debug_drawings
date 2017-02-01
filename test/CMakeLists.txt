@@ -1,3 +1,7 @@
-rock_testsuite(test_suite suite.cpp
-   test_Dummy.cpp
-   DEPS vizkit3dDebugDrawings)
+add_definitions(-DENABLE_DEBUG_DRAWINGS)
+rock_executable(draw_test draw_test.cpp
+    DEPS 
+        vizkit3dDebugDrawings
+    DEPS_PKGCONFIG 
+        base-types 
+)
