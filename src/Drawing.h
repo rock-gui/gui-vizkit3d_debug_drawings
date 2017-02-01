@@ -32,6 +32,11 @@ namespace vizkit3dDebugDrawings
             return primitives;
         }
         
+        void clear()
+        {
+            primitives.clear();
+        }
+        
     private:
         std::string name;
         PrimitiveCollection primitives;

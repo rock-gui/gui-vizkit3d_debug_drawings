@@ -50,12 +50,46 @@ namespace vizkit3dDebugDrawings
             assert(p->plugins[drawingName] != null);
         }
         
-        //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
-        QMetaObject::invokeMethod(p->plugins[drawingName], "updateData", Qt::DirectConnection,
-                                  Q_ARG(vizkit3dDebugDrawings::Drawing, d));
+        updateData(d);
     }
     
     void DrawingManager::removeDrawing(const std::string& drawingName)
     {
+        if(drawingName.empty())
+        {
+            throw new std::runtime_error("drawingName is empty");
+        }
+        
+        p->drawings.erase(drawingName);
+        
+        if(p->plugins.find(drawingName) != p->plugins.end())
+        {
+            //async invoke slot to avoid any threading issues with the gui thread
+            QMetaObject::invokeMethod(p->thread.getWidget(), "removePlugin", Qt::QueuedConnection,
+                                  Q_ARG(QObject*, p->plugins[drawingName]));
+            p->plugins.erase(drawingName);
+        }
     }
+    
+    void DrawingManager::clearDrawing(const std::string& drawingName)
+    {
+        if(drawingName.empty())
+        {
+            throw new std::runtime_error("drawingName is empty");
+        }
+        
+        if(p->drawings.find(drawingName) != p->drawings.end())
+        {
+            p->drawings[drawingName].clear();
+            updateData(p->drawings[drawingName]);
+        }
+    }
+    
+    void DrawingManager::updateData(const Drawing& d) const
+    {
+        //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
+        QMetaObject::invokeMethod(p->plugins[d.getName()], "updateData", Qt::DirectConnection,
+                                  Q_ARG(vizkit3dDebugDrawings::Drawing, d));
+    }
+    
 }
