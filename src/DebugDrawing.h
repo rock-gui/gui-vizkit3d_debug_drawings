@@ -13,6 +13,11 @@
     #define DRAW_SPHERE(...) (void)0
     #define DRAW_POLYLINE(...) (void)0
     
+    
+    #define COMPLEX_DRAWING(...) (void)0
+    
+    
+    
 #else
 
 #include <string>
@@ -74,6 +79,7 @@
         DRAW_ARROW(drawingName, posX, posY, posZ, 1, 1, 1);
     }
     
+    
     void DRAW_RING(const std::string& drawingName, double posX, double posY, double posZ,
                    double rotW, double rotX, double rotY, double rotZ, double radius,
                    double height, double thickness) 
@@ -83,6 +89,11 @@
         DRAW_PRIMITIVE(drawingName, posX, posY, posZ, rotW, rotX, rotY, rotZ, prim);
     }
     
+    void DRAW_RING(const std::string& drawingName, double posX, double posY, double posZ,
+                   double radius, double height, double thickness)
+    {
+        DRAW_RING(drawingName, posX, posY, posZ, 1, 0, 0, 0, radius, height, thickness);
+    }
     
     void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
                      double radius)
@@ -120,6 +131,10 @@
     {
         vizkit3dDebugDrawings::DrawingManager::instance()->clearDrawing(drawingName);
     }
+    
+    /**Use this if debug drawings need additional code that is only required for the drawing */
+    #define COMPLEX_DRAWING(...) do { __VA_ARGS__; } while (0)
+    
 
 #endif
 
