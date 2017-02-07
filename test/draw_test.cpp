@@ -7,12 +7,13 @@
 
 int main()
 {
-    DRAW_RING("test", 1, 1, 1, 1, 1, 0, 0, 1, 0.05, 0.01);
+    Eigen::Vector4d color(1, 0, 0, 1);
+    DRAW_RING("test", 1, 1, 1, 1, 1, 0, 0, 1, 0.05, 0.01, color);
     
-    DRAW_WIREFRAME_BOX("box", 0, 0, 1, 1, 0.3, 0.2, 0, 0.5, 0.5, 0.3);
-    DRAW_WIREFRAME_BOX("box", 0, 0, 1, 0.2, 0.2, 0.2);
-    DRAW_WIREFRAME_BOX("box", 0, 0, 1);
-    
+    DRAW_WIREFRAME_BOX("box", 0, 0, 1, 1, 0.3, 0.2, 0, 0.5, 0.5, 0.3, color);
+    DRAW_WIREFRAME_BOX("box", 0, 0, 1, 0.2, 0.2, 0.2, color);
+    color[2] = 0.5;
+    DRAW_WIREFRAME_BOX("box", 0, 0, 1, color);
     
     double x = 0;
     double y = 0;
@@ -23,31 +24,30 @@ int main()
     for(int i = 0; i < 100; ++i)
     {
         points.emplace_back(x, y, z);
-
-    
-        
         x += rnd(rndEngine);
         y += rnd(rndEngine);
         z -= rnd(rndEngine);
     }
-    
-    DRAW_POLYLINE("polyLine", 2, 2, 2, points);
-    
+
+    color[1] = 1;
+    DRAW_POLYLINE("polyLine", 2, 2, 2, points, color);
 
     double w = 0.017;
+    std::uniform_real_distribution<double> colorRnd(0, 1);
     while(true)
     {
+        Eigen::Vector4d color(colorRnd(rndEngine), colorRnd(rndEngine), colorRnd(rndEngine), 1);
         CLEAR_DRAWING("arrrr");
         Eigen::Quaterniond rot(Eigen::AngleAxisd(w, Eigen::Vector3d::UnitY()));
         DRAW_ARROW("arrrr", -1, -1, 0, rot.w(), rot.x(), rot.y(), rot.z(), 0.4,
-                            0.8, 0.6);
+                   0.8, 0.6, color);
         w += 0.07;
-        
-        DRAW_SPHERE("sphere", -2, 1, 1, 1);
+
+        DRAW_SPHERE("sphere", -2, 1, 1, 1, color);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         REMOVE_DRAWING("sphere"); //NOTE <-- this is not a good use of REMOVE_DRAWING it is only here to test threading issues
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    
+
     return 0;
 }

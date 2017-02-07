@@ -6,6 +6,7 @@
 #include <osg/Geode>
 #include <vizkit3dDebugDrawings/Drawing.h>
 
+
 namespace vizkit3d
 {
     class DrawingVisualization
@@ -13,17 +14,20 @@ namespace vizkit3d
         , boost::noncopyable
     {
     Q_OBJECT
+    Q_PROPERTY(QString name READ getName)
     public:
         DrawingVisualization();
         ~DrawingVisualization();
 
     Q_INVOKABLE void updateData(vizkit3dDebugDrawings::Drawing const &sample)
     {vizkit3d::Vizkit3DPlugin<vizkit3dDebugDrawings::Drawing>::updateData(sample);}
+    
+    QString getName() const;
 
     protected:
         virtual osg::ref_ptr<osg::Node> createMainNode();
         virtual void updateMainNode(osg::Node* node);
-        virtual void updateDataIntern(vizkit3dDebugDrawings::Drawing const& plan);
+        virtual void updateDataIntern(vizkit3dDebugDrawings::Drawing const& drawing);
         
     private:
         struct Data;
