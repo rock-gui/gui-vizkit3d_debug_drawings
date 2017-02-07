@@ -12,6 +12,7 @@
     #define CLEAR_DRAWING(...) (void) 0
     #define DRAW_SPHERE(...) (void)0
     #define DRAW_POLYLINE(...) (void)0
+    #define DRAW_TEXT(...) (void)0
     
     
     #define COMPLEX_DRAWING(...) (void)0
@@ -122,6 +123,36 @@
         auto prim = fac->createLinesNode(color, osgPoints);
         DRAW_PRIMITIVE(drawingName, posX, posY, posZ, 1, 0, 0, 0, prim);
     }
+    
+    void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
+                   double rotW, double rotX, double rotY, double rotZ,
+                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
+    {
+        osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
+        const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
+        auto prim = fac->createTextNode(text, fontSize, color);
+        DRAW_PRIMITIVE(drawingName, posX, posY, posZ, rotW, rotX, rotY, rotZ, prim);
+    }
+    
+    void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
+                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
+    {
+        DRAW_TEXT(drawingName, posX, posY, posZ, 1, 0, 0, 0, text, fontSize, colorRGBA);
+    }
+    
+    void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& pos,
+                   const base::Quaterniond& rot, const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
+    {
+        DRAW_TEXT(drawingName, pos.x(), pos.y(), pos.z(), rot.w(), rot.x(), rot.y(),
+                  rot.z(), text, fontSize, colorRGBA);
+    }
+    
+    void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& pos,
+                const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
+    {
+     DRAW_TEXT(drawingName, pos, base::Quaterniond::Identity(), text, fontSize, colorRGBA);
+    }
+    
     
     /** Removes the drawing.
      * I.e. unloades the vizkit3d plugin responsible for rendering this drawing

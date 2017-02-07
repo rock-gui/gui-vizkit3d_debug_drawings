@@ -31,6 +31,14 @@ int main()
 
     color[1] = 1;
     DRAW_POLYLINE("polyLine", 2, 2, 2, points, color);
+    
+    base::Vector3d pos(1, 2, 3);
+    DRAW_TEXT("testText", pos, "Work, work.", 0.3, color);
+    base::Quaterniond rot(Eigen::AngleAxisd(1.57, base::Vector3d::UnitX()));
+    DRAW_TEXT("testText", pos, rot, "yes, me lord.", 0.3, color);
+    rot = Eigen::AngleAxisd(M_PI, base::Vector3d::UnitX());
+    DRAW_TEXT("testText", pos, rot, "Job's done!", 0.3, color);
+
 
     double w = 0.017;
     std::uniform_real_distribution<double> colorRnd(0, 1);

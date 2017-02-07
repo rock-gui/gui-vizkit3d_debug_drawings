@@ -47,7 +47,7 @@ namespace vizkit3dDebugDrawings
         {
             //new drawing, need new plugin
             p->plugins[drawingName] = p->thread.getWidget()->loadPlugin("", "DrawingVisualization");;
-            assert(p->plugins[drawingName] != null);
+            assert(p->plugins[drawingName] != nullptr);
         }
         
         updateData(d);
