@@ -27,6 +27,7 @@
 #include <osgViz/OsgViz.hpp>
 #include <vector>
 #include <base/Eigen.hpp>
+#include "DebugDrawingColors.h"
 
     /**Draws any osgviz object
      * @param prim Pointer to osgviz::Object 
