@@ -8,6 +8,9 @@
 
 namespace vizkit3dDebugDrawings
 {
+    bool DrawingManager::standalone = true;
+
+    
     struct DrawingManager::PImpl
     {
         /**Current drawings by name */
@@ -15,11 +18,20 @@ namespace vizkit3dDebugDrawings
         std::unordered_map<std::string, QObject*> plugins;
         /**Gui thread*/
         QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread;
+        vizkit3d::Vizkit3DWidget* widget;
     };
     
     DrawingManager::DrawingManager() : p(new PImpl())
     {
-        p->thread.start();
+        if(standalone)
+        {
+            p->thread.start();
+            p->widget = p->thread.getWidget();
+        }
+        else
+        {
+            p->widget = new vizkit3d::Vizkit3DWidget();
+        }
     }
     
     DrawingManager* DrawingManager::instance()
@@ -30,7 +42,7 @@ namespace vizkit3dDebugDrawings
     
     vizkit3d::Vizkit3DWidget* DrawingManager::getVizkit3DWidget() const
     {
-        return p->thread.getWidget();
+        return p->widget;
     }
     
     void DrawingManager::addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>& primitive)
@@ -46,7 +58,7 @@ namespace vizkit3dDebugDrawings
         if(p->plugins.find(drawingName) == p->plugins.end())
         {
             //new drawing, need new plugin
-            p->plugins[drawingName] = p->thread.getWidget()->loadPlugin("", "DrawingVisualization");;
+            p->plugins[drawingName] = p->widget->loadPlugin("", "DrawingVisualization");;
             assert(p->plugins[drawingName] != nullptr);
         }
         
@@ -65,7 +77,7 @@ namespace vizkit3dDebugDrawings
         if(p->plugins.find(drawingName) != p->plugins.end())
         {
             //async invoke slot to avoid any threading issues with the gui thread
-            QMetaObject::invokeMethod(p->thread.getWidget(), "removePlugin", Qt::QueuedConnection,
+            QMetaObject::invokeMethod(p->widget, "removePlugin", Qt::QueuedConnection,
                                   Q_ARG(QObject*, p->plugins[drawingName]));
             p->plugins.erase(drawingName);
         }
@@ -90,6 +102,11 @@ namespace vizkit3dDebugDrawings
         //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
         QMetaObject::invokeMethod(p->plugins[d.getName()], "updateData", Qt::DirectConnection,
                                   Q_ARG(vizkit3dDebugDrawings::Drawing, d));
+    }
+    
+    void DrawingManager::disableStandaloneMode()
+    {
+        standalone = false;
     }
     
 }
