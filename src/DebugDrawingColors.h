@@ -11,5 +11,6 @@ namespace vizkit3dDebugDrawings
         static base::Vector4d blue;
         static base::Vector4d magenta;
         static base::Vector4d cyan;
+        static base::Vector4d black;
     };
 }
