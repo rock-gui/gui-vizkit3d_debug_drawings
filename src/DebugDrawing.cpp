@@ -77,7 +77,13 @@ void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, doubl
     osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
     const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
     auto prim = fac->createSphereNode(0, 0, 0, radius, color);
-    DRAW_PRIMITIVE(drawingName, posX, posY, posZ, 1, 0, 0, 0, prim);
+    DRAW_PRIMITIVE(drawingName, posX, posY, posZ, 1, 0, 0, 0, prim);    
+}
+
+void DRAW_SPHERE(const std::string& drawingName, base::Vector3d& position,
+                 double radius, const base::Vector4d& colorRGBA)
+{
+    DRAW_SPHERE(drawingName, position.x(), position.y(), position.z(), radius, colorRGBA);
 }
 
 void DRAW_POLYLINE(const std::string& drawingName, double posX, double posY, double posZ,
@@ -120,7 +126,20 @@ void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& pos,
 void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& pos,
             const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
 {
- DRAW_TEXT(drawingName, pos, base::Quaterniond::Identity(), text, fontSize, colorRGBA);
+    DRAW_TEXT(drawingName, pos, base::Quaterniond::Identity(), text, fontSize, colorRGBA);
+}
+
+void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const base::Vector3d& to,
+               const base::Vector4d& colorRGBA)
+{
+    osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
+    std::vector<osg::Vec3> osgPoints;
+    osgPoints.emplace_back(from.x(), from.y(), from.z());
+    osgPoints.emplace_back(to.x(), to.y(), to.z());
+    
+    const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
+    auto prim = fac->createLinesNode(color, osgPoints);
+    DRAW_PRIMITIVE(drawingName, 0, 0, 0, 1, 0, 0, 0, prim);
 }
 
 

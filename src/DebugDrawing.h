@@ -13,6 +13,7 @@
     #define DRAW_SPHERE(...) (void)0
     #define DRAW_POLYLINE(...) (void)0
     #define DRAW_TEXT(...) (void)0
+    #define DRAW_LINE(...) (void)0
     
     
     #define COMPLEX_DRAWING(...) (void)0
@@ -64,8 +65,15 @@
     void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
                      double radius, const base::Vector4d& colorRGBA);
     
+    void DRAW_SPHERE(const std::string& drawingName, base::Vector3d& position,
+                     double radius, const base::Vector4d& colorRGBA);
+    
     void DRAW_POLYLINE(const std::string& drawingName, double posX, double posY, double posZ,
                        const std::vector<base::Vector3d>& points, const base::Vector4d& colorRGBA);
+    
+    void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const base::Vector3d& to,
+                   const base::Vector4d& colorRGBA);
+    
     
     void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
                    double rotW, double rotX, double rotY, double rotZ,
