@@ -4,7 +4,7 @@
 #include <boost/noncopyable.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <osg/Geode>
-#include <vizkit3dDebugDrawings/Drawing.h>
+#include <vizkit3d_debug_drawings/Drawing.h>
 
 
 namespace vizkit3d

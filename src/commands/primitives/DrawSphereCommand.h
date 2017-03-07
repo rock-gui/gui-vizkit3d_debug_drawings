@@ -1,5 +1,5 @@
 #pragma once
-#include <vizkit3dDebugDrawings/commands/DrawCommand.h>
+#include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 
 #pragma once
 #include <string>

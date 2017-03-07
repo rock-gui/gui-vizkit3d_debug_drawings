@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vizkit3dDebugDrawings/DebugDrawing.h>
+#include <vizkit3d_debug_drawings/DebugDrawing.h>
 #include <chrono>
 #include <thread>
 #include <base/Eigen.hpp>
