@@ -1,5 +1,9 @@
 #define ENABLE_DEBUG_DRAWINGS //to get the right version of the header
 #include "DebugDrawing.h"
+#include "commands/primitives/DrawSphereCommand.h"
+#include "CommandDispatcher.h"
+
+using namespace vizkit3dDebugDrawings;
 
 void DRAW_PRIMITIVE(const std::string& drawingName, double posX, double posY, double posZ,
                     double rotW, double rotX, double rotY, double rotZ, osg::ref_ptr<osgviz::Object> prim)
@@ -83,7 +87,9 @@ void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, doubl
 void DRAW_SPHERE(const std::string& drawingName, base::Vector3d& position,
                  double radius, const base::Vector4d& colorRGBA)
 {
-    DRAW_SPHERE(drawingName, position.x(), position.y(), position.z(), radius, colorRGBA);
+    DrawSphereCommand cmd(drawingName, position, radius, colorRGBA);
+    CommandDispatcher::dispatch(cmd);
+    
 }
 
 void DRAW_POLYLINE(const std::string& drawingName, double posX, double posY, double posZ,
