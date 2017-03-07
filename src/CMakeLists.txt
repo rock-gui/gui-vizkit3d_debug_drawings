@@ -1,3 +1,4 @@
+set(OROCOS_TARGET "$ENV{OROCOS_TARGET}")
 rock_library(vizkit3d_debug_drawings
     SOURCES
         DrawingManager.cpp
@@ -16,5 +17,9 @@ rock_library(vizkit3d_debug_drawings
         commands/DrawCommand.h
         commands/Command.h
         commands/primitives/DrawSphereCommand.h
-    DEPS_PKGCONFIG vizkit3d osgViz base-types)
+    DEPS_PKGCONFIG
+        vizkit3d
+        osgViz
+        base-types
+        orocos-rtt-${OROCOS_TARGET})
 

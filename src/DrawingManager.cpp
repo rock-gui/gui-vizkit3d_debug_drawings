@@ -36,6 +36,7 @@ namespace vizkit3dDebugDrawings
     
     DrawingManager* DrawingManager::instance()
     {
+        //FIXME d is never deleted
         static DrawingManager* d = new DrawingManager();
         return d;
     }
