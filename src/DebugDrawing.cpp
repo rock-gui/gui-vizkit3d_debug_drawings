@@ -75,21 +75,18 @@ void DRAW_RING(const std::string& drawingName, double posX, double posY, double 
     DRAW_RING(drawingName, posX, posY, posZ, 1, 0, 0, 0, radius, height, thickness, colorRGBA);
 }
 
-void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
-                 double radius, const base::Vector4d& colorRGBA)
-{
-    osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
-    const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
-    auto prim = fac->createSphereNode(0, 0, 0, radius, color);
-    DRAW_PRIMITIVE(drawingName, posX, posY, posZ, 1, 0, 0, 0, prim);    
-}
-
-void DRAW_SPHERE(const std::string& drawingName, base::Vector3d& position,
+void DRAW_SPHERE(const std::string& drawingName, const base::Vector3d& position,
                  double radius, const base::Vector4d& colorRGBA)
 {
     DrawSphereCommand cmd(drawingName, position, radius, colorRGBA);
     CommandDispatcher::dispatch(cmd);
     
+}
+
+void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
+                 double radius, const base::Vector4d& colorRGBA)
+{
+    DRAW_SPHERE(drawingName, base::Vector3d(posX, posY, posZ), radius, colorRGBA);
 }
 
 void DRAW_POLYLINE(const std::string& drawingName, double posX, double posY, double posZ,

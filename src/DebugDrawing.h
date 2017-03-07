@@ -65,7 +65,7 @@
     void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
                      double radius, const base::Vector4d& colorRGBA);
     
-    void DRAW_SPHERE(const std::string& drawingName, base::Vector3d& position,
+    void DRAW_SPHERE(const std::string& drawingName, const base::Vector3d& position,
                      double radius, const base::Vector4d& colorRGBA);
     
     void DRAW_POLYLINE(const std::string& drawingName, double posX, double posY, double posZ,
