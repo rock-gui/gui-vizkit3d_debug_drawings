@@ -10,8 +10,7 @@ namespace vizkit3dDebugDrawings
         friend class DrawingManager;
     public:
         /** Execute this command on the @p drawingManager*/
-        virtual void execute(DrawingManager* drawingManager) const = 0;
-        
-        virtual ~Command(){};
+        virtual void execute(DrawingManager* drawingManager) const;
+        virtual ~Command();
     };
 }

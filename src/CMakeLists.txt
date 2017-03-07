@@ -5,6 +5,7 @@ rock_library(vizkit3d_debug_drawings
         DebugDrawingColors.cpp
         CommandDispatcher.cpp
         commands/DrawCommand.cpp
+        commands/Command.cpp
         commands/primitives/DrawSphereCommand.cpp
     HEADERS 
         DebugDrawing.h
