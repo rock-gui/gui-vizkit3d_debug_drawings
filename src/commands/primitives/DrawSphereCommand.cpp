@@ -4,8 +4,8 @@
 
 namespace vizkit3dDebugDrawings
 {
-    
-vizkit3dDebugDrawings::DrawSphereCommand::DrawSphereCommand(const std::__cxx11::string& drawingName,
+
+vizkit3dDebugDrawings::DrawSphereCommand::DrawSphereCommand(const std::string& drawingName,
                                                             const base::Vector3d& position,
                                                             double radius,
                                                             const base::Vector4d& colorRGBA) :
