@@ -3,5 +3,5 @@
 cmake_minimum_required(VERSION 2.6)
 find_package(Rock)
 set(ROCK_TEST_ENABLED ON)
-rock_init(vizkit3dDebugDrawings 0.1)
+rock_init(vizkit3d_debug_drawings 0.1)
 rock_standard_layout()

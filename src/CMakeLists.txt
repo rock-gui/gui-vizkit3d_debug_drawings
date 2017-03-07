@@ -1,4 +1,4 @@
-rock_library(vizkit3dDebugDrawings
+rock_library(vizkit3d_debug_drawings
     SOURCES
         DrawingManager.cpp
         DebugDrawing.cpp
