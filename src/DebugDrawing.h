@@ -5,6 +5,10 @@
 
 #ifndef ENABLE_DEBUG_DRAWINGS
 
+    #define CONFIGURE_DEBUG_DRAWINGS_STANDALONE(...)  (void)0
+    #define CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...)  (void)0
+    #define CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...)  (void)0
+
     #define DRAW_RING(...) (void)0
     #define DRAW_PRIMITIVE(...) (void)0
     #define DRAW_WIREFRAME_BOX(...) (void) 0
@@ -15,13 +19,12 @@
     #define DRAW_TEXT(...) (void)0
     #define DRAW_LINE(...) (void)0
     
-    
     #define COMPLEX_DRAWING(...) (void)0
-    
     
     
 #else
 
+//FIXME cleanup includes
 #include <string>
 #include "DrawingManager.h"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
@@ -29,22 +32,49 @@
 #include <vector>
 #include <base/Eigen.hpp>
 #include "DebugDrawingColors.h"
+#include <rtt/OutputPort.hpp>
+#include <vizkit3d_debug_drawings/commands/Command.h>
 
-    /**Draws any osgviz object
-     * @param prim Pointer to osgviz::Object 
-     */
-    void DRAW_PRIMITIVE(const std::string& drawingName, double posX, double posY, double posZ,
-                        double rotW, double rotX, double rotY, double rotZ, osg::ref_ptr<osgviz::Object> prim);
+namespace vizkit3d
+{
+    class Vizkit3DWidget;
+}
+/**
+ *  *** Configuration ***
+ *  Debug drawings need to be configured before beeing displayed.
+ *  All drawings are buffered until configuration has taken place.
+ *  Once configured the buffered drawings will be displayed and all further 
+ *  drawings will be drawn immediately. 
+ *  
+ *  Following configurations are possible:
+ *  * standalone:
+ *    In standalone mode a qt application is created in a seperate thread.
+ *    All drawings are displayed in a Vizkit3dWidget managed by that application.
+ * 
+ *  * using an existing vizkit3d widget:
+ *    In this mode it is assumed that a qt application is already running and a
+ *    Vizkit3dWidget exists somewhere. That widget is used to display all 
+ *    drawings.
+ * 
+ *  * via rock ports:
+ *    In this mode all drawing commands are sent through a rock port.
+ *    A vizkit3d plugin can be used to display the drawings.
+ * 
+ * NOTE: Everything debug drawing related is thread local. I.e. debug drawings are
+ *       configured on a per thread basis.
+ */
 
-    void DRAW_WIREFRAME_BOX(const std::string& drawingName, double posX, double posY, double posZ,
-                            double rotW, double rotX, double rotY, double rotZ, double xSize,
-                            double ySize, double zSize, const base::Vector4d& colorRGBA);
+    void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
+    void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<vizkit3dDebugDrawings::Command>* port); 
+
+
+    void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
+                            const base::Quaterniond& orientation, const base::Vector3d& size,
+                            const base::Vector4d& colorRGBA);
     
-    void DRAW_WIREFRAME_BOX(const std::string& drawingName, double posX, double posY, double posZ,
-                            double xSize, double ySize, double zSize, const base::Vector4d& colorRGBA);
-    
-    void DRAW_WIREFRAME_BOX(const std::string& drawingName, double posX, double posY,
-                            double posZ, const base::Vector4d& colorRGBA);
+    void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
+                            const base::Vector3d& size, const base::Vector4d& colorRGBA);
     
     void DRAW_ARROW(const std::string& drawingName, double posX, double posY, double posZ,
                             double rotW, double rotX, double rotY, double rotZ, double xScale,
@@ -54,12 +84,12 @@
                     double xScale, double yScale, double zScale, const base::Vector4d& colorRGBA);
     
     void DRAW_ARROW(const std::string& drawingName, double posX, double posY, double posZ, const base::Vector4d& colorRGBA);
-    
-    void DRAW_RING(const std::string& drawingName, double posX, double posY, double posZ,
-                   double rotW, double rotX, double rotY, double rotZ, double radius,
+
+    void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
+                   const base::Quaterniond& orientation, double radius,
                    double height, double thickness, const base::Vector4d& colorRGBA);
     
-    void DRAW_RING(const std::string& drawingName, double posX, double posY, double posZ,
+    void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
                    double radius, double height, double thickness, const base::Vector4d& colorRGBA);
     
     void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
@@ -74,18 +104,18 @@
     void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const base::Vector3d& to,
                    const base::Vector4d& colorRGBA);
     
+    void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
+                   const base::Quaterniond& orientation,
+                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
+    
+    void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
+                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
     
     void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
                    double rotW, double rotX, double rotY, double rotZ,
                    const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
     
     void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
-                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
-    
-    void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& pos,
-                   const base::Quaterniond& rot, const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
-    
-    void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& pos,
                    const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
     
     /** Removes the drawing.

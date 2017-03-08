@@ -1,5 +1,7 @@
 #pragma once
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
+
+#pragma once
 #include <string>
 #include <base/Eigen.hpp>
 #include <boost_serialization/EigenTypes.hpp>
@@ -11,7 +13,7 @@ namespace osg
 
 namespace vizkit3dDebugDrawings
 {
-class DrawSphereCommand : public DrawCommand
+class DrawRingCommand : public DrawCommand
 {
     friend class boost::serialization::access;
     template<class Archive>
@@ -20,23 +22,30 @@ class DrawSphereCommand : public DrawCommand
         // serialize base class information
         ar & boost::serialization::base_object<DrawCommand>(*this);
         ar & position;
+        ar & orientation;
+        ar & height;
+        ar & thickness;
         ar & radius;
         ar & colorRGBA;
     }
     
 public:
     
-    DrawSphereCommand();
+    DrawRingCommand();
     
-    DrawSphereCommand(const std::string& drawingName, const base::Vector3d& position, double radius,
-                      const base::Vector4d& colorRGBA);
+    DrawRingCommand(const std::string& drawingName, const base::Vector3d& position,
+                    const base::Quaterniond& orientation, double height,
+                    double thickness, double radius, const base::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
 private:
     base::Vector3d position;
+    base::Quaterniond orientation;
+    double height;
+    double thickness;
     double radius;
     base::Vector4d colorRGBA;
-
+    
 };
 }

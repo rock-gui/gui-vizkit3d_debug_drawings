@@ -8,8 +8,6 @@
 
 namespace vizkit3dDebugDrawings
 {
-    bool DrawingManager::standalone = true;
-
     
     struct DrawingManager::PImpl
     {
@@ -21,26 +19,15 @@ namespace vizkit3dDebugDrawings
         vizkit3d::Vizkit3DWidget* widget;
     };
     
-    DrawingManager::DrawingManager() : p(new PImpl())
+    DrawingManager::DrawingManager(vizkit3d::Vizkit3DWidget* widget) : p(new PImpl())
     {
-        if(standalone)
-        {
-            p->thread.start();
-            p->widget = p->thread.getWidget();
-        }
-        else
-        {
-            p->widget = new vizkit3d::Vizkit3DWidget();
-        }
+        p->widget = widget;
     }
     
-    DrawingManager* DrawingManager::instance()
-    {
-        //FIXME d is never deleted
-        static DrawingManager* d = new DrawingManager();
-        return d;
-    }
+    DrawingManager::~DrawingManager()
+    {}
     
+        
     vizkit3d::Vizkit3DWidget* DrawingManager::getVizkit3DWidget() const
     {
         return p->widget;
@@ -103,11 +90,6 @@ namespace vizkit3dDebugDrawings
         //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
         QMetaObject::invokeMethod(p->plugins[d.getName()], "updateData", Qt::DirectConnection,
                                   Q_ARG(vizkit3dDebugDrawings::Drawing, d));
-    }
-    
-    void DrawingManager::disableStandaloneMode()
-    {
-        standalone = false;
     }
     
 }

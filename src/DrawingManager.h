@@ -19,7 +19,9 @@ namespace vizkit3dDebugDrawings
     class DrawingManager
     {
     public:
-        static DrawingManager* instance();
+        /** @p widget The widget that this manager should draw on */
+        DrawingManager(vizkit3d::Vizkit3DWidget* widget);
+        ~DrawingManager();
         
         /** Adds @p prim to the drawing named @p drawingName.
          * If @p drawingName does not exist, it is created.
@@ -38,16 +40,9 @@ namespace vizkit3dDebugDrawings
         
         /**Returns the Vizkit3DWidget instance that is used by the DrawingManager.  */
         vizkit3d::Vizkit3DWidget* getVizkit3DWidget() const;
-        
-        /**By default the manager runs in standalone mode, i.e. it starts its own
-         * gui thread. If you call this method the DrawingManger will not create a
-         * gui thread. Instead it will assume that a qt context exists and will use it.
-         * @note This method needs to be called before the singelton is created, i.e.
-         *       before instance() is called for the first time.*/
-        static void disableStandaloneMode();
-        
+                
     private:
-        DrawingManager();
+
         /**Use pimpl idiom to hide as much of the implementation details as possible because this
          * class might be included in a lot of projects. Thus changes to the header would cause lots
          * of recompiling that we don't want.*/
@@ -58,7 +53,5 @@ namespace vizkit3dDebugDrawings
         
         struct PImpl;
         std::unique_ptr<PImpl> p;
-        
-        static bool standalone; //if true, the manager will be instanziated using standalone mode
     };
 }

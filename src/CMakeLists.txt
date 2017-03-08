@@ -8,6 +8,9 @@ rock_library(vizkit3d_debug_drawings
         commands/DrawCommand.cpp
         commands/Command.cpp
         commands/primitives/DrawSphereCommand.cpp
+        commands/primitives/DrawTextCommand.cpp
+        commands/primitives/DrawRingCommand.cpp
+        commands/primitives/DrawWireframeBoxCommand.cpp
     HEADERS 
         DebugDrawing.h
         Drawing.h
@@ -17,6 +20,9 @@ rock_library(vizkit3d_debug_drawings
         commands/DrawCommand.h
         commands/Command.h
         commands/primitives/DrawSphereCommand.h
+        commands/primitives/DrawTextCommand.h
+        commands/primitives/DrawRingCommand.h
+        commands/primitives/DrawWireframeBoxCommand.h
     DEPS_PKGCONFIG
         vizkit3d
         osgViz
