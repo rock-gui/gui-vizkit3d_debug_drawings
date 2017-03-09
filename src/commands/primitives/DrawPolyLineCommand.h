@@ -3,6 +3,7 @@
 #include <string>
 #include <base/Eigen.hpp>
 #include <boost_serialization/EigenTypes.hpp>
+#include <boost/serialization/vector.hpp>
 
 namespace osg
 {
