@@ -8,7 +8,11 @@
 
 int main()
 {
-    CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
+    
+    //draw something to test buffering before configuration
+    DRAW_CYLINDER("cylinder", base::Vector3d(3, 3, 2), base::Vector3d(1,1,1),
+                  vizkit3dDebugDrawings::Color::android_green);
+
     Eigen::Vector4d color(1, 0, 0, 1);
     DRAW_SPHERE("sphere", -2, 1, 1, .5, color);
     DRAW_SPHERE("sphere", base::Vector3d(-2, 1, 0), .5, color);
@@ -63,6 +67,9 @@ int main()
     
     DRAW_LINE("line", base::Vector3d(-1, -1, -1), base::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
+    //NOTE dont do configuration this late in the real world.
+    //     It is done here to ensure that all clone() methods are implemented correctly
+    CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
 
     while(true)
     {

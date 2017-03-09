@@ -25,4 +25,10 @@ DrawArrowCommand::DrawArrowCommand(const std::string& drawingName, const base::V
 DrawArrowCommand::DrawArrowCommand(): DrawCommand("default")
 {}
 
+DrawArrowCommand* DrawArrowCommand::clone() const
+{
+    return new DrawArrowCommand(*this);
+}
+
+
 }

@@ -34,6 +34,8 @@ public:
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
+    virtual DrawPolyLineCommand* clone() const;
+    
 private:
     base::Vector3d position;
     std::vector<base::Vector3d> points;

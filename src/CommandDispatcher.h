@@ -23,7 +23,8 @@ namespace vizkit3dDebugDrawings
         static CommandDispatcher* threadLocalInstance();
         
         /** Dispatch the given drawing command.
-         *  The command is dispatched or buffered depending on the configuration*/
+         *  The command is dispatched or buffered depending on the configuration.
+         *  The buffer is a ring buffer of size 100000*/
         void dispatch(const Command& cmd);
         
         /**Configures the dispatcher. Until configured, all commands are buffered
@@ -38,6 +39,7 @@ namespace vizkit3dDebugDrawings
         CommandDispatcher();
         ~CommandDispatcher();
         void checkAndSetConfigured();
+        void dispatchBufferedCommands();
         
         DrawingManager* getDrawingManager();
         

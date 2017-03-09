@@ -37,6 +37,8 @@ public:
     /** @return The name (unique id) of the drawing that this primitive belongs to */
     const std::string& getDrawingName() const;
     
+    virtual DrawCommand* clone() const;
+    
     virtual ~DrawCommand();
     
 private:

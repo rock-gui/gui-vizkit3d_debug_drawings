@@ -42,9 +42,9 @@ namespace vizkit3d
 /**
  *  *** Configuration ***
  *  Debug drawings need to be configured before beeing displayed.
- *  All drawings are buffered until configuration has taken place.
+ *  Up to 100000 drawings are buffered until configuration has taken place.
  *  Once configured the buffered drawings will be displayed and all further 
- *  drawings will be drawn immediately. 
+ *  drawings will be drawn immediately.
  *  
  *  Following configurations are possible:
  *  * standalone:
@@ -97,6 +97,13 @@ namespace vizkit3d
     
     void DRAW_SPHERE(const std::string& drawingName, const base::Vector3d& position,
                      double radius, const base::Vector4d& colorRGBA);
+    
+    void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
+                       const base::Quaterniond& orientation, const base::Vector3d& size,
+                       const base::Vector4d& colorRGBA);
+    
+    void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
+                       const base::Vector3d& size, const base::Vector4d& colorRGBA);
     
     /** @param position origin of the line
      *  @param points relative to @p position.*/

@@ -5,6 +5,7 @@
 #include "commands/primitives/DrawWireframeBoxCommand.h"
 #include "commands/primitives/DrawArrowCommand.h"
 #include "commands/primitives/DrawPolyLineCommand.h"
+#include "commands/primitives/DrawCylinderCommand.h"
 #include "commands/RemoveDrawingCommand.h"
 #include "commands/ClearDrawingCommand.h"
 
@@ -119,6 +120,20 @@ void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const
     cmd.getPoints().push_back(from);
     cmd.getPoints().push_back(to);
     CommandDispatcher::threadLocalInstance()->dispatch(cmd);    
+}
+
+void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
+                   const base::Quaterniond& orientation, const base::Vector3d& size,
+                   const base::Vector4d& colorRGBA)
+{
+    DrawCylinderCommand cmd(drawingName, position, orientation, size, colorRGBA);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd); 
+}
+
+void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
+                   const base::Vector3d& size, const base::Vector4d& colorRGBA)
+{
+    DRAW_CYLINDER(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
 

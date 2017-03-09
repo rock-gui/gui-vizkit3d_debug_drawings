@@ -24,6 +24,8 @@ public:
     RemoveDrawingCommand(const std::string& drawingName);   
     virtual void execute(DrawingManager* drawingManager) const;    
     virtual ~RemoveDrawingCommand();
+    virtual RemoveDrawingCommand* clone() const;
+    
     
 private:
     /**The name of the drawing that should be removed*/

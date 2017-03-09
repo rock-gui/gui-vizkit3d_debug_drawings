@@ -16,5 +16,11 @@ RemoveDrawingCommand::RemoveDrawingCommand(const std::string& drawingName) :
 RemoveDrawingCommand::~RemoveDrawingCommand()
 {}
 
+RemoveDrawingCommand* RemoveDrawingCommand::clone() const
+{
+    return new RemoveDrawingCommand(*this);
+}
+
+
 
 }

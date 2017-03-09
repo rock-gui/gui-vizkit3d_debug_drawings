@@ -29,5 +29,11 @@ osg::ref_ptr<osgviz::Object> DrawSphereCommand::createPrimitive() const
     return prim;
 }
 
+DrawSphereCommand* DrawSphereCommand::clone() const
+{
+    return new DrawSphereCommand(*this);
+}
+
+
 
 }

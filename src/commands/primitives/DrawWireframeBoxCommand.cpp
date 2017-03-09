@@ -27,4 +27,10 @@ DrawWireframeBoxCommand::DrawWireframeBoxCommand(const std::string& drawingName,
 DrawWireframeBoxCommand::DrawWireframeBoxCommand(): DrawCommand("default")
 {}
 
+DrawWireframeBoxCommand* DrawWireframeBoxCommand::clone() const
+{
+    return new DrawWireframeBoxCommand(*this);
+}
+
+
 }

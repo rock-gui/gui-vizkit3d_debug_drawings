@@ -35,4 +35,11 @@ DrawPolyLineCommand::DrawPolyLineCommand(): DrawCommand("default")
 {
 
 }
+
+DrawPolyLineCommand* DrawPolyLineCommand::clone() const
+{
+    return new DrawPolyLineCommand(*this);
+}
+
+
 }

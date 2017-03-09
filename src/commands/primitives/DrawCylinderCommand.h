@@ -11,7 +11,7 @@ namespace osg
 
 namespace vizkit3dDebugDrawings
 {
-class DrawTextCommand : public DrawCommand
+class DrawCylinderCommand : public DrawCommand
 {
     friend class boost::serialization::access;
     template<class Archive>
@@ -21,29 +21,27 @@ class DrawTextCommand : public DrawCommand
         ar & boost::serialization::base_object<DrawCommand>(*this);
         ar & position;
         ar & orientation;
-        ar & text;
-        ar & fontSize;
+        ar & size;
         ar & colorRGBA;
     }
     
 public:
     
-    DrawTextCommand();
+    DrawCylinderCommand();
     
-    DrawTextCommand(const std::string& drawingName, const base::Vector3d& position,
-                    const base::Quaterniond& orientation, const std::string& text,
-                    double fontSize, const base::Vector4d& colorRGBA);
+    DrawCylinderCommand(const std::string& drawingName, const base::Vector3d& position,
+                     const base::Quaterniond& orientation, const base::Vector3d& size,
+                      const base::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
-    virtual DrawTextCommand* clone() const;
+    virtual DrawCylinderCommand* clone() const;
     
 private:
     base::Vector3d position;
     base::Quaterniond orientation;
-    std::string text;
-    double fontSize;
+    base::Vector3d size;
     base::Vector4d colorRGBA;
-    
+
 };
 }

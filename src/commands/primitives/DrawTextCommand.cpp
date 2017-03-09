@@ -29,5 +29,11 @@ DrawTextCommand::DrawTextCommand(): DrawCommand("default")
 
 }
 
+DrawTextCommand* DrawTextCommand::clone() const
+{
+    return new DrawTextCommand(*this);
+}
+
+
 
 }

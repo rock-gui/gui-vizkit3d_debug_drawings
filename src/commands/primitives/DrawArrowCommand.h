@@ -35,6 +35,8 @@ public:
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
+    virtual DrawArrowCommand* clone() const;
+    
 private:
     base::Vector3d position;
     base::Quaterniond orientation;

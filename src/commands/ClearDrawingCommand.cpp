@@ -15,4 +15,10 @@ void ClearDrawingCommand::execute(DrawingManager* drawingManager) const
 ClearDrawingCommand::~ClearDrawingCommand()
 {}
 
+ClearDrawingCommand* ClearDrawingCommand::clone() const
+{
+    return new ClearDrawingCommand(*this);
+}
+
+
 }

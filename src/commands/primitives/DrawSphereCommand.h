@@ -33,6 +33,8 @@ public:
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
+    virtual DrawSphereCommand* clone() const;
+    
 private:
     base::Vector3d position;
     double radius;

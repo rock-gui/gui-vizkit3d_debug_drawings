@@ -7,8 +7,16 @@ void Command::execute(vizkit3dDebugDrawings::DrawingManager* drawingManager) con
 {
     //NOTE This method should be pure virtual, however pure virtual classes cannot
     //     be used in orogen.
-    throw std::runtime_error("called base class execute");
+    throw std::runtime_error("called base class execute()");
 }
+
+Command* Command::clone() const
+{
+    //NOTE This method should be pure virtual, however pure virtual classes cannot
+    //     be used in orogen.
+    throw std::runtime_error("called base class clone()");
+}
+
 
 Command::~Command()
 {

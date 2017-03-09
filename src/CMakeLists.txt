@@ -15,6 +15,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawWireframeBoxCommand.cpp
         commands/primitives/DrawArrowCommand.cpp
         commands/primitives/DrawPolyLineCommand.cpp
+        commands/primitives/DrawCylinderCommand.cpp
     HEADERS 
         DebugDrawing.h
         Drawing.h
@@ -31,6 +32,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawWireframeBoxCommand.h
         commands/primitives/DrawArrowCommand.h
         commands/primitives/DrawPolyLineCommand.h
+        commands/primitives/DrawCylinderCommand.h
     DEPS_PKGCONFIG
         vizkit3d
         osgViz

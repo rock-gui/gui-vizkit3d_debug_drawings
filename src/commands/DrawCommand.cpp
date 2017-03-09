@@ -24,4 +24,11 @@ DrawCommand::~DrawCommand()
 {
 }
 
+DrawCommand* DrawCommand::clone() const
+{
+    //should not be callable, but pure-virtual does not work with orogen.
+    throw std::runtime_error("called DrawCommand clone()");
+}
+
+
 }

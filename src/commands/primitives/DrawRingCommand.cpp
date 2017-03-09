@@ -25,4 +25,10 @@ osg::ref_ptr< osgviz::Object > DrawRingCommand::createPrimitive() const
     return prim;
 }
 
+DrawRingCommand* DrawRingCommand::clone() const
+{
+    return new DrawRingCommand(*this);
+}
+
+
 }
