@@ -13,6 +13,10 @@ RemoveDrawingCommand::RemoveDrawingCommand(const std::string& drawingName) :
         drawingName(drawingName)
 {}
 
+RemoveDrawingCommand::RemoveDrawingCommand() : drawingName("default")
+{}
+
+
 RemoveDrawingCommand::~RemoveDrawingCommand()
 {}
 

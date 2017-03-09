@@ -22,6 +22,7 @@ class RemoveDrawingCommand : public Command
 public:
     
     RemoveDrawingCommand(const std::string& drawingName);   
+    RemoveDrawingCommand();
     virtual void execute(DrawingManager* drawingManager) const;    
     virtual ~RemoveDrawingCommand();
     virtual RemoveDrawingCommand* clone() const;

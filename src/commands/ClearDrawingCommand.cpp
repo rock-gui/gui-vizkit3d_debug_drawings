@@ -7,6 +7,12 @@ ClearDrawingCommand::ClearDrawingCommand(const std::string& drawingName) :
         drawingName(drawingName)
 {}
 
+ClearDrawingCommand::ClearDrawingCommand() : drawingName("default")
+{
+
+}
+
+
 void ClearDrawingCommand::execute(DrawingManager* drawingManager) const
 {
     drawingManager->clearDrawing(drawingName);

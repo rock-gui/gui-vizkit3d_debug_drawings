@@ -5,6 +5,10 @@
 #include <vizkit3d_debug_drawings/commands/primitives/DrawCylinderCommand.h>
 #include <vizkit3d_debug_drawings/commands/primitives/DrawPolyLineCommand.h>
 #include <vizkit3d_debug_drawings/commands/primitives/DrawRingCommand.h>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawTextCommand.h>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawWireframeBoxCommand.h>
+#include <vizkit3d_debug_drawings/commands/ClearDrawingCommand.h>
+#include <vizkit3d_debug_drawings/commands/RemoveDrawingCommand.h>
 
 #include <base/Eigen.hpp>
 #include <boost/archive/binary_oarchive.hpp>
@@ -145,5 +149,39 @@ BOOST_AUTO_TEST_CASE(ring_cmd_test)
     compare(a.radius, b.radius);
 }
 
+BOOST_AUTO_TEST_CASE(text_cmd_test)
+{
+    DrawTextCommand a("qqq", base::Vector3d(1,422,0), base::Quaterniond(1,0,09.4,1), "bla bla bu", 42.042, vizkit3dDebugDrawings::Color::yale_blue);
+    DrawTextCommand b = serializeAndDeserialize(a);
+    compare(a.colorRGBA, b.colorRGBA);
+    compare(a.position, b.position);
+    compare(a.drawingName, b.drawingName);
+    compare(a.orientation, b.orientation);
+    compare(a.fontSize, b.fontSize);
+    compare(a.text, b.text);
+}
 
+BOOST_AUTO_TEST_CASE(wireframe_cmd_test)
+{
+    DrawWireframeBoxCommand a("law", base::Vector3d(12,422,0), base::Quaterniond(11,0,09.4,1), base::Vector3d(1,2,3), vizkit3dDebugDrawings::Color::zaffre);
+    DrawWireframeBoxCommand b = serializeAndDeserialize(a);
+    compare(a.colorRGBA, b.colorRGBA);
+    compare(a.position, b.position);
+    compare(a.drawingName, b.drawingName);
+    compare(a.orientation, b.orientation);
+    compare(a.size, b.size);
+}
 
+BOOST_AUTO_TEST_CASE(clear_cmd_test)
+{
+    ClearDrawingCommand a("asdsadqweqwe");
+    ClearDrawingCommand b = serializeAndDeserialize(a);
+    compare(a.drawingName, b.drawingName);
+}
+
+BOOST_AUTO_TEST_CASE(remove_cmd_test)
+{
+    RemoveDrawingCommand a("qwqewqeqwe565467dgfc");
+    RemoveDrawingCommand b = serializeAndDeserialize(a);
+    compare(a.drawingName, b.drawingName);
+}
