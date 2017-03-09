@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vizkit3d_debug_drawings/DebugDrawing.h>
+#include <vizkit3d_debug_drawings/DebugDrawingColors.h>
 #include <chrono>
 #include <thread>
 #include <base/Eigen.hpp>
@@ -50,6 +51,17 @@ int main()
     arrowColor.x() -= 0.3;
     DRAW_ARROW("arrow", arrowPos, arrowRot, arrowSize, arrowColor);
     
+    
+    base::Vector3d linePos(-1, 0, 0);
+    base::Vector4d lineColor(1, 0, 0, 1);    
+    std::vector<base::Vector3d> points;
+    points.emplace_back(0, 0, 0);
+    points.emplace_back(0, 0, 2);
+    points.emplace_back(2, 0, 2);
+    points.emplace_back(2, 2, 2);
+    DRAW_POLYLINE("polyLine", linePos, points, lineColor);
+    
+    DRAW_LINE("line", base::Vector3d(-1, -1, -1), base::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
 // 
 // 

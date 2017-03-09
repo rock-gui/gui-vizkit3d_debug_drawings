@@ -98,9 +98,17 @@ namespace vizkit3d
     void DRAW_SPHERE(const std::string& drawingName, const base::Vector3d& position,
                      double radius, const base::Vector4d& colorRGBA);
     
-    void DRAW_POLYLINE(const std::string& drawingName, double posX, double posY, double posZ,
+    /** @param position origin of the line
+     *  @param points relative to @p position.*/
+    void DRAW_POLYLINE(const std::string& drawingName, const base::Vector3d& position,
                        const std::vector<base::Vector3d>& points, const base::Vector4d& colorRGBA);
     
+    /** @param points realtive to (0, 0, 0) */
+    void DRAW_POLYLINE(const std::string& drawingName, const std::vector<base::Vector3d>& points,
+                       const base::Vector4d& colorRGBA);
+    
+    /** @param from relative to (0, 0, 0)
+     *  @param to   relative to (0, 0, 0) */
     void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const base::Vector3d& to,
                    const base::Vector4d& colorRGBA);
     

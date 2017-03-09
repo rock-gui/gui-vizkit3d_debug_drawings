@@ -4,6 +4,8 @@
 #include "commands/primitives/DrawRingCommand.h"
 #include "commands/primitives/DrawWireframeBoxCommand.h"
 #include "commands/primitives/DrawArrowCommand.h"
+#include "commands/primitives/DrawPolyLineCommand.h"
+
 #include "CommandDispatcher.h"
 #include <vizkit3d/Vizkit3DWidget.hpp>
 
@@ -70,18 +72,12 @@ void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, doubl
     DRAW_SPHERE(drawingName, base::Vector3d(posX, posY, posZ), radius, colorRGBA);
 }
 
-void DRAW_POLYLINE(const std::string& drawingName, double posX, double posY, double posZ,
+void DRAW_POLYLINE(const std::string& drawingName, const base::Vector3d& position,
                    const std::vector<base::Vector3d>& points, const base::Vector4d& colorRGBA)
 {
-//     osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
-//     std::vector<osg::Vec3> osgPoints;
-//     for(const base::Vector3d& p : points)
-//     {
-//         osgPoints.emplace_back(p.x(), p.y(), p.z());
-//     }
-//     const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
-//     auto prim = fac->createLinesNode(color, osgPoints);
-//     DRAW_PRIMITIVE(drawingName, posX, posY, posZ, 1, 0, 0, 0, prim);
+    DrawPolyLineCommand cmd(drawingName, position, colorRGBA);
+    cmd.getPoints().insert(cmd.getPoints().begin(), points.begin(), points.end());
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);    
 }
 
 void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
@@ -117,14 +113,10 @@ void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double 
 void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const base::Vector3d& to,
                const base::Vector4d& colorRGBA)
 {
-//     osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
-//     std::vector<osg::Vec3> osgPoints;
-//     osgPoints.emplace_back(from.x(), from.y(), from.z());
-//     osgPoints.emplace_back(to.x(), to.y(), to.z());
-//     
-//     const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
-//     auto prim = fac->createLinesNode(color, osgPoints);
-//     DRAW_PRIMITIVE(drawingName, 0, 0, 0, 1, 0, 0, 0, prim);
+    DrawPolyLineCommand cmd(drawingName, base::Vector3d(0, 0, 0), colorRGBA);
+    cmd.getPoints().push_back(from);
+    cmd.getPoints().push_back(to);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);    
 }
 
 
