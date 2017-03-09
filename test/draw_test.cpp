@@ -63,12 +63,17 @@ int main()
     
     DRAW_LINE("line", base::Vector3d(-1, -1, -1), base::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
-// 
-// 
-//     double w = 0.017;
-//     std::uniform_real_distribution<double> colorRnd(0, 1);
+
     while(true)
     {
+        base::Vector3d blinkPos(-3, -3, -3);
+        DRAW_SPHERE("removeTest", blinkPos, 1, vizkit3dDebugDrawings::Color::air_force_blue_raf);
+        DRAW_SPHERE("remvoeTest2", base::Vector3d(-4, -4, -4), 0.8, vizkit3dDebugDrawings::Color::cadmium_orange);
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        REMOVE_DRAWING("removeTest");
+        CLEAR_DRAWING("remvoeTest2");
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        
 //         Eigen::Vector4d color(colorRnd(rndEngine), colorRnd(rndEngine), colorRnd(rndEngine), 1);
 //         CLEAR_DRAWING("arrrr");
 //         Eigen::Quaterniond rot(Eigen::AngleAxisd(w, Eigen::Vector3d::UnitY()));

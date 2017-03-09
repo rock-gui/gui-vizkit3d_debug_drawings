@@ -5,6 +5,8 @@
 #include "commands/primitives/DrawWireframeBoxCommand.h"
 #include "commands/primitives/DrawArrowCommand.h"
 #include "commands/primitives/DrawPolyLineCommand.h"
+#include "commands/RemoveDrawingCommand.h"
+#include "commands/ClearDrawingCommand.h"
 
 #include "CommandDispatcher.h"
 #include <vizkit3d/Vizkit3DWidget.hpp>
@@ -125,7 +127,8 @@ void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const
  * @note If you want to animate something, use CLEAR_DRAWING instead.*/
 void REMOVE_DRAWING(const std::string& drawingName)
 {
-//     vizkit3dDebugDrawings::DrawingManager::instance()->removeDrawing(drawingName);
+    RemoveDrawingCommand cmd(drawingName);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);      
 }
 
 /** Removes the content from a drawing but keeps the drawing itself.
@@ -133,7 +136,8 @@ void REMOVE_DRAWING(const std::string& drawingName)
  * Use this if you want to animate movements.*/
 void CLEAR_DRAWING(const std::string& drawingName)
 {
-//     vizkit3dDebugDrawings::DrawingManager::instance()->clearDrawing(drawingName);
+    ClearDrawingCommand cmd(drawingName);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);  
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
