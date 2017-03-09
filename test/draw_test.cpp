@@ -42,6 +42,15 @@ int main()
     DRAW_WIREFRAME_BOX("wireframeBox", wireframePos, wireframeSize, wireframeColor);
     
     
+    base::Vector3d arrowPos(-1, -1, -1);
+    base::Vector3d arrowSize(1, 1, 1);
+    base::Vector4d arrowColor(1, 1, 1, 1);    
+    DRAW_ARROW("arrow", arrowPos, arrowSize, arrowColor);
+    base::Quaterniond arrowRot(Eigen::AngleAxisd(0.7, base::Vector3d::UnitY()));
+    arrowColor.x() -= 0.3;
+    DRAW_ARROW("arrow", arrowPos, arrowRot, arrowSize, arrowColor);
+    
+    
 // 
 // 
 //     double w = 0.017;

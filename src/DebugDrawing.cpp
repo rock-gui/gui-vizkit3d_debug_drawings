@@ -3,6 +3,7 @@
 #include "commands/primitives/DrawTextCommand.h"
 #include "commands/primitives/DrawRingCommand.h"
 #include "commands/primitives/DrawWireframeBoxCommand.h"
+#include "commands/primitives/DrawArrowCommand.h"
 #include "CommandDispatcher.h"
 #include <vizkit3d/Vizkit3DWidget.hpp>
 
@@ -23,27 +24,22 @@ void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& po
     DRAW_WIREFRAME_BOX(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
-void DRAW_ARROW(const std::string& drawingName, double posX, double posY, double posZ,
-                        double rotW, double rotX, double rotY, double rotZ, double xScale,
-                double yScale, double zScale, const base::Vector4d& colorRGBA)
+
+void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
+                const base::Quaterniond& orientation, const base::Vector3d& scale,
+                const base::Vector4d& colorRGBA)
 {
-//     osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
-//     const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
-//     auto prim = fac->createArrow(color);
-//     prim->setScale(xScale, yScale, zScale);
-//     DRAW_PRIMITIVE(drawingName, posX, posY, posZ, rotW, rotX, rotY, rotZ, prim);
+    DrawArrowCommand cmd(drawingName, position, orientation, scale, colorRGBA);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);   
 }
 
-void DRAW_ARROW(const std::string& drawingName, double posX, double posY, double posZ,
-                double xScale, double yScale, double zScale, const base::Vector4d& colorRGBA)
+
+void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
+                const base::Vector3d& scale, const base::Vector4d& colorRGBA)
 {
-//     DRAW_ARROW(drawingName, posX, posY, posZ, 1, 0, 0, 0, xScale, yScale, zScale, colorRGBA);
+    DRAW_ARROW(drawingName, position, base::Quaterniond::Identity(), scale, colorRGBA);
 }
 
-void DRAW_ARROW(const std::string& drawingName, double posX, double posY, double posZ, const base::Vector4d& colorRGBA)
-{
-//     DRAW_ARROW(drawingName, posX, posY, posZ, 1, 1, 1, colorRGBA);
-}
 
 void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
                const base::Quaterniond& orientation, double radius,

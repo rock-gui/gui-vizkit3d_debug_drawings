@@ -11,6 +11,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawTextCommand.cpp
         commands/primitives/DrawRingCommand.cpp
         commands/primitives/DrawWireframeBoxCommand.cpp
+        commands/primitives/DrawArrowCommand.cpp
     HEADERS 
         DebugDrawing.h
         Drawing.h
@@ -23,6 +24,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawTextCommand.h
         commands/primitives/DrawRingCommand.h
         commands/primitives/DrawWireframeBoxCommand.h
+        commands/primitives/DrawArrowCommand.h
     DEPS_PKGCONFIG
         vizkit3d
         osgViz
