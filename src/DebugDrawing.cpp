@@ -171,6 +171,12 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<boost::shared_ptr<Command
     CommandDispatcher::threadLocalInstance()->configurePort(port);
 }
 
+void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::OutputPort<boost::shared_ptr<Command>>* port)
+{
+    if(!CommandDispatcher::threadLocalInstance()->isConfigured())
+        CommandDispatcher::threadLocalInstance()->configurePort(port);
+}
+
 vizkit3d::Vizkit3DWidget* GET_DEBUG_DRAWING_WIDGET()
 {
     return CommandDispatcher::threadLocalInstance()->getWidget();
