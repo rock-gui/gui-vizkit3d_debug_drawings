@@ -33,7 +33,6 @@
 #include <vector>
 #include <base/Eigen.hpp>
 #include "DebugDrawingColors.h"
-#include <rtt/OutputPort.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vizkit3d_debug_drawings/commands/Command.h>
 
@@ -41,6 +40,13 @@ namespace vizkit3d
 {
     class Vizkit3DWidget;
 }
+
+namespace RTT
+{
+    template <typename T>
+    class OutputPort;
+}
+
 /**
  *  *** Configuration ***
  *  Debug drawings need to be configured before beeing displayed.

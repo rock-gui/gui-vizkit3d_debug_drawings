@@ -11,6 +11,7 @@
 
 #include "CommandDispatcher.h"
 #include <vizkit3d/Vizkit3DWidget.hpp>
+#include <rtt/OutputPort.hpp>
 
 using namespace vizkit3dDebugDrawings;
 
