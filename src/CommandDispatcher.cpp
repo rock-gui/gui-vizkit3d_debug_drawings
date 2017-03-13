@@ -12,7 +12,7 @@ namespace vizkit3dDebugDrawings
 struct CommandDispatcher::Impl
 {
     bool configured = false;
-    RTT::OutputPort<Command>* port = nullptr; //for port mode
+    RTT::OutputPort<boost::shared_ptr<Command>>* port = nullptr; //for port mode
     QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread; //for standalone mode
     std::unique_ptr<DrawingManager> drawingManager; //need to use pointer due to lazy initiaization
     std::deque<std::unique_ptr<vizkit3dDebugDrawings::Command>> beforeConfigCommands; //stores all commands send before config, need to store on heap to store polymorphic copies
@@ -51,7 +51,8 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
     }
     else if(p->port != nullptr)
     {
-        p->port->write(cmd);
+        boost::shared_ptr<Command> pCmd(cmd.clone());
+        p->port->write(pCmd);
     }
     else if(!p->configured)
     {
@@ -67,7 +68,7 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
     }
 }
 
-void CommandDispatcher::configurePort(RTT::OutputPort< Command >* port)
+void CommandDispatcher::configurePort(RTT::OutputPort<boost::shared_ptr<Command>>* port)
 {
     checkAndSetConfigured();
     p->port = port;
@@ -107,5 +108,24 @@ void CommandDispatcher::dispatchBufferedCommands()
     }
     p->beforeConfigCommands.clear();
 }
+
+bool CommandDispatcher::isConfigured() const
+{
+    return p->configured;
+}
+
+vizkit3d::Vizkit3DWidget* CommandDispatcher::getWidget()
+{
+    if(!isConfigured())
+        throw std::runtime_error("Debug drawings not configured");
+    
+    if(!(p->drawingManager))
+        throw std::runtime_error("Debug drawigns not configured to use widget");
+
+    return p->drawingManager->getVizkit3DWidget();
+}
+
+
+
 
 }

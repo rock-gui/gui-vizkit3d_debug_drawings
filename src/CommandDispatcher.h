@@ -1,6 +1,6 @@
 #pragma once
 #include <rtt/OutputPort.hpp>
-#include "commands/Command.h"
+#include <boost/shared_ptr.hpp>
 
 namespace vizkit3d
 {
@@ -10,6 +10,7 @@ namespace vizkit3d
 namespace vizkit3dDebugDrawings
 {
     class DrawingManager;
+    class Command;
     
     /** Dispatches drawing commands depending on a given configuration.
      *  All commands are buffered until a configuration is set.*/
@@ -29,9 +30,15 @@ namespace vizkit3dDebugDrawings
         
         /**Configures the dispatcher. Until configured, all commands are buffered
          * @throw std::runtime_error if already configured*/
-        void configurePort(RTT::OutputPort<Command>* port);
+        void configurePort(RTT::OutputPort<boost::shared_ptr<Command>>* port);
         void configureStandalone();
         void configureUseWidget(vizkit3d::Vizkit3DWidget* widget);
+        
+        bool isConfigured() const;
+        
+        /** Returns the widget that is used for drawing.
+         *  @throw std::runtime_error if no widget is configured*/
+        vizkit3d::Vizkit3DWidget* getWidget();
         
     private:
         

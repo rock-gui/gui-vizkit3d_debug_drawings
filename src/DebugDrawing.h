@@ -33,6 +33,7 @@
 #include <base/Eigen.hpp>
 #include "DebugDrawingColors.h"
 #include <rtt/OutputPort.hpp>
+#include <boost/shared_ptr.hpp>
 #include <vizkit3d_debug_drawings/commands/Command.h>
 
 namespace vizkit3d
@@ -66,8 +67,12 @@ namespace vizkit3d
 
     void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<vizkit3dDebugDrawings::Command>* port); 
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::Command>>* port); 
 
+    /** Returns the vizkit3d widget that is used for debug drawing.
+     *  @throw std::runtime_error if debug drawings are not configured to use a widget*/
+    vizkit3d::Vizkit3DWidget* GET_DEBUG_DRAWING_WIDGET();
+    
 
     void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
                             const base::Quaterniond& orientation, const base::Vector3d& size,
