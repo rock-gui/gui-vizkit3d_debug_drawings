@@ -8,7 +8,7 @@
     #define CONFIGURE_DEBUG_DRAWINGS_STANDALONE(...)  (void)0
     #define CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...)  (void)0
     #define CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...)  (void)0
-    #define GET_DEBUG_DRAWING_WIDGET(...)  (void)0
+    #define GET_DEBUG_DRAWING_WIDGET(...) nullptr
 
     #define DRAW_RING(...) (void)0
     #define DRAW_PRIMITIVE(...) (void)0
