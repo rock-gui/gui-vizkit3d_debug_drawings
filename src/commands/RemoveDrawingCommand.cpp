@@ -24,4 +24,6 @@ RemoveDrawingCommand* RemoveDrawingCommand::clone() const
 {
     return new RemoveDrawingCommand(*this);
 }
+
 }
+

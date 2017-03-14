@@ -25,8 +25,9 @@ class DrawCylinderCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-public:
+
     
+public:
     DrawCylinderCommand();
     
     DrawCylinderCommand(const std::string& drawingName, const base::Vector3d& position,

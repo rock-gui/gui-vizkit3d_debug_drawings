@@ -2,6 +2,7 @@
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 
+
 namespace vizkit3dDebugDrawings
 {
 DrawTextCommand::DrawTextCommand(const std::string& drawingName,
@@ -34,6 +35,5 @@ DrawTextCommand* DrawTextCommand::clone() const
     return new DrawTextCommand(*this);
 }
 
-
-
 }
+

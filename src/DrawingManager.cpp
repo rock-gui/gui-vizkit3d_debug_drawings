@@ -2,6 +2,7 @@
 #include "Drawing.h"
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
+#include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <unordered_map>
 #include <vector>
 #include <osgViz/Object.h>
@@ -16,7 +17,7 @@ namespace vizkit3dDebugDrawings
         std::unordered_map<std::string, QObject*> plugins;
         /**Gui thread*/
         QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread;
-        vizkit3d::Vizkit3DWidget* widget;
+        vizkit3d::Vizkit3DWidget* widget = nullptr;
     };
     
     DrawingManager::DrawingManager(vizkit3d::Vizkit3DWidget* widget) : p(new PImpl())
@@ -46,7 +47,7 @@ namespace vizkit3dDebugDrawings
         if(p->plugins.find(drawingName) == p->plugins.end())
         {
             //new drawing, need new plugin
-            p->plugins[drawingName] = p->widget->loadPlugin("", "DrawingVisualization");;
+            p->plugins[drawingName] = loadPlugin();
             assert(p->plugins[drawingName] != nullptr);
         }
         
@@ -92,4 +93,16 @@ namespace vizkit3dDebugDrawings
                                   Q_ARG(vizkit3dDebugDrawings::Drawing, d));
     }
     
+    vizkit3d::VizPluginBase* DrawingManager::loadPlugin()
+    {
+//         DrawingVisualization
+        //use queded connection if we are not in gui thread
+        std::cout << "WIDGET: " << getVizkit3DWidget() << std::endl;
+        const Qt::ConnectionType conType = QThread::currentThread() == getVizkit3DWidget()->thread()? Qt::DirectConnection : Qt::BlockingQueuedConnection; 
+        QObject* plugin = nullptr;
+        QMetaObject::invokeMethod(getVizkit3DWidget(), "loadPlugin", conType,
+                                  Q_RETURN_ARG(QObject*, plugin),
+                                  Q_ARG(QString, ""), Q_ARG(QString, "DrawingVisualization"));
+        return dynamic_cast<vizkit3d::VizPluginBase*>(plugin);
+    }
 }

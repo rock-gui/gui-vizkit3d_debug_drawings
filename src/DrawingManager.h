@@ -6,6 +6,7 @@
 namespace vizkit3d 
 {
     class Vizkit3DWidget;
+    class VizPluginBase;
 }
 namespace osgviz
 {
@@ -50,6 +51,9 @@ namespace vizkit3dDebugDrawings
         /** invokes updateData() on the vizkit3d plugin belonging to @p d.
          * @note plugin needs to exist before.*/
         void updateData(const Drawing& d) const;
+        
+        /**thread safe invoke vizkit3d to load a plugin */
+        vizkit3d::VizPluginBase* loadPlugin();
         
         struct PImpl;
         std::unique_ptr<PImpl> p;

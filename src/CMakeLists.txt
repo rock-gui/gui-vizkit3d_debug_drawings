@@ -33,6 +33,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawArrowCommand.h
         commands/primitives/DrawPolyLineCommand.h
         commands/primitives/DrawCylinderCommand.h
+        commands/BoostSerializationExports.h
     DEPS_PKGCONFIG
         vizkit3d
         osgViz

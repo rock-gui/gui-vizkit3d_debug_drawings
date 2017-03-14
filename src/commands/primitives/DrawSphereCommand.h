@@ -24,8 +24,9 @@ class DrawSphereCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-public:
     
+    
+public:
     DrawSphereCommand();
     
     DrawSphereCommand(const std::string& drawingName, const base::Vector3d& position, double radius,

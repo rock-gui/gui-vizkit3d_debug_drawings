@@ -1,6 +1,7 @@
 #include "DrawWireframeBoxCommand.h"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
+
 namespace vizkit3dDebugDrawings
 {
     
@@ -34,3 +35,5 @@ DrawWireframeBoxCommand* DrawWireframeBoxCommand::clone() const
 
 
 }
+
+

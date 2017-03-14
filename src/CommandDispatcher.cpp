@@ -44,18 +44,23 @@ CommandDispatcher* CommandDispatcher::threadLocalInstance()
 
 void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
 {
+    std::cout << "RECEIVED DEBUG DRAWING COMMAND\n";
     if(p->drawingManager != nullptr)
     {
+        std::cout << "SENDING TO WIDGET\n";
         //either standalone or widget mode
         cmd.execute(p->drawingManager.get());
     }
     else if(p->port != nullptr)
     {
         boost::shared_ptr<Command> pCmd(cmd.clone());
+        std::cout << "SENDING TO PORT " << pCmd << "\n";
+        
         p->port->write(pCmd);
     }
     else if(!p->configured)
     {
+        std::cout << "NOT CONFIGURED! BUFFERING\n";
         p->beforeConfigCommands.emplace_back(cmd.clone());
         if(p->beforeConfigCommands.size() >= p->maxBeforeConfigCommands)
         {

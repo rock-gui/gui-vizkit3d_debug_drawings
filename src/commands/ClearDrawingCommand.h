@@ -19,8 +19,9 @@ class ClearDrawingCommand : public Command
         ar & drawingName;
     }
     
-public:
     
+    
+public:
     ClearDrawingCommand(const std::string& drawingName);   
     ClearDrawingCommand();
     virtual void execute(DrawingManager* drawingManager) const;    

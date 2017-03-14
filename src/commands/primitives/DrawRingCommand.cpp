@@ -2,6 +2,7 @@
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 
+
 namespace vizkit3dDebugDrawings
 {
     
@@ -30,5 +31,5 @@ DrawRingCommand* DrawRingCommand::clone() const
     return new DrawRingCommand(*this);
 }
 
-
 }
+

@@ -17,6 +17,7 @@
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <vizkit3d_debug_drawings/DebugDrawingColors.h>
+#include <boost/serialization/export.hpp>
 
 using namespace vizkit3dDebugDrawings;
 using namespace boost;
@@ -81,6 +82,35 @@ void compare(const std::vector<T>& a, const std::vector<T>& b)
     {
         compare(a[i], b[i]);
     }
+}
+
+BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawSphereCommand);
+
+BOOST_AUTO_TEST_CASE(serialize_base_test)
+{
+    Command* cmd = new DrawSphereCommand("test123", base::Vector3d(1,42,0), 0.42, base::Vector4d(1, 0, 0, 1));
+    
+    std::vector<char> buffer;
+    
+    iostreams::back_insert_device<std::vector<char>> sink{buffer};
+    iostreams::stream<iostreams::back_insert_device<std::vector<char>>> os{sink};
+    archive::binary_oarchive oa(os);
+    
+    oa << cmd;
+    os.close();
+    
+    BOOST_CHECK(buffer.size() > 0);
+    
+    iostreams::array_source source{buffer.data(), buffer.size()};
+    iostreams::stream<iostreams::array_source> is{source};
+    archive::binary_iarchive ia(is);
+
+    Command* cmd2;
+    ia >> cmd2;
+    
+    BOOST_CHECK(dynamic_cast<DrawSphereCommand*>(cmd2) != nullptr);
+    
+    
 }
 
 
@@ -185,3 +215,6 @@ BOOST_AUTO_TEST_CASE(remove_cmd_test)
     RemoveDrawingCommand b = serializeAndDeserialize(a);
     compare(a.drawingName, b.drawingName);
 }
+
+
+

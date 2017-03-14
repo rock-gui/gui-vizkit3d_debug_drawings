@@ -29,8 +29,9 @@ class DrawRingCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-public:
     
+    
+public:
     DrawRingCommand();
     
     DrawRingCommand(const std::string& drawingName, const base::Vector3d& position,

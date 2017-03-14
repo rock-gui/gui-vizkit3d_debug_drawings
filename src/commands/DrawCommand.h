@@ -25,8 +25,9 @@ class DrawCommand : public Command
         ar & drawingName;
     }
     
-public:
     
+    
+public:
     DrawCommand(const std::string& drawingName);
     
     /**Creates an osgviz::Object that represents the drawing*/

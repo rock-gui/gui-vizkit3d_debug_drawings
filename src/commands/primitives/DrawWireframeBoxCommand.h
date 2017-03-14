@@ -25,8 +25,9 @@ class DrawWireframeBoxCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-public:
+
     
+public:
     DrawWireframeBoxCommand();
     
     DrawWireframeBoxCommand(const std::string& drawingName, const base::Vector3d& position,

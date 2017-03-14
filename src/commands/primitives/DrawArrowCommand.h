@@ -25,8 +25,9 @@ class DrawArrowCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-public:
     
+    
+public:
     DrawArrowCommand();
     
     DrawArrowCommand(const std::string& drawingName, const base::Vector3d& position,

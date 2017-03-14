@@ -1,6 +1,7 @@
 #include "ClearDrawingCommand.h"
 #include <vizkit3d_debug_drawings/DrawingManager.h>
 
+
 namespace vizkit3dDebugDrawings
 {
 ClearDrawingCommand::ClearDrawingCommand(const std::string& drawingName) :
@@ -25,6 +26,5 @@ ClearDrawingCommand* ClearDrawingCommand::clone() const
 {
     return new ClearDrawingCommand(*this);
 }
-
 
 }

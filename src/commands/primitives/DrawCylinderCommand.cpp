@@ -33,5 +33,5 @@ DrawCylinderCommand* DrawCylinderCommand::clone() const
     return new DrawCylinderCommand(*this);
 }
 
-
 }
+

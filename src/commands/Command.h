@@ -1,6 +1,7 @@
 #pragma once
 #include <boost/serialization/access.hpp>
 
+#include <string>
 namespace vizkit3dDebugDrawings
 {
     class DrawingManager;
@@ -15,11 +16,14 @@ namespace vizkit3dDebugDrawings
         void serialize(Archive & ar, const unsigned int version)
         {}
         
+        
+        
     public:
         /** Execute this command on the @p drawingManager*/
         virtual void execute(DrawingManager* drawingManager) const;
         virtual ~Command();
         
+
         /**Creates a virtual copy of this instance.
          * This method needs to be reimplemented in all base classes.
          * @see virtual copy constructor idiom: https://isocpp.org/wiki/faq/virtual-functions#virtual-ctors

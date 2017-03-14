@@ -26,8 +26,9 @@ class DrawTextCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-public:
+
     
+public:
     DrawTextCommand();
     
     DrawTextCommand(const std::string& drawingName, const base::Vector3d& position,
