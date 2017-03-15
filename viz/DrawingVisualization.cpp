@@ -37,6 +37,7 @@ void DrawingVisualization::updateMainNode(osg::Node* node)
 void DrawingVisualization::updateDataIntern(vizkit3dDebugDrawings::Drawing const& value)
 {
     p->data = value;
+    emit propertyChanged("name");
 }
 
 QString DrawingVisualization::getName() const
