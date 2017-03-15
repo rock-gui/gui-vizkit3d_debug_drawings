@@ -36,8 +36,6 @@ namespace vizkit3dDebugDrawings
     
     void DrawingManager::addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>& primitive)
     {
-        std::cout << "ADD PRIM: " << drawingName << std::endl;
-        
         if(drawingName.empty())
         {
             throw new std::runtime_error("drawingName is empty");
@@ -58,8 +56,6 @@ namespace vizkit3dDebugDrawings
     
     void DrawingManager::removeDrawing(const std::string& drawingName)
     {
-        std::cout << "REMOVE DRAWING: " << drawingName << std::endl;
-        
         if(drawingName.empty())
         {
             throw new std::runtime_error("drawingName is empty");
@@ -78,7 +74,6 @@ namespace vizkit3dDebugDrawings
     
     void DrawingManager::clearDrawing(const std::string& drawingName)
     {
-        std::cout << "CLEAR DRAWING: " << drawingName << std::endl;
         if(drawingName.empty())
         {
             throw new std::runtime_error("drawingName is empty");
@@ -108,9 +103,7 @@ namespace vizkit3dDebugDrawings
     
     vizkit3d::VizPluginBase* DrawingManager::loadPlugin()
     {
-//         DrawingVisualization
         //use queded connection if we are not in gui thread
-        std::cout << "WIDGET: " << getVizkit3DWidget() << std::endl;
         const Qt::ConnectionType conType = QThread::currentThread() == getVizkit3DWidget()->thread()? Qt::DirectConnection : Qt::BlockingQueuedConnection; 
         QObject* plugin = nullptr;
         QMetaObject::invokeMethod(getVizkit3DWidget(), "loadPlugin", conType,

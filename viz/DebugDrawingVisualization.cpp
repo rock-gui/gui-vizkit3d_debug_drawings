@@ -41,6 +41,7 @@ void DebugDrawingVisualization::updateDataIntern(boost::shared_ptr<vizkit3dDebug
     p->data = cmd;
     if(p->data)
     {
+        //The drawing manager handles all the threading issues.
         p->manager->clearAllDrawings();
         p->data->executeAll(p->manager.get());
     }

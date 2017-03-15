@@ -31,8 +31,6 @@
 //FIXME cleanup includes
 #include <string>
 #include "DrawingManager.h"
-#include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
-#include <osgViz/OsgViz.hpp>
 #include <vector>
 #include <base/Eigen.hpp>
 #include "DebugDrawingColors.h"
