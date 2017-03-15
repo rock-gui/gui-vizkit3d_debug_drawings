@@ -10,4 +10,5 @@
   <depend package="base/types" />
   <depend package="gui/vizkit3d" />
   <depend package="gui/osgviz/osgviz" />
+  <depend package="base/boost_serialization" />
 </package>
