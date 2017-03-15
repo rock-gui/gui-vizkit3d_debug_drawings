@@ -28,6 +28,10 @@ namespace vizkit3d
         virtual void updateDataIntern(boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer> const& cmd);
         
     private:
+        
+        /**Create the drawing manager if it doesnt exist, yet */
+        void createManager();
+        
         struct Data;
         Data* p;
     };

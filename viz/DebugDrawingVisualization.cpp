@@ -23,13 +23,15 @@ DebugDrawingVisualization::~DebugDrawingVisualization()
 
 osg::ref_ptr<osg::Node> DebugDrawingVisualization::createMainNode()
 {
-    //manager cannot be initalized before this point because the plugin is lazy initialzied.
-    //I.e. getWidget() still returns nullptr when called from inside 
-    //the ctor.
-    if(!p->manager)
-        p->manager.reset(new DrawingManager(getWidget()));
     return new osg::Group();
 }
+
+void DebugDrawingVisualization::createManager()
+{
+    if(!p->manager)
+        p->manager.reset(new DrawingManager(getWidget()));
+}
+
 
 void DebugDrawingVisualization::updateMainNode(osg::Node* node)
 {
@@ -38,6 +40,7 @@ void DebugDrawingVisualization::updateMainNode(osg::Node* node)
 
 void DebugDrawingVisualization::updateDataIntern(boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer> const& cmd)
 {
+    createManager();
     p->data = cmd;
     if(p->data)
     {
