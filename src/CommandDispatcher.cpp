@@ -1,9 +1,11 @@
 #include "CommandDispatcher.h"
 #include "DrawingManager.h"
 #include "commands/Command.h"
+#include "commands/CommandBuffer.h"
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
 #include <memory>
+#include <thread>
 
 namespace vizkit3dDebugDrawings
 {
@@ -12,11 +14,12 @@ namespace vizkit3dDebugDrawings
 struct CommandDispatcher::Impl
 {
     bool configured = false;
-    RTT::OutputPort<boost::shared_ptr<Command>>* port = nullptr; //for port mode
+    RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port = nullptr; //for port mode
     QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread; //for standalone mode
     std::unique_ptr<DrawingManager> drawingManager; //need to use pointer due to lazy initiaization
     std::deque<std::unique_ptr<vizkit3dDebugDrawings::Command>> beforeConfigCommands; //stores all commands send before config, need to store on heap to store polymorphic copies
     const size_t maxBeforeConfigCommands = 100000; //maximum size of beforeConfigCommands to avoid memory leaks
+    boost::shared_ptr<CommandBuffer> cmdBuffer; //is pointer because we need to send it through port (sending by value works but would break polymorphism)
 };
 
 CommandDispatcher::CommandDispatcher() : p(new CommandDispatcher::Impl())
@@ -44,23 +47,29 @@ CommandDispatcher* CommandDispatcher::threadLocalInstance()
 
 void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
 {
-    std::cout << "RECEIVED DEBUG DRAWING COMMAND\n";
     if(p->drawingManager != nullptr)
     {
-        std::cout << "SENDING TO WIDGET\n";
         //either standalone or widget mode
         cmd.execute(p->drawingManager.get());
     }
     else if(p->port != nullptr)
     {
+        /* Re-sending the complete state instead of just sending the commands 
+         * produces some overhead. But depending on the connection type lots of
+         * commands may be dropped. If commands are dropped, the current state cannot
+         * be reproduced on the other end of the port. Thus we have to send the
+         * whole state every time. */
         boost::shared_ptr<Command> pCmd(cmd.clone());
-        std::cout << "SENDING TO PORT " << pCmd << "\n";
+        p->cmdBuffer->addCommand(pCmd);
         
-        p->port->write(pCmd);
+        //need to copy because the buffer will switch threads when beeing written to the port.
+        //shallow copy is enough, the commands wont be modified.
+        boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(*(p->cmdBuffer)));
+        p->port->write(copy);
     }
     else if(!p->configured)
     {
-        std::cout << "NOT CONFIGURED! BUFFERING\n";
+        std::cout << "Warning: Debug drawings not configured. Buffering drawings until configured.\n";
         p->beforeConfigCommands.emplace_back(cmd.clone());
         if(p->beforeConfigCommands.size() >= p->maxBeforeConfigCommands)
         {
@@ -73,10 +82,11 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
     }
 }
 
-void CommandDispatcher::configurePort(RTT::OutputPort<boost::shared_ptr<Command>>* port)
+void CommandDispatcher::configurePort(RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port)
 {
     checkAndSetConfigured();
     p->port = port;
+    p->cmdBuffer.reset(new CommandBuffer);
     dispatchBufferedCommands();
 }
 

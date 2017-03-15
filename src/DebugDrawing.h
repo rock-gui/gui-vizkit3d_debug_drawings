@@ -37,7 +37,7 @@
 #include <base/Eigen.hpp>
 #include "DebugDrawingColors.h"
 #include <boost/shared_ptr.hpp>
-#include <vizkit3d_debug_drawings/commands/Command.h>
+#include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
 
 namespace vizkit3d
 {
@@ -78,10 +78,10 @@ namespace RTT
     /**@throw std::runtime_error if already configured */
     void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::Command>>* port); 
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>* port); 
 
     /**Same as above but does nothing if already configured. */
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::Command>>* port);
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>* port);
     
     /** Returns the vizkit3d widget that is used for debug drawing.
      *  @throw std::runtime_error if debug drawings are not configured to use a widget*/

@@ -2,14 +2,14 @@
 #include <boost/noncopyable.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <osg/Geode>
-#include <vizkit3d_debug_drawings/commands/Command.h>
+#include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
 #include <boost/shared_ptr.hpp>
 
 
 namespace vizkit3d
 {
     class DebugDrawingVisualization
-        : public vizkit3d::Vizkit3DPlugin<boost::shared_ptr<vizkit3dDebugDrawings::Command>>
+        : public vizkit3d::Vizkit3DPlugin<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>
         , boost::noncopyable
     {
     Q_OBJECT
@@ -18,14 +18,14 @@ namespace vizkit3d
         DebugDrawingVisualization();
         ~DebugDrawingVisualization();
 
-    Q_INVOKABLE void updateData(boost::shared_ptr<vizkit3dDebugDrawings::Command> const &sample)
-    {vizkit3d::Vizkit3DPlugin<boost::shared_ptr<vizkit3dDebugDrawings::Command>>::updateData(sample);}
+    Q_INVOKABLE void updateData(boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer> const &sample)
+    {vizkit3d::Vizkit3DPlugin<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>::updateData(sample);}
 
 
     protected:
         virtual osg::ref_ptr<osg::Node> createMainNode();
         virtual void updateMainNode(osg::Node* node);
-        virtual void updateDataIntern(boost::shared_ptr<vizkit3dDebugDrawings::Command> const& cmd);
+        virtual void updateDataIntern(boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer> const& cmd);
         
     private:
         struct Data;

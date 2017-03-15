@@ -11,6 +11,7 @@ namespace vizkit3dDebugDrawings
 {
     class DrawingManager;
     class Command;
+    class CommandBuffer;
     
     /** Dispatches drawing commands depending on a given configuration.
      *  All commands are buffered until a configuration is set.*/
@@ -30,7 +31,7 @@ namespace vizkit3dDebugDrawings
         
         /**Configures the dispatcher. Until configured, all commands are buffered
          * @throw std::runtime_error if already configured*/
-        void configurePort(RTT::OutputPort<boost::shared_ptr<Command>>* port);
+        void configurePort(RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port);
         void configureStandalone();
         void configureUseWidget(vizkit3d::Vizkit3DWidget* widget);
         

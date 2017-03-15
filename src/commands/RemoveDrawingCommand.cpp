@@ -25,5 +25,11 @@ RemoveDrawingCommand* RemoveDrawingCommand::clone() const
     return new RemoveDrawingCommand(*this);
 }
 
+const std::string& RemoveDrawingCommand::getDrawingName() const
+{
+    return drawingName;
+}
+
+
 }
 

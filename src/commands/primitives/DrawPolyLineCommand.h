@@ -26,7 +26,6 @@ class DrawPolyLineCommand : public DrawCommand
     }
     
     
-    
 public:
     DrawPolyLineCommand();
     

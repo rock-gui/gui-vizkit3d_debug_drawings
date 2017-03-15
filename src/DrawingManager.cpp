@@ -36,6 +36,8 @@ namespace vizkit3dDebugDrawings
     
     void DrawingManager::addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>& primitive)
     {
+        std::cout << "ADD PRIM: " << drawingName << std::endl;
+        
         if(drawingName.empty())
         {
             throw new std::runtime_error("drawingName is empty");
@@ -56,6 +58,8 @@ namespace vizkit3dDebugDrawings
     
     void DrawingManager::removeDrawing(const std::string& drawingName)
     {
+        std::cout << "REMOVE DRAWING: " << drawingName << std::endl;
+        
         if(drawingName.empty())
         {
             throw new std::runtime_error("drawingName is empty");
@@ -74,6 +78,7 @@ namespace vizkit3dDebugDrawings
     
     void DrawingManager::clearDrawing(const std::string& drawingName)
     {
+        std::cout << "CLEAR DRAWING: " << drawingName << std::endl;
         if(drawingName.empty())
         {
             throw new std::runtime_error("drawingName is empty");
@@ -85,6 +90,14 @@ namespace vizkit3dDebugDrawings
             updateData(p->drawings[drawingName]);
         }
     }
+    
+    void DrawingManager::clearAllDrawings()
+    {
+        for(auto drawingKeyValuePair : p->drawings)
+        {
+            drawingKeyValuePair.second.clear();
+        }
+    }   
     
     void DrawingManager::updateData(const Drawing& d) const
     {

@@ -7,6 +7,7 @@ using namespace vizkit3dDebugDrawings;
 
 struct DebugDrawingVisualization::Data {    
     std::unique_ptr<DrawingManager> manager; //pointer because lazy init
+    boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer> data;
 };
 
 
@@ -31,11 +32,18 @@ osg::ref_ptr<osg::Node> DebugDrawingVisualization::createMainNode()
 }
 
 void DebugDrawingVisualization::updateMainNode(osg::Node* node)
-{}
-
-void DebugDrawingVisualization::updateDataIntern(boost::shared_ptr<vizkit3dDebugDrawings::Command> const& cmd)
 {
-    cmd->execute(p->manager.get());
+
+}
+
+void DebugDrawingVisualization::updateDataIntern(boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer> const& cmd)
+{
+    p->data = cmd;
+    if(p->data)
+    {
+        p->manager->clearAllDrawings();
+        p->data->executeAll(p->manager.get());
+    }
 }
 
 //Macro that makes this plugin loadable in ruby, this is optional.

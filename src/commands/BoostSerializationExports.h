@@ -4,6 +4,7 @@
  */
 
 #pragma once
+
 #include "Command.h"
 #include "DrawCommand.h"
 #include "RemoveDrawingCommand.h"

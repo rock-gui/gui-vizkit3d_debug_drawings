@@ -27,4 +27,11 @@ ClearDrawingCommand* ClearDrawingCommand::clone() const
     return new ClearDrawingCommand(*this);
 }
 
+const std::string& ClearDrawingCommand::getDrawingName() const
+{
+    return drawingName;
+
+}
+
+
 }

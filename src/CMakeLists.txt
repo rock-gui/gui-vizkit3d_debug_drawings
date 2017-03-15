@@ -9,6 +9,7 @@ rock_library(vizkit3d_debug_drawings
         commands/Command.cpp
         commands/RemoveDrawingCommand.cpp
         commands/ClearDrawingCommand.cpp
+        commands/CommandBuffer.cpp
         commands/primitives/DrawSphereCommand.cpp
         commands/primitives/DrawTextCommand.cpp
         commands/primitives/DrawRingCommand.cpp
@@ -26,6 +27,7 @@ rock_library(vizkit3d_debug_drawings
         commands/Command.h
         commands/RemoveDrawingCommand.h
         commands/ClearDrawingCommand.h
+        commands/CommandBuffer.h
         commands/primitives/DrawSphereCommand.h
         commands/primitives/DrawTextCommand.h
         commands/primitives/DrawRingCommand.h
@@ -38,5 +40,6 @@ rock_library(vizkit3d_debug_drawings
         vizkit3d
         osgViz
         base-types
+        boost_serialization
         orocos-rtt-${OROCOS_TARGET})
 

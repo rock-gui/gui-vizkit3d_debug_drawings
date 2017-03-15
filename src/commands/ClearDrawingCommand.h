@@ -25,6 +25,7 @@ public:
     ClearDrawingCommand(const std::string& drawingName);   
     ClearDrawingCommand();
     virtual void execute(DrawingManager* drawingManager) const;    
+    const std::string& getDrawingName() const;
     virtual ~ClearDrawingCommand();
     
     virtual ClearDrawingCommand* clone() const;

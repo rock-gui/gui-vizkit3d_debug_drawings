@@ -39,6 +39,9 @@ namespace vizkit3dDebugDrawings
          * Use this if you want to animate movements.*/
         void clearDrawing(const std::string& drawingName);
         
+        /** Remove the content from all drawings but keep the plugins. */
+        void clearAllDrawings();
+        
         /**Returns the Vizkit3DWidget instance that is used by the DrawingManager.  */
         vizkit3d::Vizkit3DWidget* getVizkit3DWidget() const;
                 
