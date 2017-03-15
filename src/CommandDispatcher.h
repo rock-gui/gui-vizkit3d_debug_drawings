@@ -14,7 +14,8 @@ namespace vizkit3dDebugDrawings
     class CommandBuffer;
     
     /** Dispatches drawing commands depending on a given configuration.
-     *  All commands are buffered until a configuration is set.*/
+     *  If the dispatcher is not configured, the commands will be stored in
+     *  a ring buffer until configuration.  */
     class CommandDispatcher
     {
     public:
@@ -29,8 +30,14 @@ namespace vizkit3dDebugDrawings
          *  The buffer is a ring buffer of size 100000*/
         void dispatch(const Command& cmd);
         
-        /**Configures the dispatcher. Until configured, all commands are buffered
-         * @throw std::runtime_error if already configured*/
+        /**Configures the dispatcher. 
+         * There are three possible configurations:
+         *  - use portport   : Commands are send to @p port.
+         *  - run standalone : A qt app will be started in a new thread and all commands will be displayed
+         *  - existing widget: An existing widget is used to display all commands.
+         * 
+         * @throw std::runtime_error if already configured.
+         * */
         void configurePort(RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port);
         void configureStandalone();
         void configureUseWidget(vizkit3d::Vizkit3DWidget* widget);
