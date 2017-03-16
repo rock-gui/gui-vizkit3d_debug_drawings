@@ -42,7 +42,7 @@ void CommandBuffer::executeAll(vizkit3dDebugDrawings::DrawingManager* manager) c
     }
 }
 
-const std::unordered_map<std::string, std::vector<boost::shared_ptr< Command>>>& CommandBuffer::getCommands() const
+const CommandBuffer::CommandMap& CommandBuffer::getCommands() const
 {
     return commands;
 }
