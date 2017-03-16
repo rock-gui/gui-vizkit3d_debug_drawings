@@ -22,13 +22,13 @@
     #define DRAW_POLYLINE(...) (void)0
     #define DRAW_TEXT(...) (void)0
     #define DRAW_LINE(...) (void)0
+    #define PLOT_2D(...) (void)0
     
     #define COMPLEX_DRAWING(...) (void)0
     
     
 #else
 
-//FIXME cleanup includes
 #include <string>
 #include "DrawingManager.h"
 #include <vector>
@@ -149,6 +149,8 @@ namespace RTT
     
     void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
                    const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
+    
+    void PLOT_2D(const std::string& drawingName, double value, const base::Vector4d& colorRGBA);
     
     /** Removes the drawing.
      * I.e. unloades the vizkit3d plugin responsible for rendering this drawing

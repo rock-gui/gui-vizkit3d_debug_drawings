@@ -28,6 +28,8 @@ namespace vizkit3dDebugDrawings
          * If @p drawingName does not exist, it is created.
          * @param drawingName May not be empty*/
         void addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>&);
+        
+        void addPlot(const std::string& drawingName, double plotVal);
       
         /** Removes the drawing.
          * I.e. unloades the vizkit3d plugin responsible for rendering this drawing

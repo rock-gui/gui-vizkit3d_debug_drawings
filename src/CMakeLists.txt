@@ -17,6 +17,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawArrowCommand.cpp
         commands/primitives/DrawPolyLineCommand.cpp
         commands/primitives/DrawCylinderCommand.cpp
+        qcustomplot/qcustomplot.cpp
     HEADERS 
         DebugDrawing.h
         Drawing.h
@@ -36,6 +37,9 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawPolyLineCommand.h
         commands/primitives/DrawCylinderCommand.h
         commands/BoostSerializationExports.h
+        qcustomplot/qcustomplot.h
+    MOC
+        qcustomplot/qcustomplot.h
     DEPS_PKGCONFIG
         vizkit3d
         osgViz

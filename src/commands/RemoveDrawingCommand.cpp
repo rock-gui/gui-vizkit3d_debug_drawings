@@ -6,14 +6,14 @@ namespace vizkit3dDebugDrawings
 {
 void RemoveDrawingCommand::execute(DrawingManager* drawingManager) const
 {
-    drawingManager->removeDrawing(drawingName);
+    drawingManager->removeDrawing(getDrawingName());
 }
 
 RemoveDrawingCommand::RemoveDrawingCommand(const std::string& drawingName) :
-        drawingName(drawingName)
+        Command(drawingName)
 {}
 
-RemoveDrawingCommand::RemoveDrawingCommand() : drawingName("default")
+RemoveDrawingCommand::RemoveDrawingCommand() : Command("default")
 {}
 
 
@@ -24,12 +24,6 @@ RemoveDrawingCommand* RemoveDrawingCommand::clone() const
 {
     return new RemoveDrawingCommand(*this);
 }
-
-const std::string& RemoveDrawingCommand::getDrawingName() const
-{
-    return drawingName;
-}
-
 
 }
 

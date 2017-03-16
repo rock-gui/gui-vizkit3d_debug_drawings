@@ -16,7 +16,6 @@ class ClearDrawingCommand : public Command
     {
         // serialize base class information
         ar & boost::serialization::base_object<Command>(*this);
-        ar & drawingName;
     }
     
     
@@ -25,13 +24,8 @@ public:
     ClearDrawingCommand(const std::string& drawingName);   
     ClearDrawingCommand();
     virtual void execute(DrawingManager* drawingManager) const;    
-    const std::string& getDrawingName() const;
     virtual ~ClearDrawingCommand();
     
     virtual ClearDrawingCommand* clone() const;
-    
-private:
-    /**The name of the drawing that should be removed*/
-    std::string drawingName;
 };
 }

@@ -5,19 +5,15 @@
 namespace vizkit3dDebugDrawings
 {
     
-DrawCommand::DrawCommand(const std::string& drawingName) : drawingName(drawingName)
+DrawCommand::DrawCommand(const std::string& drawingName) : Command(drawingName)
 {
     
 }
-    
-const std::string& DrawCommand::getDrawingName() const
-{
-    return drawingName;
-}
+
 
 void DrawCommand::execute(DrawingManager* drawingManager) const
 {
-    drawingManager->addPrimitive(drawingName, createPrimitive());
+    drawingManager->addPrimitive(getDrawingName(), createPrimitive());
 }
 
 DrawCommand::~DrawCommand()

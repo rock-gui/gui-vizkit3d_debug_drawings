@@ -5,10 +5,10 @@
 namespace vizkit3dDebugDrawings
 {
 ClearDrawingCommand::ClearDrawingCommand(const std::string& drawingName) :
-        drawingName(drawingName)
+        Command(drawingName)
 {}
 
-ClearDrawingCommand::ClearDrawingCommand() : drawingName("default")
+ClearDrawingCommand::ClearDrawingCommand() : Command("default")
 {
 
 }
@@ -16,7 +16,7 @@ ClearDrawingCommand::ClearDrawingCommand() : drawingName("default")
 
 void ClearDrawingCommand::execute(DrawingManager* drawingManager) const
 {
-    drawingManager->clearDrawing(drawingName);
+    drawingManager->clearDrawing(getDrawingName());
 }
 
 ClearDrawingCommand::~ClearDrawingCommand()
@@ -26,12 +26,5 @@ ClearDrawingCommand* ClearDrawingCommand::clone() const
 {
     return new ClearDrawingCommand(*this);
 }
-
-const std::string& ClearDrawingCommand::getDrawingName() const
-{
-    return drawingName;
-
-}
-
 
 }

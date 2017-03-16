@@ -54,6 +54,11 @@ namespace vizkit3dDebugDrawings
         updateData(d);
     }
     
+    void DrawingManager::addPlot(const std::string& drawingName, double plotVal)
+    {
+        
+    }
+    
     void DrawingManager::removeDrawing(const std::string& drawingName)
     {
         if(drawingName.empty())

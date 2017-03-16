@@ -17,6 +17,21 @@ Command* Command::clone() const
     throw std::runtime_error("called base class clone()");
 }
 
+const std::string& Command::getDrawingName() const
+{
+    return drawingName;
+}
+
+Command::Command(const std::string& drawingName) : drawingName(drawingName)
+{
+    
+}
+Command::Command() : drawingName(drawingName)
+{
+
+}
+
+
 
 Command::~Command()
 {

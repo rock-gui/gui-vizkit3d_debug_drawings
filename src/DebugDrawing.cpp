@@ -137,6 +137,11 @@ void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& positio
     DRAW_CYLINDER(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
+void PLOT_2D(const std::string& drawingName, double value, const base::Vector4d& colorRGBA)
+{
+    
+}
+
 
 /** Removes the drawing.
  * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
