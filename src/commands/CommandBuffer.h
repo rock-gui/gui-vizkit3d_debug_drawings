@@ -5,6 +5,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/version.hpp>
 
 #if BOOST_VERSION < 105600
     #include <map>
