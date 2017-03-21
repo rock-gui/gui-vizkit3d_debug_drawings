@@ -57,7 +57,8 @@ namespace vizkit3dDebugDrawings
         updateData(d);
     }
     
-    void DrawingManager::addPlot(const std::string& drawingName, double x, double y)
+    void DrawingManager::addPlotDataPoint(const std::string& drawingName,
+                                          const base::Vector2d& dataPoint)
     {
         if(drawingName.empty())
         {
@@ -71,11 +72,7 @@ namespace vizkit3dDebugDrawings
             assert(p->plotPlugins[drawingName] != nullptr);
         }
         
-        PlotDrawing d;
-        d.name = drawingName;
-        d.x = x;
-        d.y = y;
-        
+        const PlotDrawing d{drawingName, dataPoint};        
         updateData(d);
     }
     

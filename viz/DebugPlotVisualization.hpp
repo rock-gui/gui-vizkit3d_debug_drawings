@@ -24,6 +24,8 @@ namespace vizkit3d
     
     QString getName() const;
 
+    signals:
+        void replot();//emitted when the plot needs to be redrawn
     protected:
         virtual osg::ref_ptr<osg::Node> createMainNode();
         virtual void updateMainNode(osg::Node* node);

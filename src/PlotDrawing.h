@@ -1,5 +1,5 @@
 #pragma once
-
+#include <base/Eigen.hpp>
 
 namespace vizkit3dDebugDrawings
 {
@@ -7,7 +7,6 @@ namespace vizkit3dDebugDrawings
     struct PlotDrawing
     {
         std::string name;
-        double x;
-        double y;
+        base::Vector2d data;
     };
 }

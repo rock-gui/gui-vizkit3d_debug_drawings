@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include <osg/ref_ptr>
+#include <base/Eigen.hpp>
 
 namespace vizkit3d 
 {
@@ -30,7 +31,7 @@ namespace vizkit3dDebugDrawings
          * @param drawingName May not be empty*/
         void addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>&);
         
-        void addPlot(const std::string& drawingName, double x, double y);
+        void addPlotDataPoint(const std::string& drawingName, const base::Vector2d& dataPoint);
       
         /** Removes the drawing.
          * I.e. unloades the vizkit3d plugin responsible for rendering this drawing

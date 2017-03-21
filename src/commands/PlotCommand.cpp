@@ -11,14 +11,14 @@ PlotCommand* PlotCommand::clone() const
 
 void PlotCommand::execute(DrawingManager* drawingManager) const
 {
-    drawingManager->addPlot(getDrawingName(), x, y);
+    drawingManager->addPlotDataPoint(getDrawingName(), dataPoint);
 }
 
-PlotCommand::PlotCommand(const std::string& drawingName, double x, double y):
-        Command(drawingName), x(x), y(y)
+PlotCommand::PlotCommand(const std::string& drawingName, const base::Vector2d& dataPoint):
+        Command(drawingName), dataPoint(dataPoint)
 {}
 
-PlotCommand::PlotCommand() : Command("default"), x(0), y(0)
+PlotCommand::PlotCommand() : Command("default"), dataPoint(base::Vector2d::Zero())
 {}
 
 

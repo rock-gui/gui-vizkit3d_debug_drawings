@@ -67,14 +67,20 @@ int main()
     
     DRAW_LINE("line", base::Vector3d(-1, -1, -1), base::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
-    PLOT_2D("plot_test", 10, 20);
+
     
     //NOTE dont do configuration this late in the real world.
     //     It is done here to ensure that all clone() methods are implemented correctly
     CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
 
+    double x = 0;
+    double y = 0;
+    
     while(true)
     {
+        x += 0.1;
+        y = std::sin(x);
+        PLOT_2D("sin", {x, y});
         base::Vector3d blinkPos(-3, -3, -3);
         DRAW_SPHERE("removeTest", blinkPos, 1, vizkit3dDebugDrawings::Color::air_force_blue_raf);
         DRAW_SPHERE("remvoeTest2", base::Vector3d(-4, -4, -4), 0.8, vizkit3dDebugDrawings::Color::cadmium_orange);

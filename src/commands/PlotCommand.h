@@ -2,7 +2,8 @@
 #include <string>
 #include "Command.h"
 #include <boost/serialization/base_object.hpp>
-
+#include <base/Eigen.hpp>
+#include <boost_serialization/EigenTypes.hpp>
 
 
 namespace vizkit3dDebugDrawings
@@ -18,12 +19,11 @@ class PlotCommand : public Command
     {
         // serialize base class information
         ar & boost::serialization::base_object<Command>(*this);
-        ar & x;
-        ar & y;
+        ar & dataPoint;
     }
     
 public:
-    PlotCommand(const std::string& drawingName, double x, double y);
+    PlotCommand(const std::string& drawingName, const base::Vector2d& dataPoint);
     PlotCommand();
     
     virtual void execute(DrawingManager* drawingManager) const;
@@ -33,7 +33,6 @@ public:
     virtual ~PlotCommand();
     
 private:
-    double x;
-    double y;
+    base::Vector2d dataPoint;
 };
 }

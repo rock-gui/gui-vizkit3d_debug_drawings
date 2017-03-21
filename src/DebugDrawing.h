@@ -151,7 +151,7 @@ namespace RTT
                    const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
     
     //FIXME use eigen vector as parameter
-    void PLOT_2D(const std::string& drawingName, double x, double y);
+    void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint);
     
     /** Removes the drawing.
      * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
