@@ -20,12 +20,29 @@ DebugPlotVisualization::DebugPlotVisualization()
 {
     p->plot = new QCustomPlot();
     p->plot->addGraph();
+//     p->plot->setInteraction(QCP::iRangeDrag, true);
+//     p->plot->setInteraction(QCP::iRangeZoom, true);
+    
+    p->plot->setContextMenuPolicy(Qt::CustomContextMenu);
+    
     p->dock = new QDockWidget("default name");
     p->dock->setWidget(p->plot);
     
     connect(this, SIGNAL(replot()), p->plot, SLOT(replot()));
+    connect(p->plot, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequest(QPoint)));
+    
     
 }
+
+void DebugPlotVisualization::contextMenuRequest(QPoint pos)
+{
+  QMenu *menu = new QMenu(p->plot);
+  menu->setAttribute(Qt::WA_DeleteOnClose);
+  menu->addAction("autoScroll", this, SLOT(testSlot()));//->setData((int)(Qt::AlignTop|Qt::AlignLeft));
+   
+  menu->popup(p->plot->mapToGlobal(pos));
+}
+
 
 DebugPlotVisualization::~DebugPlotVisualization()
 {
@@ -45,11 +62,16 @@ void DebugPlotVisualization::updateMainNode(osg::Node* node)
     {
         std::cout << p->data.front().transpose() << "\n";
         p->plot->graph(0)->addData(p->data.front().x(), p->data.front().y());
+        p->plot->xAxis->setRange(p->data.front().x() - 6, p->data.front().x() + 1);
         p->data.pop_front();
     }
     
+    
     if(plotNeedsRedraw)
+    {
+        
         emit replot();//need to do this in gui thread, otherwise recursive redraw occurs
+    }
 }
 
 

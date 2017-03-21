@@ -24,6 +24,10 @@ namespace vizkit3d
     
     QString getName() const;
 
+    public slots:
+        void contextMenuRequest(QPoint);
+        void testSlot();
+    
     signals:
         void replot();//emitted when the plot needs to be redrawn
     protected:
