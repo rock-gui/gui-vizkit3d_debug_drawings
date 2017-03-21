@@ -1,5 +1,4 @@
-#ifndef vizkit3dDebugDrawings_DrawingVisualization_H
-#define vizkit3dDebugDrawings_DrawingVisualization_H
+#pragma once
 
 #include <boost/noncopyable.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
@@ -34,4 +33,3 @@ namespace vizkit3d
         Data* p;
     };
 }
-#endif

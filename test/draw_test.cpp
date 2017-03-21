@@ -67,6 +67,8 @@ int main()
     
     DRAW_LINE("line", base::Vector3d(-1, -1, -1), base::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
+    PLOT_2D("plot_test", 10, 20);
+    
     //NOTE dont do configuration this late in the real world.
     //     It is done here to ensure that all clone() methods are implemented correctly
     CONFIGURE_DEBUG_DRAWINGS_STANDALONE();

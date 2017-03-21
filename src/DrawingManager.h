@@ -16,6 +16,7 @@ namespace osgviz
 namespace vizkit3dDebugDrawings
 {   
     class Drawing;
+    class PlotDrawing;
     
     class DrawingManager
     {
@@ -29,7 +30,7 @@ namespace vizkit3dDebugDrawings
          * @param drawingName May not be empty*/
         void addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>&);
         
-        void addPlot(const std::string& drawingName, double plotVal);
+        void addPlot(const std::string& drawingName, double x, double y);
       
         /** Removes the drawing.
          * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
@@ -57,8 +58,11 @@ namespace vizkit3dDebugDrawings
          * @note plugin needs to exist before.*/
         void updateData(const Drawing& d) const;
         
+        //FIXME comment
+        void updateData(const PlotDrawing& d) const;
+        
         /**thread safe invoke vizkit3d to load a plugin */
-        vizkit3d::VizPluginBase* loadPlugin();
+        vizkit3d::VizPluginBase* loadPlugin(const std::string& pluginName);
         
         struct PImpl;
         std::unique_ptr<PImpl> p;

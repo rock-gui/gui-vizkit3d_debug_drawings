@@ -1,5 +1,6 @@
 #include "DrawingManager.h"
 #include "Drawing.h"
+#include "PlotDrawing.h"
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
@@ -14,7 +15,9 @@ namespace vizkit3dDebugDrawings
     {
         /**Current drawings by name */
         std::unordered_map<std::string, Drawing> drawings;
-        std::unordered_map<std::string, QObject*> plugins;
+        std::unordered_map<std::string, QObject*> drawingPlugins;
+        std::unordered_map<std::string, QObject*> plotPlugins;
+        
         /**Gui thread*/
         QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread;
         vizkit3d::Vizkit3DWidget* widget = nullptr;
@@ -38,50 +41,76 @@ namespace vizkit3dDebugDrawings
     {
         if(drawingName.empty())
         {
-            throw new std::runtime_error("drawingName is empty");
+            throw  std::runtime_error("drawingName is empty");
         }
         Drawing& d = p->drawings[drawingName];
         d.addPrimitive(primitive);
         d.setName(drawingName); //d might be a new Drawing
         
-        if(p->plugins.find(drawingName) == p->plugins.end())
+        if(p->drawingPlugins.find(drawingName) == p->drawingPlugins.end())
         {
             //new drawing, need new plugin
-            p->plugins[drawingName] = loadPlugin();
-            assert(p->plugins[drawingName] != nullptr);
+            p->drawingPlugins[drawingName] = loadPlugin("DrawingVisualization");
+            assert(p->drawingPlugins[drawingName] != nullptr);
         }
         
         updateData(d);
     }
     
-    void DrawingManager::addPlot(const std::string& drawingName, double plotVal)
+    void DrawingManager::addPlot(const std::string& drawingName, double x, double y)
     {
+        if(drawingName.empty())
+        {
+            throw  std::runtime_error("drawingName is empty");
+        }
         
+        if(p->plotPlugins.find(drawingName) == p->plotPlugins.end())
+        {
+            //new drawing, need new plugin
+            p->plotPlugins[drawingName] = loadPlugin("DebugPlotVisualization");
+            assert(p->plotPlugins[drawingName] != nullptr);
+        }
+        
+        PlotDrawing d;
+        d.name = drawingName;
+        d.x = x;
+        d.y = y;
+        
+        updateData(d);
     }
     
     void DrawingManager::removeDrawing(const std::string& drawingName)
     {
         if(drawingName.empty())
         {
-            throw new std::runtime_error("drawingName is empty");
+            throw  std::runtime_error("drawingName is empty");
         }
         
         p->drawings.erase(drawingName);
         
-        if(p->plugins.find(drawingName) != p->plugins.end())
+        if(p->drawingPlugins.find(drawingName) != p->drawingPlugins.end())
         {
             //async invoke slot to avoid any threading issues with the gui thread
             QMetaObject::invokeMethod(p->widget, "removePlugin", Qt::QueuedConnection,
-                                  Q_ARG(QObject*, p->plugins[drawingName]));
-            p->plugins.erase(drawingName);
+                                  Q_ARG(QObject*, p->drawingPlugins[drawingName]));
+            p->drawingPlugins.erase(drawingName);
         }
+        
+        //FIXME duplicate code?!
+        if(p->plotPlugins.find(drawingName) != p->plotPlugins.end())
+        {
+            QMetaObject::invokeMethod(p->widget, "removePlugin", Qt::QueuedConnection,
+                                  Q_ARG(QObject*, p->plotPlugins[drawingName]));
+            p->plotPlugins.erase(drawingName);
+        }
+        
     }
     
     void DrawingManager::clearDrawing(const std::string& drawingName)
     {
         if(drawingName.empty())
         {
-            throw new std::runtime_error("drawingName is empty");
+            throw std::runtime_error("drawingName is empty");
         }
         
         if(p->drawings.find(drawingName) != p->drawings.end())
@@ -89,6 +118,9 @@ namespace vizkit3dDebugDrawings
             p->drawings[drawingName].clear();
             updateData(p->drawings[drawingName]);
         }
+        
+        //FIXME how to clear plot?
+        
     }
     
     void DrawingManager::clearAllDrawings()
@@ -97,23 +129,37 @@ namespace vizkit3dDebugDrawings
         {
             drawingKeyValuePair.second.clear();
         }
+        
+        //FIXME how to clear plots?
     }   
     
     void DrawingManager::updateData(const Drawing& d) const
     {
+        QObject* plugin = p->drawingPlugins[d.getName()];
+        
         //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
-        QMetaObject::invokeMethod(p->plugins[d.getName()], "updateData", Qt::DirectConnection,
+        QMetaObject::invokeMethod(plugin, "updateData", Qt::DirectConnection,
                                   Q_ARG(vizkit3dDebugDrawings::Drawing, d));
     }
     
-    vizkit3d::VizPluginBase* DrawingManager::loadPlugin()
+    void DrawingManager::updateData(const PlotDrawing& d) const
+    {
+        QObject* plugin = p->plotPlugins[d.name];
+        
+        //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
+        QMetaObject::invokeMethod(plugin, "updateData", Qt::DirectConnection,
+                                  Q_ARG(vizkit3dDebugDrawings::PlotDrawing, d));
+    }
+
+    
+    vizkit3d::VizPluginBase* DrawingManager::loadPlugin(const std::string& pluginName)
     {
         //use queded connection if we are not in gui thread
         const Qt::ConnectionType conType = QThread::currentThread() == getVizkit3DWidget()->thread()? Qt::DirectConnection : Qt::BlockingQueuedConnection; 
         QObject* plugin = nullptr;
         QMetaObject::invokeMethod(getVizkit3DWidget(), "loadPlugin", conType,
                                   Q_RETURN_ARG(QObject*, plugin),
-                                  Q_ARG(QString, ""), Q_ARG(QString, "DrawingVisualization"));
+                                  Q_ARG(QString, ""), Q_ARG(QString, QString::fromStdString(pluginName)));
         return dynamic_cast<vizkit3d::VizPluginBase*>(plugin);
     }
 }

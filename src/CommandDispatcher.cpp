@@ -4,6 +4,7 @@
 #include "commands/CommandBuffer.h"
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
+#include <vizkit3d/QVizkitMainWindow.hpp>
 #include <memory>
 #include <thread>
 
@@ -15,7 +16,7 @@ struct CommandDispatcher::Impl
 {
     bool configured = false;
     RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port = nullptr; //for port mode
-    QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread; //for standalone mode
+    QtThreadedWidget<vizkit3d::QVizkitMainWindow> thread; //for standalone mode
     std::unique_ptr<DrawingManager> drawingManager; //need to use pointer due to lazy initiaization
     std::deque<std::unique_ptr<vizkit3dDebugDrawings::Command>> beforeConfigCommands; //stores all commands send before config, need to store on heap to store polymorphic copies
     const size_t maxBeforeConfigCommands = 100000; //maximum size of beforeConfigCommands to avoid memory leaks
@@ -94,7 +95,7 @@ void CommandDispatcher::configureStandalone()
 {
     checkAndSetConfigured();
     p->thread.start();
-    p->drawingManager.reset(new DrawingManager(p->thread.getWidget()));
+    p->drawingManager.reset(new DrawingManager(p->thread.getWidget()->getVizkitWidget()));
     dispatchBufferedCommands();
 }
 

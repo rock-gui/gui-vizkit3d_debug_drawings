@@ -8,6 +8,7 @@
 #include "commands/primitives/DrawCylinderCommand.h"
 #include "commands/RemoveDrawingCommand.h"
 #include "commands/ClearDrawingCommand.h"
+#include "commands/PlotCommand.h"
 
 #include "CommandDispatcher.h"
 #include <vizkit3d/Vizkit3DWidget.hpp>
@@ -137,9 +138,11 @@ void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& positio
     DRAW_CYLINDER(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
-void PLOT_2D(const std::string& drawingName, double value, const base::Vector4d& colorRGBA)
+void PLOT_2D(const std::string& drawingName, double x, double y)
 {
-    
+    std::cout << "PLOT 2D\n";
+    PlotCommand cmd(drawingName, x, y);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
 }
 
 

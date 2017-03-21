@@ -10,6 +10,7 @@ rock_library(vizkit3d_debug_drawings
         commands/RemoveDrawingCommand.cpp
         commands/ClearDrawingCommand.cpp
         commands/CommandBuffer.cpp
+        commands/PlotCommand.cpp
         commands/primitives/DrawSphereCommand.cpp
         commands/primitives/DrawTextCommand.cpp
         commands/primitives/DrawRingCommand.cpp
@@ -17,7 +18,6 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawArrowCommand.cpp
         commands/primitives/DrawPolyLineCommand.cpp
         commands/primitives/DrawCylinderCommand.cpp
-        qcustomplot/qcustomplot.cpp
     HEADERS 
         DebugDrawing.h
         Drawing.h
@@ -29,6 +29,7 @@ rock_library(vizkit3d_debug_drawings
         commands/RemoveDrawingCommand.h
         commands/ClearDrawingCommand.h
         commands/CommandBuffer.h
+        commands/PlotCommand.h
         commands/primitives/DrawSphereCommand.h
         commands/primitives/DrawTextCommand.h
         commands/primitives/DrawRingCommand.h
@@ -37,9 +38,6 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawPolyLineCommand.h
         commands/primitives/DrawCylinderCommand.h
         commands/BoostSerializationExports.h
-        qcustomplot/qcustomplot.h
-    MOC
-        qcustomplot/qcustomplot.h
     DEPS_PKGCONFIG
         vizkit3d
         osgViz
