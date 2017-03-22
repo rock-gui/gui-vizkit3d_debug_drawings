@@ -26,10 +26,10 @@ namespace vizkit3d
 
     public slots:
         void contextMenuRequest(QPoint);
+        void autoScrollChecked();
         void testSlot();
     
-    signals:
-        void replot();//emitted when the plot needs to be redrawn
+
     protected:
         virtual osg::ref_ptr<osg::Node> createMainNode();
         virtual void updateMainNode(osg::Node* node);
@@ -37,6 +37,9 @@ namespace vizkit3d
         virtual void createDockWidgets();
         
     private:
+        
+        void setAutoscroll(bool enable);
+        
         struct Data;
         Data* p;
     };

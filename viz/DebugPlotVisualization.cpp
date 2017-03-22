@@ -4,6 +4,7 @@
 #include "qcustomplot/qcustomplot.h"
 #include <deque>
 #include <base/Eigen.hpp>
+#include <QAction>
 
 using namespace vizkit3d;
 
@@ -12,6 +13,7 @@ struct DebugPlotVisualization::Data {
     QDockWidget* dock;
     QCustomPlot* plot;
     std::string plotName;
+    QAction* autoScrollAction;
 };
 
 
@@ -20,22 +22,47 @@ DebugPlotVisualization::DebugPlotVisualization()
 {
     p->plot = new QCustomPlot();
     p->plot->addGraph();
-//     p->plot->setInteraction(QCP::iRangeDrag, true);
-//     p->plot->setInteraction(QCP::iRangeZoom, true);
+
     
     p->plot->setContextMenuPolicy(Qt::CustomContextMenu);
     
     p->dock = new QDockWidget("default name");
     p->dock->setWidget(p->plot);
     
+    
+    p->autoScrollAction = new QAction("auto scroll", p->plot);
+    p->autoScrollAction->setCheckable(true);
+    p->autoScrollAction->setChecked(true);
+    p->autoScrollAction->setToolTip("Use mouse to zoom and drag if auto scroll is disabled");
+    connect(p->autoScrollAction, SIGNAL(triggered()), this, SLOT(autoScrollChecked()));
+    
     connect(p->plot, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequest(QPoint)));
+}
+
+void DebugPlotVisualization::autoScrollChecked()
+{
+    setAutoscroll(p->autoScrollAction->isChecked());
+}
+
+void DebugPlotVisualization::setAutoscroll(bool enable)
+{
+    if(enable)
+    {
+        p->plot->setInteraction(QCP::iRangeDrag, false);
+        p->plot->setInteraction(QCP::iRangeZoom, false);
+    }
+    else
+    {
+        p->plot->setInteraction(QCP::iRangeDrag, true);
+        p->plot->setInteraction(QCP::iRangeZoom, true);
+    }
 }
 
 void DebugPlotVisualization::contextMenuRequest(QPoint pos)
 {
   QMenu *menu = new QMenu(p->plot);
-  menu->setAttribute(Qt::WA_DeleteOnClose);
-  menu->addAction("autoScroll", this, SLOT(testSlot()));//->setData((int)(Qt::AlignTop|Qt::AlignLeft));
+//   menu->setAttribute(Qt::WA_DeleteOnClose);
+  menu->addAction(p->autoScrollAction);
    
   menu->popup(p->plot->mapToGlobal(pos));
 }
@@ -57,9 +84,16 @@ void DebugPlotVisualization::updateMainNode(osg::Node* node)
     const bool plotNeedsRedraw = !p->data.empty();
     while(!p->data.empty())
     {
-        std::cout << p->data.front().transpose() << "\n";
         p->plot->graph(0)->addData(p->data.front().x(), p->data.front().y());
-        p->plot->xAxis->setRange(p->data.front().x() - 6, p->data.front().x() + 1);
+        
+        //if auto scroll
+        if(p->autoScrollAction->isChecked())
+        {
+            //FIXME find better way to rescale y
+            p->plot->rescaleAxes();//to scale y axis
+            p->plot->xAxis->setRange(p->data.front().x() - 6, p->data.front().x() + 1);
+        }
+        
         p->data.pop_front(); 
     }
     
