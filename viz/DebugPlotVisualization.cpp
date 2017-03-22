@@ -28,10 +28,7 @@ DebugPlotVisualization::DebugPlotVisualization()
     p->dock = new QDockWidget("default name");
     p->dock->setWidget(p->plot);
     
-    connect(this, SIGNAL(replot()), p->plot, SLOT(replot()));
     connect(p->plot, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequest(QPoint)));
-    
-    
 }
 
 void DebugPlotVisualization::contextMenuRequest(QPoint pos)
@@ -63,15 +60,13 @@ void DebugPlotVisualization::updateMainNode(osg::Node* node)
         std::cout << p->data.front().transpose() << "\n";
         p->plot->graph(0)->addData(p->data.front().x(), p->data.front().y());
         p->plot->xAxis->setRange(p->data.front().x() - 6, p->data.front().x() + 1);
-        p->data.pop_front();
+        p->data.pop_front(); 
     }
     
-    
-    if(plotNeedsRedraw)
-    {
-        
-        emit replot();//need to do this in gui thread, otherwise recursive redraw occurs
-    }
+    //to avoid calling repaint recursivly (because updateMainNode might not
+    //be running in the qt main thread.
+    //For some reason this works while emitting a signal does not, no idea why
+    QMetaObject::invokeMethod(p->plot, "replot", Qt::QueuedConnection);
 }
 
 
