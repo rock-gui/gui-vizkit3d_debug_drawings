@@ -14,6 +14,8 @@ struct DebugPlotVisualization::Data {
     QCustomPlot* plot;
     std::string plotName;
     QAction* autoScrollAction;
+    const size_t maxSamples = 2000; //maximum number of samples that is displayed
+    const size_t removeSamples = 200; //number of samples that is removd if maxSamples is reached
 };
 
 
@@ -85,19 +87,26 @@ void DebugPlotVisualization::updateMainNode(osg::Node* node)
     while(!p->data.empty())
     {
         p->plot->graph(0)->addData(p->data.front().x(), p->data.front().y());
+        if(p->plot->graph(0)->data()->size() > p->maxSamples)
+        {
+            //removing data is expensive, therefore we remove bigger batches at once
+            const double removeKey = (p->plot->graph(0)->data()->begin() + p->removeSamples)->sortKey();
+            p->plot->graph(0)->data()->removeBefore(removeKey);
+        }
         
         //if auto scroll
         if(p->autoScrollAction->isChecked())
         {
-            //FIXME find better way to rescale y
-            p->plot->rescaleAxes();//to scale y axis
             p->plot->xAxis->setRange(p->data.front().x() - 6, p->data.front().x() + 1);
+            bool foundRange = false;
+            const QCPRange yRange = p->plot->graph(0)->getValueRange(foundRange,  QCP::sdBoth, p->plot->xAxis->range());
+            if(foundRange)
+                p->plot->yAxis->setRange(yRange);
         }
-        
         p->data.pop_front(); 
     }
     
-    //to avoid calling repaint recursivly (because updateMainNode might not
+    //invoke to avoid calling repaint recursivly (because updateMainNode might not
     //be running in the qt main thread.
     //For some reason this works while emitting a signal does not, no idea why
     QMetaObject::invokeMethod(p->plot, "replot", Qt::QueuedConnection);
