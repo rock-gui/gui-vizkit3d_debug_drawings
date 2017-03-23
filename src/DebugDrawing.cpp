@@ -9,6 +9,7 @@
 #include "commands/RemoveDrawingCommand.h"
 #include "commands/ClearDrawingCommand.h"
 #include "commands/PlotCommand.h"
+#include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
 
 #include "CommandDispatcher.h"
 #include <vizkit3d/Vizkit3DWidget.hpp>

@@ -74,7 +74,6 @@ int main()
     CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
 
     double x = 0;
-    double y = 0; 
     
     while(true)
     {

@@ -35,7 +35,7 @@
 #include <base/Eigen.hpp>
 #include "DebugDrawingColors.h"
 #include <boost/shared_ptr.hpp>
-#include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
+
 
 namespace vizkit3d
 {
@@ -46,6 +46,11 @@ namespace RTT
 {
     template <typename T>
     class OutputPort;
+}
+
+namespace vizkit3dDebugDrawings
+{
+    class CommandBuffer;
 }
 
 /**
