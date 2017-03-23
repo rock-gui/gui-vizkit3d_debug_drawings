@@ -5,17 +5,20 @@
 #include <deque>
 #include <base/Eigen.hpp>
 #include <QAction>
+#include <mutex>
 
 using namespace vizkit3d;
 
 struct DebugPlotVisualization::Data {
     std::deque<base::Vector2d> data;
+    std::mutex dataMutex;
     QDockWidget* dock;
     QCustomPlot* plot;
     std::string plotName;
     QAction* autoScrollAction;
-    const size_t maxSamples = 2000; //maximum number of samples that is displayed
-    const size_t removeSamples = 200; //number of samples that is removd if maxSamples is reached
+    QTimer timer;
+    const size_t maxSamples = 20000; //maximum number of samples that is displayed
+    const size_t removeSamples = 2000; //number of samples that is removd if maxSamples is reached
 };
 
 
@@ -37,9 +40,11 @@ DebugPlotVisualization::DebugPlotVisualization()
     p->autoScrollAction->setChecked(true);
     p->autoScrollAction->setToolTip("Use mouse to zoom and drag if auto scroll is disabled");
     connect(p->autoScrollAction, SIGNAL(triggered()), this, SLOT(autoScrollChecked()));
-    
     connect(p->plot, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequest(QPoint)));
-}
+    connect(&p->timer, SIGNAL(timeout()), this, SLOT(updateUi()));
+    
+    p->timer.start(250);
+} 
 
 void DebugPlotVisualization::autoScrollChecked()
 {
@@ -72,7 +77,7 @@ void DebugPlotVisualization::contextMenuRequest(QPoint pos)
 
 DebugPlotVisualization::~DebugPlotVisualization()
 {
-    delete p;
+    //empty dtor needs to be defined for unique_ptr pimpl idiom to compile
 }
 
 osg::ref_ptr<osg::Node> DebugPlotVisualization::createMainNode()
@@ -80,13 +85,19 @@ osg::ref_ptr<osg::Node> DebugPlotVisualization::createMainNode()
     return new osg::Group();
 }
 
-void DebugPlotVisualization::updateMainNode(osg::Node* node)
+void DebugPlotVisualization::updateUi()
 {
-    p->dock->setWindowTitle(QString(p->plotName.c_str()));
     const bool plotNeedsRedraw = !p->data.empty();
+    
     while(!p->data.empty())
     {
-        p->plot->graph(0)->addData(p->data.front().x(), p->data.front().y());
+        base::Vector2d dataPoint;
+        {
+            std::lock_guard<std::mutex> lock(p->dataMutex);
+            dataPoint = p->data.front();
+            p->data.pop_front();
+        }
+        p->plot->graph(0)->addData(dataPoint.x(), dataPoint.y());
         if(p->plot->graph(0)->data()->size() > p->maxSamples)
         {
             //removing data is expensive, therefore we remove bigger batches at once
@@ -97,25 +108,35 @@ void DebugPlotVisualization::updateMainNode(osg::Node* node)
         //if auto scroll
         if(p->autoScrollAction->isChecked())
         {
-            p->plot->xAxis->setRange(p->data.front().x() - 6, p->data.front().x() + 1);
+            p->plot->xAxis->setRange(dataPoint.x() - 6, dataPoint.x() + 1);
             bool foundRange = false;
             const QCPRange yRange = p->plot->graph(0)->getValueRange(foundRange,  QCP::sdBoth, p->plot->xAxis->range());
             if(foundRange)
                 p->plot->yAxis->setRange(yRange);
         }
-        p->data.pop_front(); 
     }
     
-    //invoke to avoid calling repaint recursivly (because updateMainNode might not
-    //be running in the qt main thread.
-    //For some reason this works while emitting a signal does not, no idea why
-    QMetaObject::invokeMethod(p->plot, "replot", Qt::QueuedConnection);
+    if(plotNeedsRedraw)
+    {
+        //invoke to avoid calling repaint from a timer thread
+        //For some reason this works while emitting a signal does not, no idea why
+        QMetaObject::invokeMethod(p->plot, "replot", Qt::QueuedConnection);
+    }
+    
+}
+
+void DebugPlotVisualization::updateMainNode(osg::Node* node)
+{
+    p->dock->setWindowTitle(QString(p->plotName.c_str()));
 }
 
 
 void DebugPlotVisualization::updateDataIntern(vizkit3dDebugDrawings::PlotDrawing const& value)
 {
-    p->data.push_back(value.data);
+    {
+        std::lock_guard<std::mutex> lock(p->dataMutex);
+        p->data.push_back(value.data);
+    }
     
     if(p->plotName != value.name)
     {

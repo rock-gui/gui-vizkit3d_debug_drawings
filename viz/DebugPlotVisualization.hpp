@@ -4,6 +4,7 @@
 #include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <osg/Geode>
 #include <vizkit3d_debug_drawings/PlotDrawing.h>
+#include<memory>
 
 
 namespace vizkit3d
@@ -24,11 +25,10 @@ namespace vizkit3d
     
     QString getName() const;
 
-    public slots:
+    private slots:
         void contextMenuRequest(QPoint);
         void autoScrollChecked();
-        void testSlot();
-    
+        void updateUi();//refreshes the ui
 
     protected:
         virtual osg::ref_ptr<osg::Node> createMainNode();
@@ -41,6 +41,6 @@ namespace vizkit3d
         void setAutoscroll(bool enable);
         
         struct Data;
-        Data* p;
+        std::unique_ptr<Data> p;
     };
 }
