@@ -30,7 +30,6 @@
 #else
 
 #include <string>
-#include "DrawingManager.h"
 #include <vector>
 #include <base/Eigen.hpp>
 #include "DebugDrawingColors.h"
@@ -155,7 +154,6 @@ namespace vizkit3dDebugDrawings
     void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
                    const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
     
-    //FIXME use eigen vector as parameter
     void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint);
     
     /** Removes the drawing.
