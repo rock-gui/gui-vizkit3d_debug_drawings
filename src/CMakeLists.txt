@@ -24,6 +24,7 @@ rock_library(vizkit3d_debug_drawings
         DrawingManager.h
         DebugDrawingColors.h
         CommandDispatcher.h
+        PlotDataPoint.h
         commands/DrawCommand.h
         commands/Command.h
         commands/RemoveDrawingCommand.h

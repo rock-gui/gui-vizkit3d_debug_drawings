@@ -17,7 +17,7 @@ namespace osgviz
 namespace vizkit3dDebugDrawings
 {   
     class Drawing;
-    class PlotDrawing;
+    class PlotDataPoint;
     
     class DrawingManager
     {
@@ -60,7 +60,7 @@ namespace vizkit3dDebugDrawings
         void updateData(const Drawing& d) const;
         
         //FIXME comment
-        void updateData(const PlotDrawing& d) const;
+        void updateData(const PlotDataPoint& d) const;
         
         /**thread safe invoke vizkit3d to load a plugin */
         vizkit3d::VizPluginBase* loadPlugin(const std::string& pluginName);

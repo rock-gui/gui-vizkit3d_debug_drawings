@@ -27,18 +27,16 @@ DebugPlotVisualization::DebugPlotVisualization()
 {
     p->plot = new QCustomPlot();
     p->plot->addGraph();
-
-    
     p->plot->setContextMenuPolicy(Qt::CustomContextMenu);
     
     p->dock = new QDockWidget("default name");
     p->dock->setWidget(p->plot);
     
-    
     p->autoScrollAction = new QAction("auto scroll", p->plot);
     p->autoScrollAction->setCheckable(true);
     p->autoScrollAction->setChecked(true);
     p->autoScrollAction->setToolTip("Use mouse to zoom and drag if auto scroll is disabled");
+    
     connect(p->autoScrollAction, SIGNAL(triggered()), this, SLOT(autoScrollChecked()));
     connect(p->plot, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequest(QPoint)));
     connect(&p->timer, SIGNAL(timeout()), this, SLOT(updateUi()));
@@ -77,7 +75,11 @@ void DebugPlotVisualization::contextMenuRequest(QPoint pos)
 
 DebugPlotVisualization::~DebugPlotVisualization()
 {
-    //empty dtor needs to be defined for unique_ptr pimpl idiom to compile
+    //dtor needs to be defined for unique_ptr pimpl idiom to compile
+    
+    //if dock is not managed by qt, delete it manually
+    if(p->dock->parent() == nullptr)
+        delete p->dock;
 }
 
 osg::ref_ptr<osg::Node> DebugPlotVisualization::createMainNode()
@@ -131,7 +133,7 @@ void DebugPlotVisualization::updateMainNode(osg::Node* node)
 }
 
 
-void DebugPlotVisualization::updateDataIntern(vizkit3dDebugDrawings::PlotDrawing const& value)
+void DebugPlotVisualization::updateDataIntern(vizkit3dDebugDrawings::PlotDataPoint const& value)
 {
     {
         std::lock_guard<std::mutex> lock(p->dataMutex);

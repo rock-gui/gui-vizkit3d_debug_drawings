@@ -3,10 +3,10 @@
 
 namespace vizkit3dDebugDrawings
 {
-    /**A named collection of drawables */
-    struct PlotDrawing
+    
+    struct PlotDataPoint
     {
-        std::string name;
+        std::string name; //name of the plot
         base::Vector2d data;
     };
 }

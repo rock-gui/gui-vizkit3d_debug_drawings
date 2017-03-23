@@ -1,6 +1,6 @@
 #include "DrawingManager.h"
 #include "Drawing.h"
-#include "PlotDrawing.h"
+#include "PlotDataPoint.h"
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
@@ -72,7 +72,7 @@ namespace vizkit3dDebugDrawings
             assert(p->plotPlugins[drawingName] != nullptr);
         }
         
-        const PlotDrawing d{drawingName, dataPoint};        
+        const PlotDataPoint d{drawingName, dataPoint};        
         updateData(d);
     }
     
@@ -139,13 +139,13 @@ namespace vizkit3dDebugDrawings
                                   Q_ARG(vizkit3dDebugDrawings::Drawing, d));
     }
     
-    void DrawingManager::updateData(const PlotDrawing& d) const
+    void DrawingManager::updateData(const PlotDataPoint& d) const
     {
         QObject* plugin = p->plotPlugins[d.name];
         
         //NOTE DirectConnection should be fine because updateData is designed to be called from a non-gui thread
         QMetaObject::invokeMethod(plugin, "updateData", Qt::DirectConnection,
-                                  Q_ARG(vizkit3dDebugDrawings::PlotDrawing, d));
+                                  Q_ARG(vizkit3dDebugDrawings::PlotDataPoint, d));
     }
 
     
