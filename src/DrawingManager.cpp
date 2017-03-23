@@ -1,7 +1,6 @@
 #include "DrawingManager.h"
 #include "Drawing.h"
 #include "PlotDataPoint.h"
-#include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <unordered_map>
@@ -11,15 +10,12 @@
 namespace vizkit3dDebugDrawings
 {
     
-    struct DrawingManager::PImpl
+    struct DrawingManager::PImpl 
     {
         /**Current drawings by name */
         std::unordered_map<std::string, Drawing> drawings;
         std::unordered_map<std::string, QObject*> drawingPlugins;
         std::unordered_map<std::string, QObject*> plotPlugins;
-        
-        /**Gui thread*/
-        QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread;
         vizkit3d::Vizkit3DWidget* widget = nullptr;
     };
     
