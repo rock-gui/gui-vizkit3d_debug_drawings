@@ -5,8 +5,8 @@ includedir=${prefix}/include
 
 Name: vizkit3dDebugDrawings-viz
 Description: vizKit plugin for the vizkit3dDebugDrawings library
-Requires: vizkit3dDebugDrawings @PKGCONFIG_DEPS@
+Requires: vizkit3d_debug_drawings @PKGCONFIG_DEPS@
 Version: @PROJECT_VERSION@
-Libs: -L${libdir} -lvizkit3dDebugDrawings-viz
+Libs: -L${libdir} -lvizkit3d_debug_drawings-viz
 Cflags: -I${includedir}
 
