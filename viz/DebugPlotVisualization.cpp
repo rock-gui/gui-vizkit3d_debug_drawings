@@ -1,7 +1,7 @@
 #include <iostream>
 #include "DebugPlotVisualization.hpp"
 #include <QLabel>
-#include "qcustomplot/qcustomplot.h"
+#include <rock_widget_collection/qcustomplot.h>
 #include <deque>
 #include <base/Eigen.hpp>
 #include <QAction>
@@ -51,15 +51,15 @@ void DebugPlotVisualization::autoScrollChecked()
 
 void DebugPlotVisualization::setAutoscroll(bool enable)
 {
-    if(enable)
+    if(!enable)
     {
-        p->plot->setInteraction(QCP::iRangeDrag, false);
-        p->plot->setInteraction(QCP::iRangeZoom, false);
+        p->plot->setRangeDrag(Qt::Horizontal | Qt::Vertical);
+        p->plot->setRangeZoom(Qt::Horizontal | Qt::Vertical);
     }
     else
     {
-        p->plot->setInteraction(QCP::iRangeDrag, true);
-        p->plot->setInteraction(QCP::iRangeZoom, true);
+        p->plot->setRangeDrag(0);
+        p->plot->setRangeZoom(0);
     }
 }
 
@@ -99,22 +99,21 @@ void DebugPlotVisualization::updateUi()
             dataPoint = p->data.front();
             p->data.pop_front();
         }
+        
         p->plot->graph(0)->addData(dataPoint.x(), dataPoint.y());
+        
         if(p->plot->graph(0)->data()->size() > p->maxSamples)
         {
             //removing data is expensive, therefore we remove bigger batches at once
-            const double removeKey = (p->plot->graph(0)->data()->begin() + p->removeSamples)->sortKey();
-            p->plot->graph(0)->data()->removeBefore(removeKey);
+            const double removeKey = (p->plot->graph(0)->data()->begin() + p->removeSamples)->key;
+            p->plot->graph(0)->removeDataBefore(removeKey);
         }
         
         //if auto scroll
         if(p->autoScrollAction->isChecked())
         {
             p->plot->xAxis->setRange(dataPoint.x() - 6, dataPoint.x() + 1);
-            bool foundRange = false;
-            const QCPRange yRange = p->plot->graph(0)->getValueRange(foundRange,  QCP::sdBoth, p->plot->xAxis->range());
-            if(foundRange)
-                p->plot->yAxis->setRange(yRange);
+            p->plot->graph(0)->rescaleValueAxis();
         }
     }
     

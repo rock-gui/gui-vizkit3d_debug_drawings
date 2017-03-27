@@ -10,15 +10,14 @@ rock_vizkit_plugin(vizkit3dDebugDrawings-viz
 
 rock_vizkit_plugin(vizkit3dDebugDrawingsPlot-viz
     DebugPlotVisualization.cpp
-    qcustomplot/qcustomplot.cpp
     DEPS
         vizkit3d_debug_drawings
+    DEPS_PKGCONFIG
+        rock_widget_collection
     MOC
         DebugPlotVisualization.hpp
-        qcustomplot/qcustomplot.h
     HEADERS
         DebugPlotVisualization.hpp
-        qcustomplot/qcustomplot.h
 )
   
         
