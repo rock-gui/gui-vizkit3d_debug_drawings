@@ -23,6 +23,7 @@
     #define DRAW_TEXT(...) (void)0
     #define DRAW_LINE(...) (void)0
     #define PLOT_2D(...) (void)0
+    #define CLEAR_PLOT(...) (void)0
     
     #define COMPLEX_DRAWING(...) (void)0
     
@@ -154,7 +155,9 @@ namespace vizkit3dDebugDrawings
     void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
                    const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
     
-    void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint);
+    void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
+    
+    void CLEAR_PLOT(const std::string& plotName);
     
     /** Removes the drawing.
      * I.e. unloades the vizkit3d plugin responsible for rendering this drawing

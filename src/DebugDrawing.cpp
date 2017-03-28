@@ -9,6 +9,7 @@
 #include "commands/RemoveDrawingCommand.h"
 #include "commands/ClearDrawingCommand.h"
 #include "commands/PlotCommand.h"
+#include "commands/ClearPlotCommand.h"
 #include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
 
 #include "CommandDispatcher.h"
@@ -144,6 +145,13 @@ void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint)
     PlotCommand cmd(drawingName, dataPoint);
     CommandDispatcher::threadLocalInstance()->dispatch(cmd);
 }
+
+void CLEAR_PLOT(const std::string& plotName)
+{
+    ClearPlotCommand cmd(plotName);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+}
+
 
 
 /** Removes the drawing.

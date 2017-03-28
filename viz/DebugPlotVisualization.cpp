@@ -17,8 +17,8 @@ struct DebugPlotVisualization::Data {
     std::string plotName;
     QAction* autoScrollAction;
     QTimer timer;
-    const size_t maxSamples = 20000; //maximum number of samples that is displayed
-    const size_t removeSamples = 2000; //number of samples that is removd if maxSamples is reached
+    const int maxSamples = 20000; //maximum number of samples that is displayed
+    const int removeSamples = 2000; //number of samples that is removd if maxSamples is reached
 };
 
 
@@ -41,7 +41,7 @@ DebugPlotVisualization::DebugPlotVisualization()
     connect(p->plot, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequest(QPoint)));
     connect(&p->timer, SIGNAL(timeout()), this, SLOT(updateUi()));
     
-    p->timer.start(250);
+    p->timer.start(250); //QTimer executes in ui thread
 } 
 
 void DebugPlotVisualization::autoScrollChecked()
@@ -96,6 +96,10 @@ void DebugPlotVisualization::updateUi()
         base::Vector2d dataPoint;
         {
             std::lock_guard<std::mutex> lock(p->dataMutex);
+            
+            if(p->data.empty())//some other thread might clear the data while we wait for the lock
+                break;
+            
             dataPoint = p->data.front();
             p->data.pop_front();
         }
@@ -130,6 +134,19 @@ void DebugPlotVisualization::updateMainNode(osg::Node* node)
 {
     p->dock->setWindowTitle(QString(p->plotName.c_str()));
 }
+
+void DebugPlotVisualization::clearData()
+{
+    //clear all data points that have not been drawn, yet
+    {
+        std::lock_guard<std::mutex> lock(p->dataMutex);
+        p->data.clear();
+    }
+    
+    p->plot->graph(0)->clearData();
+    QMetaObject::invokeMethod(p->plot, "replot", Qt::QueuedConnection);
+}
+
 
 
 void DebugPlotVisualization::updateDataIntern(vizkit3dDebugDrawings::PlotDataPoint const& value)

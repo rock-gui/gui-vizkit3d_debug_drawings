@@ -74,7 +74,7 @@ int main()
     CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
 
     double x = 0;
-    
+    size_t i = 0;
     while(true)
     {
         x += 0.1;
@@ -83,6 +83,13 @@ int main()
         PLOT_2D("tan", {x, std::tan(x)});
         PLOT_2D("atan", {x, std::atan(x)});
         PLOT_2D("x", {x, x});
+        
+        if(i > 100)
+        {
+            CLEAR_PLOT("x");
+            i = 0;
+        }
+        ++i;
         
         base::Vector3d blinkPos(-3, -3, -3);
         DRAW_SPHERE("removeTest", blinkPos, 1, vizkit3dDebugDrawings::Color::air_force_blue_raf);

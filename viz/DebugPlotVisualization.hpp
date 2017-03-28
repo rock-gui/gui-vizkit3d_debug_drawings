@@ -24,6 +24,9 @@ namespace vizkit3d
     {vizkit3d::Vizkit3DPlugin<vizkit3dDebugDrawings::PlotDataPoint>::updateData(sample);}
     
     QString getName() const;
+    
+    public slots:
+        void clearData();
 
     private slots:
         void contextMenuRequest(QPoint);

@@ -35,10 +35,8 @@ namespace vizkit3dDebugDrawings
     
     void DrawingManager::addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>& primitive)
     {
-        if(drawingName.empty())
-        {
-            throw  std::runtime_error("drawingName is empty");
-        }
+        checkStringNotEmpty(drawingName);
+
         Drawing& d = p->drawings[drawingName];
         d.addPrimitive(primitive);
         d.setName(drawingName); //d might be a new Drawing
@@ -53,31 +51,38 @@ namespace vizkit3dDebugDrawings
         updateData(d);
     }
     
-    void DrawingManager::addPlotDataPoint(const std::string& drawingName,
+    void DrawingManager::addPlotDataPoint(const std::string& plotName,
                                           const base::Vector2d& dataPoint)
     {
-        if(drawingName.empty())
-        {
-            throw  std::runtime_error("drawingName is empty");
-        }
+        checkStringNotEmpty(plotName);
         
-        if(p->plotPlugins.find(drawingName) == p->plotPlugins.end())
+        if(p->plotPlugins.find(plotName) == p->plotPlugins.end())
         {
             //new drawing, need new plugin
-            p->plotPlugins[drawingName] = loadPlugin("DebugPlotVisualization");
-            assert(p->plotPlugins[drawingName] != nullptr);
+            p->plotPlugins[plotName] = loadPlugin("DebugPlotVisualization");
+            assert(p->plotPlugins[plotName] != nullptr);
         }
         
-        const PlotDataPoint d{drawingName, dataPoint};        
+        const PlotDataPoint d{plotName, dataPoint};        
         updateData(d);
     }
     
+    void DrawingManager::clearPlot(const std::string& plotName)
+    {
+        checkStringNotEmpty(plotName);
+        
+        auto plotPlugin = p->plotPlugins.find(plotName);
+        if(plotPlugin != p->plotPlugins.end())
+        {
+            //async invoke slot to avoid any threading issues with the gui thread
+            QMetaObject::invokeMethod(plotPlugin->second, "clearData", Qt::QueuedConnection);
+        }
+    }
+
+    
     void DrawingManager::removeDrawing(const std::string& drawingName)
     {
-        if(drawingName.empty())
-        {
-            throw  std::runtime_error("drawingName is empty");
-        }
+        checkStringNotEmpty(drawingName);
         
         p->drawings.erase(drawingName);
         
@@ -90,30 +95,24 @@ namespace vizkit3dDebugDrawings
         }
         
         //FIXME duplicate code?!
-        if(p->plotPlugins.find(drawingName) != p->plotPlugins.end())
-        {
-            QMetaObject::invokeMethod(p->widget, "removePlugin", Qt::QueuedConnection,
-                                  Q_ARG(QObject*, p->plotPlugins[drawingName]));
-            p->plotPlugins.erase(drawingName);
-        }
+//         if(p->plotPlugins.find(drawingName) != p->plotPlugins.end())
+//         {
+//             QMetaObject::invokeMethod(p->widget, "removePlugin", Qt::QueuedConnection,
+//                                   Q_ARG(QObject*, p->plotPlugins[drawingName]));
+//             p->plotPlugins.erase(drawingName);
+//         }
         
     }
     
     void DrawingManager::clearDrawing(const std::string& drawingName)
     {
-        if(drawingName.empty())
-        {
-            throw std::runtime_error("drawingName is empty");
-        }
+        checkStringNotEmpty(drawingName);
         
         if(p->drawings.find(drawingName) != p->drawings.end())
         {
             p->drawings[drawingName].clear();
             updateData(p->drawings[drawingName]);
-        }
-        
-        //FIXME how to clear plot?
-        
+        }        
     }
     
     void DrawingManager::clearAllDrawings()
@@ -122,8 +121,6 @@ namespace vizkit3dDebugDrawings
         {
             drawingKeyValuePair.second.clear();
         }
-        
-        //FIXME how to clear plots?
     }   
     
     void DrawingManager::updateData(const Drawing& d) const
@@ -155,4 +152,14 @@ namespace vizkit3dDebugDrawings
                                   Q_ARG(QString, ""), Q_ARG(QString, QString::fromStdString(pluginName)));
         return dynamic_cast<vizkit3d::VizPluginBase*>(plugin);
     }
+    
+    void DrawingManager::checkStringNotEmpty(const std::string& str)
+    {
+        if(str.empty())
+        {
+            throw std::runtime_error("drawingName is empty");
+        }
+    }
+
+    
 }
