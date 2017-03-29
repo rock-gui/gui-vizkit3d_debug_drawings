@@ -28,6 +28,7 @@ DebugPlotVisualization::DebugPlotVisualization()
     p->plot = new QCustomPlot();
     p->plot->addGraph();
     p->plot->setContextMenuPolicy(Qt::CustomContextMenu);
+    p->plot->setMinimumHeight(200);
     
     p->dock = new QDockWidget("default name");
     p->dock->setWidget(p->plot);
