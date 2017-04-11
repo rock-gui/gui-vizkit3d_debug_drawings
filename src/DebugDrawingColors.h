@@ -351,6 +351,7 @@ namespace vizkit3dDebugDrawings
         static base::Vector4d gray_asparagus;
         static base::Vector4d gray_html_css_gray;
         static base::Vector4d gray_x11_gray;
+        static base::Vector4d green;
         static base::Vector4d green_color_wheel_x11_green;
         static base::Vector4d green_crayola;
         static base::Vector4d green_html_css_green;

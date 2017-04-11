@@ -347,6 +347,7 @@ namespace vizkit3dDebugDrawings
     base::Vector4d Color::gray_asparagus = base::Vector4d(0.2745098039,0.3490196078,0.2705882353,1);
     base::Vector4d Color::gray_html_css_gray = base::Vector4d(0.5019607843,0.5019607843,0.5019607843,1);
     base::Vector4d Color::gray_x11_gray = base::Vector4d(0.7450980392,0.7450980392,0.7450980392,1);
+    base::Vector4d Color::green = base::Vector4d(0,1,0,1);
     base::Vector4d Color::green_color_wheel_x11_green = base::Vector4d(0,1,0,1);
     base::Vector4d Color::green_crayola = base::Vector4d(0.1098039216,0.6745098039,0.4705882353,1);
     base::Vector4d Color::green_html_css_green = base::Vector4d(0,0.5019607843,0,1);
