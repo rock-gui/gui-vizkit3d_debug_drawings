@@ -87,6 +87,14 @@ void DRAW_POLYLINE(const std::string& drawingName, const base::Vector3d& positio
     CommandDispatcher::threadLocalInstance()->dispatch(cmd);    
 }
 
+/** @param points realtive to (0, 0, 0) */
+void DRAW_POLYLINE(const std::string& drawingName, const std::vector<base::Vector3d>& points,
+                   const base::Vector4d& colorRGBA)
+{
+    DRAW_POLYLINE(drawingName, base::Vector3d(0, 0, 0), points, colorRGBA);
+}
+
+
 void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
                const base::Quaterniond& orientation, const std::string& text,
                double fontSize, const base::Vector4d& colorRGBA)

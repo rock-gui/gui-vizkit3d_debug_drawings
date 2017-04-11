@@ -64,7 +64,7 @@ int main()
     points.emplace_back(2, 0, 2);
     points.emplace_back(2, 2, 2);
     DRAW_POLYLINE("polyLine", linePos, points, lineColor);
-    
+    DRAW_POLYLINE("polyLine2", points, lineColor);
     DRAW_LINE("line", base::Vector3d(-1, -1, -1), base::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
 
