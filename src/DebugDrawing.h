@@ -22,6 +22,7 @@
     #define DRAW_POLYLINE(...) (void)0
     #define DRAW_TEXT(...) (void)0
     #define DRAW_LINE(...) (void)0
+    #define DRAW_AXES(...) (void)0
     #define PLOT_2D(...) (void)0
     #define CLEAR_PLOT(...) (void)0
     
@@ -154,6 +155,18 @@ namespace vizkit3dDebugDrawings
     
     void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
                    const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
+    
+    
+    /** @param position position of the center of the axes */
+    void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
+                   const base::Quaterniond& orientation, const base::Vector3d& size);
+    
+    void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
+                   const base::Quaterniond& orientation);
+    
+    void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position);
+    
+    
     
     void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
     

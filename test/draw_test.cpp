@@ -36,6 +36,12 @@ int main()
     DRAW_TEXT("testText", pos, rot, "Job's done!", 0.3, color);
     
     
+    DRAW_AXES("axes1", base::Vector3d(2,0,1));
+    DRAW_AXES("axes1", base::Vector3d(4,0,1), base::Quaterniond::Identity(), base::Vector3d(2,2,2));
+    DRAW_AXES("axes1", base::Vector3d(3,0,1), base::Quaterniond(Eigen::AngleAxisd(1.57, base::Vector3d::UnitX())));
+    
+    
+    
     base::Vector3d wireframePos(0, 2, 0);
     base::Quaterniond wireframeRot(Eigen::AngleAxisd(0.5, base::Vector3d::UnitY()));
     base::Vector3d wireframeSize(0.5, 1, 2);

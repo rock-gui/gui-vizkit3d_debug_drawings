@@ -6,6 +6,7 @@
 #include "commands/primitives/DrawArrowCommand.h"
 #include "commands/primitives/DrawPolyLineCommand.h"
 #include "commands/primitives/DrawCylinderCommand.h"
+#include "commands/primitives/DrawAxesCommand.h"
 #include "commands/RemoveDrawingCommand.h"
 #include "commands/ClearDrawingCommand.h"
 #include "commands/PlotCommand.h"
@@ -146,6 +147,25 @@ void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& positio
                    const base::Vector3d& size, const base::Vector4d& colorRGBA)
 {
     DRAW_CYLINDER(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
+}
+
+
+void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
+               const base::Quaterniond& orientation, const base::Vector3d& size)
+{
+    DrawAxesCommand cmd(drawingName,position, orientation, size);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+}
+
+void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
+               const base::Quaterniond& orientation)
+{
+    DRAW_AXES(drawingName, position, orientation, base::Vector3d(1, 1, 1));
+}
+
+void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position)
+{
+    DRAW_AXES(drawingName, position, base::Quaterniond::Identity());
 }
 
 void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint)
