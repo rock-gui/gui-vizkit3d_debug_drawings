@@ -37,13 +37,9 @@ void DrawingVisualization::updateMainNode(osg::Node* node)
 void DrawingVisualization::updateDataIntern(vizkit3dDebugDrawings::Drawing const& value)
 {
     p->data = value;
-    emit propertyChanged("name");
+    setPluginName(QString("Debug Drawing: ") + QString(p->data.getName().c_str()));
 }
 
-QString DrawingVisualization::getName() const
-{
-    return QString(p->data.getName().c_str());
-}
 
 //Macro that makes this plugin loadable in ruby, this is optional.
 VizkitQtPlugin(DrawingVisualization)

@@ -160,13 +160,8 @@ void DebugPlotVisualization::updateDataIntern(vizkit3dDebugDrawings::PlotDataPoi
     if(p->plotName != value.name)
     {
         p->plotName = value.name;
-        emit propertyChanged("name");
+        setPluginName(QString("Debug Plot: ") + QString(p->plotName.c_str()));
     }
-}
-
-QString DebugPlotVisualization::getName() const
-{
-    return QString(p->plotName.c_str());
 }
 
 void DebugPlotVisualization::createDockWidgets()

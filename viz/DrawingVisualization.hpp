@@ -13,7 +13,6 @@ namespace vizkit3d
         , boost::noncopyable
     {
     Q_OBJECT
-    Q_PROPERTY(QString name READ getName)
     public:
         DrawingVisualization();
         ~DrawingVisualization();
