@@ -36,18 +36,18 @@ void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& po
 
 
 void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
-                const base::Quaterniond& orientation, const base::Vector3d& scale,
+                const base::Quaterniond& orientation, const base::Vector3d& size,
                 const base::Vector4d& colorRGBA)
 {
-    DrawArrowCommand cmd(drawingName, position, orientation, scale, colorRGBA);
+    DrawArrowCommand cmd(drawingName, position, orientation, size, colorRGBA);
     CommandDispatcher::threadLocalInstance()->dispatch(cmd);   
 }
 
 
 void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
-                const base::Vector3d& scale, const base::Vector4d& colorRGBA)
+                const base::Vector3d& size, const base::Vector4d& colorRGBA)
 {
-    DRAW_ARROW(drawingName, position, base::Quaterniond::Identity(), scale, colorRGBA);
+    DRAW_ARROW(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
 

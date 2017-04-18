@@ -102,11 +102,11 @@ namespace vizkit3dDebugDrawings
     /** @param position Position of the tip of the arrow
      *  @param orientation Identity points in z-direction*/
     void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
-                    const base::Quaterniond& orientation, const base::Vector3d& scale,
+                    const base::Quaterniond& orientation, const base::Vector3d& size,
                     const base::Vector4d& colorRGBA);
     
     void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
-                    const base::Vector3d& scale, const base::Vector4d& colorRGBA);
+                    const base::Vector3d& size, const base::Vector4d& colorRGBA);
 
     void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
                    const base::Quaterniond& orientation, double radius,
