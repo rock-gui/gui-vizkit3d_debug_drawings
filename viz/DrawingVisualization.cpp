@@ -37,7 +37,11 @@ void DrawingVisualization::updateMainNode(osg::Node* node)
 void DrawingVisualization::updateDataIntern(vizkit3dDebugDrawings::Drawing const& value)
 {
     p->data = value;
-    setPluginName(QString("Debug Drawing: ") + QString(p->data.getName().c_str()));
+    const QString pluginName = QString("Debug Drawing: ") + QString(p->data.getName().c_str());
+    if(getPluginName() != pluginName)
+    {
+        setPluginName(pluginName);
+    }
 }
 
 
