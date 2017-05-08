@@ -7,6 +7,7 @@
 #include "commands/primitives/DrawPolyLineCommand.h"
 #include "commands/primitives/DrawCylinderCommand.h"
 #include "commands/primitives/DrawAxesCommand.h"
+#include "commands/primitives/DrawAABBCommand.h"
 #include "commands/RemoveDrawingCommand.h"
 #include "commands/ClearDrawingCommand.h"
 #include "commands/PlotCommand.h"
@@ -168,6 +169,15 @@ void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position)
     DRAW_AXES(drawingName, position, base::Quaterniond::Identity());
 }
 
+void DRAW_AABB(const std::string& drawingName, Eigen::AlignedBox3d box, 
+               const base::Vector4d& colorRGBA)
+{
+
+    DrawAABBCommand cmd(drawingName, box.min(), box.max(), colorRGBA);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+}
+
+
 void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint)
 {
     PlotCommand cmd(drawingName, dataPoint);
@@ -202,6 +212,15 @@ void CLEAR_DRAWING(const std::string& drawingName)
 
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
 {
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
+    std::cout << "STANDALONE" << std::endl;
     CommandDispatcher::threadLocalInstance()->configureStandalone();
 }
 

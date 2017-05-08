@@ -20,6 +20,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawPolyLineCommand.cpp
         commands/primitives/DrawCylinderCommand.cpp
         commands/primitives/DrawAxesCommand.cpp
+        commands/primitives/DrawAABBCommand.cpp
         
     HEADERS 
         DebugDrawing.h
@@ -43,6 +44,7 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawPolyLineCommand.h
         commands/primitives/DrawPolyLineCommand.h
         commands/primitives/DrawAxesCommand.h
+        commands/primitives/DrawAABBCommand.h
         commands/BoostSerializationExports.h
     DEPS_PKGCONFIG
         vizkit3d

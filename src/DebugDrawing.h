@@ -23,6 +23,7 @@
     #define DRAW_TEXT(...) (void)0
     #define DRAW_LINE(...) (void)0
     #define DRAW_AXES(...) (void)0
+    #define DRAW_AABB(...) (void)0
     #define PLOT_2D(...) (void)0
     #define CLEAR_PLOT(...) (void)0
     
@@ -166,7 +167,9 @@ namespace vizkit3dDebugDrawings
     
     void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position);
     
-    
+    /** draw axis aligned bounding box */
+    void DRAW_AABB(const std::string& drawingName, Eigen::AlignedBox3d box,
+                   const base::Vector4d& colorRGBA);
     
     void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
     

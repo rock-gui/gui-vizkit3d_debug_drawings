@@ -74,6 +74,12 @@ int main()
     DRAW_LINE("line", base::Vector3d(-1, -1, -1), base::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
 
+    Eigen::Vector3d min, max;
+    min << -1, -1, -1;
+    max << 1, 1, 1;
+    Eigen::AlignedBox3d boundingBox(min, max);
+    DRAW_AABB("AABB", boundingBox, vizkit3dDebugDrawings::Color::alloy_orange);
+    
     
     //NOTE dont do configuration this late in the real world.
     //     It is done here to ensure that all clone() methods are implemented correctly

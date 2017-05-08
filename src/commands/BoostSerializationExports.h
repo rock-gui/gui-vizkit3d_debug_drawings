@@ -18,6 +18,7 @@
 #include "primitives/DrawTextCommand.h"
 #include "primitives/DrawWireframeBoxCommand.h"
 #include "primitives/DrawAxesCommand.h"
+#include "primitives/DrawAABBCommand.h"
 
 //NOTE needs to be included last
 #include <boost/serialization/export.hpp>
@@ -36,3 +37,4 @@ BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::RemoveDrawingCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::PlotCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawAxesCommand);
+BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawAABBCommand);
