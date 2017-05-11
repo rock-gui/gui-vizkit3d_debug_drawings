@@ -51,6 +51,9 @@ int main()
     DRAW_WIREFRAME_BOX("wireframeBox", wireframePos, base::Quaterniond::Identity(), wireframeSize, wireframeColor);
     wireframePos.z() += 2.2;
     DRAW_WIREFRAME_BOX("wireframeBox", wireframePos, wireframeSize, wireframeColor);
+    wireframePos << 0, 0, 0;
+    wireframeSize << 0.5, 0.5, 0.5;
+    DRAW_WIREFRAME_BOX("wireframeBox", wireframePos, wireframeSize, wireframeColor);
     
     
     base::Vector3d arrowPos(-1, -1, -1);

@@ -212,15 +212,6 @@ void CLEAR_DRAWING(const std::string& drawingName)
 
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
 {
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
-    std::cout << "STANDALONE" << std::endl;
     CommandDispatcher::threadLocalInstance()->configureStandalone();
 }
 

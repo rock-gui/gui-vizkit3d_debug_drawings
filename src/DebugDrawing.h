@@ -96,10 +96,12 @@ namespace vizkit3dDebugDrawings
     vizkit3d::Vizkit3DWidget* GET_DEBUG_DRAWING_WIDGET();
     
 
+    /** @param position center of the box  */
     void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
                             const base::Quaterniond& orientation, const base::Vector3d& size,
                             const base::Vector4d& colorRGBA);
     
+    /** @param position center of the box*/
     void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
                             const base::Vector3d& size, const base::Vector4d& colorRGBA);
     
@@ -109,6 +111,7 @@ namespace vizkit3dDebugDrawings
                     const base::Quaterniond& orientation, const base::Vector3d& size,
                     const base::Vector4d& colorRGBA);
     
+    /** @param position Position of the tip of the arrow */
     void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
                     const base::Vector3d& size, const base::Vector4d& colorRGBA);
 
