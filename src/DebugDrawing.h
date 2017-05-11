@@ -88,6 +88,9 @@ namespace vizkit3dDebugDrawings
     /**Same as above but does nothing if already configured. */
     void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>* port);
     
+    /**Same as above but does nothing if already configured */
+    void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
+    
     /** Returns the vizkit3d widget that is used for debug drawing.
      *  @throw std::runtime_error if debug drawings are not configured to use a widget*/
     vizkit3d::Vizkit3DWidget* GET_DEBUG_DRAWING_WIDGET();
