@@ -9,6 +9,7 @@
     #define CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...)  (void)0
     #define CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...)  (void)0
     #define CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(...)  (void)0
+    #define CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...)  (void)0
     
     
     #define GET_DEBUG_DRAWING_WIDGET(...) nullptr
@@ -24,6 +25,7 @@
     #define DRAW_LINE(...) (void)0
     #define DRAW_AXES(...) (void)0
     #define DRAW_AABB(...) (void)0
+    #define DRAW_CYLINDER(...) (void)0
     #define PLOT_2D(...) (void)0
     #define CLEAR_PLOT(...) (void)0
     

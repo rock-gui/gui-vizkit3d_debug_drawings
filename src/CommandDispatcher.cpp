@@ -12,6 +12,8 @@ namespace vizkit3dDebugDrawings
     
 struct CommandDispatcher::Impl
 {
+    const int maxWarnings = 10;
+    size_t warningCount = 0; //how many times has the "buffering" warning been shown
     bool configured = false;
     RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port = nullptr; //for port mode
     QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread; //for standalone mode
@@ -68,7 +70,11 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
     }
     else if(!p->configured)
     {
-        std::cout << "Warning: Debug drawings not configured. Buffering drawings until configured.\n";
+        if(p->warningCount < p->maxWarnings)
+        {
+            std::cout << "Warning: Debug drawings not configured. Buffering drawings until configured.\n";
+            ++p->warningCount;
+        }
         p->beforeConfigCommands.emplace_back(cmd.clone());
         if(p->beforeConfigCommands.size() >= p->maxBeforeConfigCommands)
         {
