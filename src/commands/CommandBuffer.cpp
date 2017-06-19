@@ -3,6 +3,7 @@
 #include "DrawCommand.h"
 #include "ClearDrawingCommand.h"
 #include "RemoveDrawingCommand.h"
+#include "ClearPlotCommand.h"
 #include <vizkit3d_debug_drawings/DrawingManager.h>
 
 //need to be included. otherwise BOOST_CLASS_EXPORT wont work (http://www.boost.org/doc/libs/1_46_1/libs/serialization/doc/special.html)
@@ -16,6 +17,7 @@ void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
 {
     ClearDrawingCommand* clearCmd = nullptr;
     RemoveDrawingCommand* removeCmd = nullptr;
+    ClearPlotCommand* clearPlotCmd = nullptr;
     
 
     if((clearCmd = dynamic_cast<ClearDrawingCommand*>(cmd.get())))
@@ -26,8 +28,10 @@ void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
     {
         commands[removeCmd->getDrawingName()].clear();
     }
-    
-    //FIXME handle plot commands
+    else if(clearPlotCmd = dynamic_cast<ClearPlotCommand*>(cmd.get()))
+    {
+        commands[clearPlotCmd->getDrawingName()].clear();
+    }
 
     commands[cmd->getDrawingName()].push_back(cmd);
 }
