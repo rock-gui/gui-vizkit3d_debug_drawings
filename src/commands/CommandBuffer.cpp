@@ -26,6 +26,8 @@ void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
     {
         commands[removeCmd->getDrawingName()].clear();
     }
+    
+    //FIXME handle plot commands
 
     commands[cmd->getDrawingName()].push_back(cmd);
 }

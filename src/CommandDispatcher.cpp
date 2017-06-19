@@ -5,6 +5,7 @@
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
 #include <memory>
+#include <base/Time.hpp>
 
 namespace vizkit3dDebugDrawings
 {
@@ -12,6 +13,10 @@ namespace vizkit3dDebugDrawings
     
 struct CommandDispatcher::Impl
 {
+    /** Sending the state through a port is expensive and laggy. Therefore we limit
+     *  how often data will be send through the port. sendDelay is the time between
+     *  two send operations in ms*/
+    const int sendDelay = 33;
     const int maxWarnings = 10;
     size_t warningCount = 0; //how many times has the "buffering" warning been shown
     bool configured = false;
@@ -21,6 +26,7 @@ struct CommandDispatcher::Impl
     std::deque<std::unique_ptr<vizkit3dDebugDrawings::Command>> beforeConfigCommands; //stores all commands send before config, need to store on heap to store polymorphic copies
     const size_t maxBeforeConfigCommands = 100000; //maximum size of beforeConfigCommands to avoid memory leaks
     boost::shared_ptr<CommandBuffer> cmdBuffer; //is pointer because we need to send it through port (sending by value works but would break polymorphism)
+    base::Time lastSend = base::Time::now();
 };
 
 CommandDispatcher::CommandDispatcher() : p(new CommandDispatcher::Impl())
@@ -63,10 +69,15 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
         boost::shared_ptr<Command> pCmd(cmd.clone());
         p->cmdBuffer->addCommand(pCmd);
         
-        //need to copy because the buffer will switch threads when beeing written to the port.
-        //shallow copy is enough, the commands wont be modified.
-        boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(*(p->cmdBuffer)));
-        p->port->write(copy);
+        if(base::Time::now() - p->lastSend > base::Time::fromMilliseconds(p->sendDelay))
+        {
+            p->lastSend = base::Time::now();
+            
+            //need to copy because the buffer will switch threads when beeing written to the port.
+            //shallow copy is enough, the commands wont be modified.
+            boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(*(p->cmdBuffer)));
+            p->port->write(copy);
+        }
     }
     else if(!p->configured)
     {
@@ -121,6 +132,7 @@ void CommandDispatcher::checkAndSetConfigured()
 
 void CommandDispatcher::dispatchBufferedCommands()
 {
+    std::cout << "DISPATCHING BUFFERED COMMANDS\n";
     assert(p->configured);
     for(const std::unique_ptr<vizkit3dDebugDrawings::Command>& cmd : p->beforeConfigCommands)
     {
