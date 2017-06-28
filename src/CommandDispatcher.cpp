@@ -17,7 +17,7 @@ struct CommandDispatcher::Impl
      *  how often data will be send through the port. sendDelay is the time between
      *  two send operations in ms*/
     const int sendDelay = 33;
-    const int maxWarnings = 10;
+    const size_t maxWarnings = 10;
     size_t warningCount = 0; //how many times has the "buffering" warning been shown
     bool configured = false;
     RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port = nullptr; //for port mode
