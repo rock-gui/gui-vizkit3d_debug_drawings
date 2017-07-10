@@ -31,7 +31,6 @@ namespace vizkit3dDebugDrawings
 
         CommandBuffer(); //for use in boost serialization only
         CommandBuffer(size_t maxBufferSize);
-        ~CommandBuffer();
         
         void addCommand(boost::shared_ptr<Command> cmd);
         void executeAll(DrawingManager* manager) const;

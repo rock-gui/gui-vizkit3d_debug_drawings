@@ -228,7 +228,6 @@ void CommandDispatcher::writePort(const std::string& drawingName,
     
     marshaller->setOrocosSample(handle, &buffer);
     RTT::base::DataSourceBase::shared_ptr dataSource = marshaller->getDataSource(handle);
-    std::cout << ", " << buffer.use_count();
     port->write(dataSource);
 }
 

@@ -17,17 +17,10 @@ using namespace vizkit3dDebugDrawings;
 
 CommandBuffer::CommandBuffer(size_t maxBufferSize) : maxBufferSize(maxBufferSize)
 {
-    std::cout << "COMMAND_BUFFER CREATED\n";
 }
 
 CommandBuffer::CommandBuffer() : maxBufferSize(50000)
 {
-    std::cout << "COMMAND_BUFFER CREATED 22\n";
-}
-
-CommandBuffer::~CommandBuffer()
-{
-    std::cout << "DELETE BUFFER\n";
 }
 
 
