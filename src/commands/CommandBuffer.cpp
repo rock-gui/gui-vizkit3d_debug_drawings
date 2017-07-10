@@ -27,11 +27,6 @@ CommandBuffer::CommandBuffer() : maxBufferSize(50000)
 
 void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
 {
-    ClearDrawingCommand* clearCmd = nullptr;
-    RemoveDrawingCommand* removeCmd = nullptr;
-    ClearPlotCommand* clearPlotCmd = nullptr;
-    
-
     if(dynamic_cast<ClearDrawingCommand*>(cmd.get()) || 
        dynamic_cast<RemoveDrawingCommand*>(cmd.get()) ||
        dynamic_cast<ClearPlotCommand*>(cmd.get()))

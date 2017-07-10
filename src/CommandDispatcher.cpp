@@ -41,6 +41,7 @@ struct CommandDispatcher::Impl
     /**drawing names to port mapping */
     std::unordered_map<std::string, RTT::base::OutputPortInterface*> ports; 
     std::unordered_map<std::string, orogen_transports::TypelibMarshallerBase::Handle*> handles; //drawing name to marhaller handle
+    base::Time lastSend = base::Time::now();
 };
 
 CommandDispatcher::CommandDispatcher() : p(new CommandDispatcher::Impl())
@@ -82,12 +83,20 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
         boost::shared_ptr<Command> pCmd(cmd.clone());
         
         p->cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
-        //need to copy because the buffer will switch threads when beeing written to the port.
-        //shallow copy is enough, the commands wont be modified.
-        //FIXME not sure if we really need to copy anymore since writePort marshalls?! 
-        //      Have to figure out if marshaller copys
-        boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(p->cmdBuffer[cmd.getDrawingName()]));
-        writePort(cmd.getDrawingName(), copy);
+        
+        //send with 10hz, sending is slow, otherwise we slow down the task too much
+        if((base::Time::now() - p->lastSend).toMilliseconds() >= 100)
+        {
+            p->lastSend = base::Time::now();
+            
+            //need to copy because the buffer will switch threads when beeing written to the port.
+            //shallow copy is enough, the commands wont be modified.
+            //FIXME not sure if we really need to copy anymore since writePort marshalls?! 
+            //      Have to figure out if marshaller copys
+            boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(p->cmdBuffer[cmd.getDrawingName()]));
+            writePort(cmd.getDrawingName(), copy);
+        }
+        
     }
     else if(!p->configured)
     {
