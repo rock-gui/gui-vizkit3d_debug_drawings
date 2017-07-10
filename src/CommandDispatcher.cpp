@@ -83,19 +83,8 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
         boost::shared_ptr<Command> pCmd(cmd.clone());
         
         p->cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
-        
-        //send with 10hz, sending is slow, otherwise we slow down the task too much
-        if((base::Time::now() - p->lastSend).toMilliseconds() >= 100)
-        {
-            p->lastSend = base::Time::now();
-            
-            //need to copy because the buffer will switch threads when beeing written to the port.
-            //shallow copy is enough, the commands wont be modified.
-            //FIXME not sure if we really need to copy anymore since writePort marshalls?! 
-            //      Have to figure out if marshaller copys
-            boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(p->cmdBuffer[cmd.getDrawingName()]));
-            writePort(cmd.getDrawingName(), copy);
-        }
+        sendCommandBuffer();
+
         
     }
     else if(!p->configured)
@@ -175,6 +164,28 @@ vizkit3d::Vizkit3DWidget* CommandDispatcher::getWidget()
     return p->drawingManager->getVizkit3DWidget();
 }
 
+void CommandDispatcher::sendCommandBuffer()
+{
+    const base::Time now = base::Time::now();
+    
+    if(now.toMilliseconds() - p->lastSend.toMilliseconds() >= 100)
+    {
+        p->lastSend = now;
+        for(auto it : p->cmdBuffer)
+        {
+            std::cout << "sendnig: " << it.first << std::endl;
+            //need to copy because the buffer will switch threads when beeing written to the port.
+            //shallow copy is enough, the commands wont be modified.
+            //FIXME not sure if we really need to copy anymore since writePort marshalls?! 
+            //      Have to figure out if marshaller copys
+            
+            boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(p->cmdBuffer[it.first]));
+            writePort(it.first, copy);
+        }
+        
+    }
+}
+
 
 void CommandDispatcher::writePort(const std::string& drawingName, 
                                   boost::shared_ptr<CommandBuffer> buffer)
@@ -212,7 +223,7 @@ void CommandDispatcher::writePort(const std::string& drawingName,
         assert(info != nullptr);
         
         const std::string portName("debug_" + drawingName);
-
+ 
         port = info->outputPort(portName);    
         if (!port)
         {

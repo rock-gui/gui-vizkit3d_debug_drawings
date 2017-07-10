@@ -66,6 +66,9 @@ namespace vizkit3dDebugDrawings
         void writePort(const std::string& drawingName, 
                        boost::shared_ptr<CommandBuffer> buffer);
         
+        /**Sends p->commandBuffer through rock ports */
+        void sendCommandBuffer();
+        
         //only threadLocalInstance() may create instances
         CommandDispatcher();
         ~CommandDispatcher();
