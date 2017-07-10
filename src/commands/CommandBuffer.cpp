@@ -5,13 +5,32 @@
 #include "RemoveDrawingCommand.h"
 #include "ClearPlotCommand.h"
 #include <vizkit3d_debug_drawings/DrawingManager.h>
+#include <base-logging/Logging.hpp>
 
 //need to be included. otherwise BOOST_CLASS_EXPORT wont work (http://www.boost.org/doc/libs/1_46_1/libs/serialization/doc/special.html)
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 
 #include "BoostSerializationExports.h"
+
 using namespace vizkit3dDebugDrawings;
+
+CommandBuffer::CommandBuffer(size_t maxBufferSize) : maxBufferSize(maxBufferSize)
+{
+    std::cout << "COMMAND_BUFFER CREATED\n";
+}
+
+CommandBuffer::CommandBuffer() : maxBufferSize(50000)
+{
+    std::cout << "COMMAND_BUFFER CREATED 22\n";
+}
+
+CommandBuffer::~CommandBuffer()
+{
+    std::cout << "DELETE BUFFER\n";
+}
+
+
 
 void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
 {
@@ -20,35 +39,31 @@ void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
     ClearPlotCommand* clearPlotCmd = nullptr;
     
 
-    if((clearCmd = dynamic_cast<ClearDrawingCommand*>(cmd.get())))
+    if(dynamic_cast<ClearDrawingCommand*>(cmd.get()) || 
+       dynamic_cast<RemoveDrawingCommand*>(cmd.get()) ||
+       dynamic_cast<ClearPlotCommand*>(cmd.get()))
     {
-        commands[clearCmd->getDrawingName()].clear();
-    }
-    else if((removeCmd = dynamic_cast<RemoveDrawingCommand*>(cmd.get())))
-    {
-        commands[removeCmd->getDrawingName()].clear();
-    }
-    else if(clearPlotCmd = dynamic_cast<ClearPlotCommand*>(cmd.get()))
-    {
-        commands[clearPlotCmd->getDrawingName()].clear();
+        commands.clear();
     }
 
-    commands[cmd->getDrawingName()].push_back(cmd);
+    commands.push_back(cmd);
+    if(commands.size() > maxBufferSize)
+    {
+        commands.pop_front();
+        LOG_WARN_S << "Commandbuffer is full. Dropping old commands."; 
+    }
 }
 
 void CommandBuffer::executeAll(vizkit3dDebugDrawings::DrawingManager* manager) const
 {
     
-    for(const auto& it : commands)
+    for(const auto& cmd : commands)
     {
-        for(const auto& cmd : it.second)
-        {
-            cmd->execute(manager);
-        }
+        cmd->execute(manager); 
     }
 }
 
-const CommandBuffer::CommandMap& CommandBuffer::getCommands() const
+const std::deque<boost::shared_ptr<Command>>& CommandBuffer::getCommands() const
 {
     return commands;
 }

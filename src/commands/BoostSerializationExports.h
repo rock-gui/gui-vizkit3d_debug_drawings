@@ -10,6 +10,7 @@
 #include "RemoveDrawingCommand.h"
 #include "ClearDrawingCommand.h"
 #include "PlotCommand.h"
+#include "DrawVizkitTypeCommand.h"
 #include "primitives/DrawArrowCommand.h"
 #include "primitives/DrawCylinderCommand.h"
 #include "primitives/DrawPolyLineCommand.h"
@@ -36,5 +37,6 @@ BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::ClearDrawingCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::RemoveDrawingCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::PlotCommand);
+BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawVizkitTypeCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawAxesCommand);
 BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawAABBCommand);

@@ -1,4 +1,5 @@
-set(OROCOS_TARGET "$ENV{OROCOS_TARGET}")
+set(OROCOS_TARGET "$ENV{OROCOS_TARGET}") #is needed when using orocos-rtt
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 rock_library(vizkit3d_debug_drawings
     SOURCES
         DrawingManager.cpp
@@ -12,6 +13,7 @@ rock_library(vizkit3d_debug_drawings
         commands/CommandBuffer.cpp
         commands/PlotCommand.cpp
         commands/ClearPlotCommand.cpp
+        commands/DrawVizkitTypeCommand.cpp
         commands/primitives/DrawSphereCommand.cpp
         commands/primitives/DrawTextCommand.cpp
         commands/primitives/DrawRingCommand.cpp
@@ -36,6 +38,7 @@ rock_library(vizkit3d_debug_drawings
         commands/CommandBuffer.h
         commands/PlotCommand.h
         commands/ClearPlotCommand.h
+        commands/DrawVizkitTypeCommand.h
         commands/primitives/DrawSphereCommand.h
         commands/primitives/DrawTextCommand.h
         commands/primitives/DrawRingCommand.h
@@ -48,8 +51,10 @@ rock_library(vizkit3d_debug_drawings
         commands/BoostSerializationExports.h
     DEPS_PKGCONFIG
         vizkit3d
+        vizkit3d_plugin_information
         osgViz
         base-types
         boost_serialization
-        orocos-rtt-${OROCOS_TARGET})
+        orocos-rtt-${OROCOS_TARGET}
+        orocos_cpp)
 

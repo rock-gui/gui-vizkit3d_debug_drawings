@@ -10,9 +10,11 @@
   <depend package="base/types" />
   <depend package="gui/vizkit3d" />
   <depend package="gui/osgviz/osgviz" />
+  <depend package="gui/vizkit3d_plugin_information" />
   <depend package="gui/rock_widget_collection" />
   <depend package="base/boost_serialization" />
   <depend package="rtt" />
+  <depend package="tools/orocos_cpp" />
   
   
 </package>

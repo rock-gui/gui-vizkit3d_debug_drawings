@@ -26,6 +26,7 @@
     #define DRAW_AXES(...) (void)0
     #define DRAW_AABB(...) (void)0
     #define DRAW_CYLINDER(...) (void)0
+    #define DRAW_VIZKIT3D_TYPE(...) (void)0
     #define PLOT_2D(...) (void)0
     #define CLEAR_PLOT(...) (void)0
     
@@ -48,8 +49,7 @@ namespace vizkit3d
 
 namespace RTT
 {
-    template <typename T>
-    class OutputPort;
+    class TaskContext;
 }
 
 namespace vizkit3dDebugDrawings
@@ -75,20 +75,21 @@ namespace vizkit3dDebugDrawings
  *    drawings.
  * 
  *  * via rock ports:
- *    In this mode all drawing commands are sent through a rock port.
+ *    In this mode rock ports will be created for all drawings.
  *    A vizkit3d plugin can be used to display the drawings.
  * 
  * NOTE: Everything debug drawing related is thread local. I.e. debug drawings are
- *       configured on a per thread basis.
- */
+ *       configured on a per thread basis. This is especially important when 
+ *       using drawings from inside tasks because the hooks are not necessarily 
+ *       executed in the same thread.  */
 
     /**@throw std::runtime_error if already configured */
     void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>* port); 
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext); 
 
     /**Same as above but does nothing if already configured. */
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>* port);
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
     
     /**Same as above but does nothing if already configured */
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
@@ -178,6 +179,11 @@ namespace vizkit3dDebugDrawings
     /** draw axis aligned bounding box */
     void DRAW_AABB(const std::string& drawingName, Eigen::AlignedBox3d box,
                    const base::Vector4d& colorRGBA);
+    
+    void DRAW_VIZKIT3D_TYPE(const std::string& drawingName, const base::Vector3d& position,
+                            const base::Quaterniond& orientation, const std::string& typeName,
+                            void* data);
+    
     
     void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
     

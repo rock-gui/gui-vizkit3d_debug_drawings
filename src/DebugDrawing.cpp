@@ -12,11 +12,12 @@
 #include "commands/ClearDrawingCommand.h"
 #include "commands/PlotCommand.h"
 #include "commands/ClearPlotCommand.h"
+#include "commands/DrawVizkitTypeCommand.h"
 #include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
 
 #include "CommandDispatcher.h"
 #include <vizkit3d/Vizkit3DWidget.hpp>
-#include <rtt/OutputPort.hpp>
+
 
 using namespace vizkit3dDebugDrawings;
 
@@ -178,6 +179,14 @@ void DRAW_AABB(const std::string& drawingName, Eigen::AlignedBox3d box,
 }
 
 
+void DRAW_VIZKIT3D_TYPE(const std::string& drawingName, const base::Vector3d& position,
+                        const base::Quaterniond& orientation, const std::string& typeName,
+                        void* data)
+{
+    DrawVizkitTypeCommand cmd(drawingName, position, orientation, typeName, data);
+    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+}
+
 void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint)
 {
     PlotCommand cmd(drawingName, dataPoint);
@@ -189,8 +198,6 @@ void CLEAR_PLOT(const std::string& plotName)
     ClearPlotCommand cmd(plotName);
     CommandDispatcher::threadLocalInstance()->dispatch(cmd);
 }
-
-
 
 /** Removes the drawing.
  * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
@@ -220,15 +227,15 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * wid
     CommandDispatcher::threadLocalInstance()->configureUseWidget(widget);
 }
 
-void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port)
+void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext)
 {
-    CommandDispatcher::threadLocalInstance()->configurePort(port);
+    CommandDispatcher::threadLocalInstance()->configurePort(taskContext);
 }
 
-void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port)
+void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext)
 {
     if(!CommandDispatcher::threadLocalInstance()->isConfigured())
-        CommandDispatcher::threadLocalInstance()->configurePort(port);
+        CommandDispatcher::threadLocalInstance()->configurePort(taskContext);
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget)
@@ -242,3 +249,5 @@ vizkit3d::Vizkit3DWidget* GET_DEBUG_DRAWING_WIDGET()
 {
     return CommandDispatcher::threadLocalInstance()->getWidget();
 }
+
+

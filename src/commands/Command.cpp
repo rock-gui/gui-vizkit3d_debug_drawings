@@ -26,7 +26,7 @@ Command::Command(const std::string& drawingName) : drawingName(drawingName)
 {
     
 }
-Command::Command() : drawingName(drawingName)
+Command::Command() : drawingName("default")
 {
 
 }

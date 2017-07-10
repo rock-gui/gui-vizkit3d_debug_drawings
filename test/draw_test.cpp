@@ -4,7 +4,19 @@
 #include <chrono>
 #include <thread>
 #include <base/Eigen.hpp>
+#include <base/samples/RigidBodyState.hpp>
 #include <random>
+
+
+void drawVizkitType()
+{
+    base::samples::RigidBodyState rbs;
+    rbs.position << 0, 0, 0;
+    rbs.orientation = base::Quaterniond::Identity();    
+    const base::Vector3d pos(3, 3, 3);
+    const base::Quaterniond rot = base::Quaterniond::Identity();
+    DRAW_VIZKIT3D_TYPE("vizkitType", pos, rot, "/base/samples/RigidBodyState", &rbs);
+}
 
 int main()
 {
@@ -88,6 +100,10 @@ int main()
     //     It is done here to ensure that all clone() methods are implemented correctly
     CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
 
+    
+    drawVizkitType();
+
+    
     double x = 0;
     size_t i = 0;
     while(true)

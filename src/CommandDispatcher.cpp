@@ -1,3 +1,4 @@
+#include <rtt/TaskContext.hpp>
 #include "CommandDispatcher.h"
 #include "DrawingManager.h"
 #include "commands/Command.h"
@@ -6,6 +7,15 @@
 #include <vizkit3d/Vizkit3DWidget.hpp>
 #include <memory>
 #include <base/Time.hpp>
+#include <base-logging/Logging.hpp>
+
+#include <orocos_cpp/TypeRegistry.hpp>
+#include <orocos_cpp/PluginHelper.hpp>
+#include <rtt/OutputPort.hpp>
+#include <rtt/typelib/TypelibMarshaller.hpp>
+#include <rtt/typelib/TypelibMarshallerBase.hpp>
+#include <unordered_map>
+
 
 namespace vizkit3dDebugDrawings
 {
@@ -13,20 +23,24 @@ namespace vizkit3dDebugDrawings
     
 struct CommandDispatcher::Impl
 {
-    /** Sending the state through a port is expensive and laggy. Therefore we limit
-     *  how often data will be send through the port. sendDelay is the time between
-     *  two send operations in ms*/
-    const int sendDelay = 33;
     const size_t maxWarnings = 10;
     size_t warningCount = 0; //how many times has the "buffering" warning been shown
     bool configured = false;
-    RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port = nullptr; //for port mode
     QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread; //for standalone mode
     std::unique_ptr<DrawingManager> drawingManager; //need to use pointer due to lazy initiaization
     std::deque<std::unique_ptr<vizkit3dDebugDrawings::Command>> beforeConfigCommands; //stores all commands send before config, need to store on heap to store polymorphic copies
     const size_t maxBeforeConfigCommands = 100000; //maximum size of beforeConfigCommands to avoid memory leaks
-    boost::shared_ptr<CommandBuffer> cmdBuffer; //is pointer because we need to send it through port (sending by value works but would break polymorphism)
-    base::Time lastSend = base::Time::now();
+
+    RTT::TaskContext* task = nullptr; //used for port mode    
+    
+    /** boost::shared_ptr pointer is used because we need to send it through a rock port.
+     * Sending by value works but would break polymorphism.
+     * std::shared_ptr is not used because rtt does not understand it (no c++11 support, yet)*/
+    std::unordered_map<std::string, CommandBuffer>  cmdBuffer;
+    
+    /**drawing names to port mapping */
+    std::unordered_map<std::string, RTT::base::OutputPortInterface*> ports; 
+    std::unordered_map<std::string, orogen_transports::TypelibMarshallerBase::Handle*> handles; //drawing name to marhaller handle
 };
 
 CommandDispatcher::CommandDispatcher() : p(new CommandDispatcher::Impl())
@@ -51,7 +65,6 @@ CommandDispatcher* CommandDispatcher::threadLocalInstance()
     return &dispatcher;
 }
 
-
 void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
 {
     if(p->drawingManager != nullptr)
@@ -59,7 +72,7 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
         //either standalone or widget mode
         cmd.execute(p->drawingManager.get());
     }
-    else if(p->port != nullptr)
+    else if(p->task != nullptr)
     {
         /* Re-sending the complete state instead of just sending the commands 
          * produces some overhead. But depending on the connection type lots of
@@ -67,17 +80,14 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
          * be reproduced on the other end of the port. Thus we have to send the
          * whole state every time. */
         boost::shared_ptr<Command> pCmd(cmd.clone());
-        p->cmdBuffer->addCommand(pCmd);
         
-        if(base::Time::now() - p->lastSend > base::Time::fromMilliseconds(p->sendDelay))
-        {
-            p->lastSend = base::Time::now();
-            
-            //need to copy because the buffer will switch threads when beeing written to the port.
-            //shallow copy is enough, the commands wont be modified.
-            boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(*(p->cmdBuffer)));
-            p->port->write(copy);
-        }
+        p->cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
+        //need to copy because the buffer will switch threads when beeing written to the port.
+        //shallow copy is enough, the commands wont be modified.
+        //FIXME not sure if we really need to copy anymore since writePort marshalls?! 
+        //      Have to figure out if marshaller copys
+        boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(p->cmdBuffer[cmd.getDrawingName()]));
+        writePort(cmd.getDrawingName(), copy);
     }
     else if(!p->configured)
     {
@@ -98,11 +108,10 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
     }
 }
 
-void CommandDispatcher::configurePort(RTT::OutputPort<boost::shared_ptr<CommandBuffer>>* port)
+void CommandDispatcher::configurePort(RTT::TaskContext* taskContext)
 {
     checkAndSetConfigured();
-    p->port = port;
-    p->cmdBuffer.reset(new CommandBuffer);
+    p->task = taskContext;
     dispatchBufferedCommands();
 }
 
@@ -158,6 +167,69 @@ vizkit3d::Vizkit3DWidget* CommandDispatcher::getWidget()
 }
 
 
+void CommandDispatcher::writePort(const std::string& drawingName, 
+                                  boost::shared_ptr<CommandBuffer> buffer)
+{
+    orogen_transports::TypelibMarshallerBase* marshaller = nullptr;
+    orogen_transports::TypelibMarshallerBase::Handle* handle = nullptr;
+    RTT::base::OutputPortInterface* port = nullptr;
 
+    const std::string typeName("/boost/shared_ptr</vizkit3dDebugDrawings/CommandBuffer>");
+    if(p->ports.find(drawingName) == p->ports.end())
+    {
+        //FIXME duplicate code from vizkit command
+        //FIXME load typeinfo in configure
+        //load typeinfo
+
+        RTT::types::TypeInfo* info = RTT::types::TypeInfoRepository::Instance()->type(typeName);
+        if(info == nullptr)
+        {
+            //load typekit if not loaded
+            std::string typekitName;
+            orocos_cpp::TypeRegistry reg;
+            reg.loadTypelist();
+            if(!reg.getTypekitDefiningType(typeName, typekitName))
+            {
+                LOG_ERROR_S << "vizkit3d_debug_drawings: Failed to load typekit for: " << typeName;
+                return;
+            }
+            if(!orocos_cpp::PluginHelper::loadTypekitAndTransports(typekitName))
+            {
+                LOG_ERROR_S << "vizkit3d_debug_drawings: Failed to load typekit: " << typekitName;
+                return;
+            }
+            info = RTT::types::TypeInfoRepository::Instance()->type(typeName);
+        }    
+        assert(info != nullptr);
+        
+        const std::string portName("debug_" + drawingName);
+
+        port = info->outputPort(portName);    
+        if (!port)
+        {
+            LOG_ERROR_S << "Unable to create port '" << portName << "'";
+            return;
+        }
+        p->task->ports()->addPort(port->getName(), *(port));
+        p->ports[drawingName] = port;
+        
+        marshaller = orogen_transports::getMarshallerFor(typeName);
+        handle = marshaller->createHandle();
+        p->handles[drawingName] = handle;
+    }
+    else
+    {
+        port = p->ports[drawingName];
+        marshaller = orogen_transports::getMarshallerFor(typeName);
+        handle = p->handles[drawingName];
+        //NOTE no need to delete, we use shared_ptr
+        //marshaller->deleteOrocosSample(handle);
+    }
+    
+    marshaller->setOrocosSample(handle, &buffer);
+    RTT::base::DataSourceBase::shared_ptr dataSource = marshaller->getDataSource(handle);
+    std::cout << ", " << buffer.use_count();
+    port->write(dataSource);
+}
 
 }
