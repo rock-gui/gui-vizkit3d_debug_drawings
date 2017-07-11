@@ -75,14 +75,7 @@ void CommandDispatcher::dispatch(const vizkit3dDebugDrawings::Command& cmd)
     }
     else if(p->task != nullptr)
     {
-        /* Re-sending the complete state instead of just sending the commands 
-         * produces some overhead. But depending on the connection type lots of
-         * commands may be dropped. If commands are dropped, the current state cannot
-         * be reproduced on the other end of the port. Thus we have to send the
-         * whole state every time. */
-        boost::shared_ptr<Command> pCmd(cmd.clone());
-        
-        p->cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
+
         sendCommandBuffer();
 
         
@@ -166,24 +159,7 @@ vizkit3d::Vizkit3DWidget* CommandDispatcher::getWidget()
 
 void CommandDispatcher::sendCommandBuffer()
 {
-    const base::Time now = base::Time::now();
-    
-    if(now.toMilliseconds() - p->lastSend.toMilliseconds() >= 100)
-    {
-        p->lastSend = now;
-        for(auto it : p->cmdBuffer)
-        {
-            std::cout << "sendnig: " << it.first << std::endl;
-            //need to copy because the buffer will switch threads when beeing written to the port.
-            //shallow copy is enough, the commands wont be modified.
-            //FIXME not sure if we really need to copy anymore since writePort marshalls?! 
-            //      Have to figure out if marshaller copys
-            
-            boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(p->cmdBuffer[it.first]));
-            writePort(it.first, copy);
-        }
-        
-    }
+
 }
 
 
@@ -199,7 +175,7 @@ void CommandDispatcher::writePort(const std::string& drawingName,
     {
         //FIXME duplicate code from vizkit command
         //FIXME load typeinfo in configure
-        //load typeinfo
+        //load typeinfo//
 
         RTT::types::TypeInfo* info = RTT::types::TypeInfoRepository::Instance()->type(typeName);
         if(info == nullptr)

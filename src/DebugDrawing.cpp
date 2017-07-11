@@ -15,7 +15,7 @@
 #include "commands/DrawVizkitTypeCommand.h"
 #include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
 
-#include "CommandDispatcher.h"
+#include "dispatch/CommandDispatcherFactory.hpp"
 #include <vizkit3d/Vizkit3DWidget.hpp>
 
 
@@ -27,7 +27,7 @@ void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& po
                         const base::Vector4d& colorRGBA)
 {
     DrawWireframeBoxCommand cmd(drawingName, position, orientation, size, colorRGBA);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);        
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);     
 }
 
 void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
@@ -42,7 +42,7 @@ void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
                 const base::Vector4d& colorRGBA)
 {
     DrawArrowCommand cmd(drawingName, position, orientation, size, colorRGBA);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);   
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);   
 }
 
 
@@ -59,7 +59,7 @@ void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
 { 
     DrawRingCommand cmd(drawingName, position, orientation, height, thickness, radius,
                         colorRGBA);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);    
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
 }
 
 void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
@@ -73,7 +73,7 @@ void DRAW_SPHERE(const std::string& drawingName, const base::Vector3d& position,
                  double radius, const base::Vector4d& colorRGBA)
 {
     DrawSphereCommand cmd(drawingName, position, radius, colorRGBA);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
@@ -87,7 +87,7 @@ void DRAW_POLYLINE(const std::string& drawingName, const base::Vector3d& positio
 {
     DrawPolyLineCommand cmd(drawingName, position, colorRGBA);
     cmd.getPoints().insert(cmd.getPoints().begin(), points.begin(), points.end());
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);    
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
 }
 
 /** @param points realtive to (0, 0, 0) */
@@ -104,7 +104,7 @@ void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
 {
     
     DrawTextCommand cmd(drawingName, position, orientation, text, fontSize, colorRGBA);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
@@ -134,7 +134,7 @@ void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const
     DrawPolyLineCommand cmd(drawingName, base::Vector3d(0, 0, 0), colorRGBA);
     cmd.getPoints().push_back(from);
     cmd.getPoints().push_back(to);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);    
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
 }
 
 void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
@@ -142,7 +142,7 @@ void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& positio
                    const base::Vector4d& colorRGBA)
 {
     DrawCylinderCommand cmd(drawingName, position, orientation, size, colorRGBA);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd); 
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd); 
 }
 
 void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
@@ -156,7 +156,7 @@ void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
                const base::Quaterniond& orientation, const base::Vector3d& size)
 {
     DrawAxesCommand cmd(drawingName,position, orientation, size);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
@@ -175,7 +175,7 @@ void DRAW_AABB(const std::string& drawingName, Eigen::AlignedBox3d box,
 {
 
     DrawAABBCommand cmd(drawingName, box.min(), box.max(), colorRGBA);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 
@@ -184,19 +184,19 @@ void DRAW_VIZKIT3D_TYPE(const std::string& drawingName, const base::Vector3d& po
                         void* data)
 {
     DrawVizkitTypeCommand cmd(drawingName, position, orientation, typeName, data);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint)
 {
     PlotCommand cmd(drawingName, dataPoint);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 void CLEAR_PLOT(const std::string& plotName)
 {
     ClearPlotCommand cmd(plotName);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 /** Removes the drawing.
@@ -205,7 +205,7 @@ void CLEAR_PLOT(const std::string& plotName)
 void REMOVE_DRAWING(const std::string& drawingName)
 {
     RemoveDrawingCommand cmd(drawingName);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);      
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);      
 }
 
 /** Removes the content from a drawing but keeps the drawing itself.
@@ -214,40 +214,34 @@ void REMOVE_DRAWING(const std::string& drawingName)
 void CLEAR_DRAWING(const std::string& drawingName)
 {
     ClearDrawingCommand cmd(drawingName);
-    CommandDispatcher::threadLocalInstance()->dispatch(cmd);  
+    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);  
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
 {
-    CommandDispatcher::threadLocalInstance()->configureStandalone();
+    CommandDispatcherFactory::createStandaloneDispatcher();
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * widget)
 {
-    CommandDispatcher::threadLocalInstance()->configureUseWidget(widget);
+    CommandDispatcherFactory::createWidgetDispatcher(widget);
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext)
 {
-    CommandDispatcher::threadLocalInstance()->configurePort(taskContext);
+    CommandDispatcherFactory::createPortDispatcher(taskContext);
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext)
 {
-    if(!CommandDispatcher::threadLocalInstance()->isConfigured())
-        CommandDispatcher::threadLocalInstance()->configurePort(taskContext);
+    if(!CommandDispatcherFactory::instanceExists())
+        CommandDispatcherFactory::createPortDispatcher(taskContext);
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget)
 {
-    if(!CommandDispatcher::threadLocalInstance()->isConfigured())
-        CommandDispatcher::threadLocalInstance()->configureUseWidget(widget);
-}
-
-
-vizkit3d::Vizkit3DWidget* GET_DEBUG_DRAWING_WIDGET()
-{
-    return CommandDispatcher::threadLocalInstance()->getWidget();
+    if(!CommandDispatcherFactory::instanceExists())
+        CommandDispatcherFactory::createWidgetDispatcher(widget);
 }
 
 

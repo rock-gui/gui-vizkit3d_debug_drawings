@@ -51,13 +51,7 @@ namespace vizkit3dDebugDrawings
         void configureStandalone();
         void configureUseWidget(vizkit3d::Vizkit3DWidget* widget);
         
-        
-        
         bool isConfigured() const;
-        
-        /** Returns the widget that is used for drawing.
-         *  @throw std::runtime_error if no widget is configured*/
-        vizkit3d::Vizkit3DWidget* getWidget();
         
     private:
         

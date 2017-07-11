@@ -20,6 +20,7 @@ void drawVizkitType()
 
 int main()
 {
+    CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
     
     //draw something to test buffering before configuration
     DRAW_CYLINDER("cylinder", base::Vector3d(3, 3, 2), base::Vector3d(1,1,1),
@@ -95,10 +96,6 @@ int main()
     Eigen::AlignedBox3d boundingBox(min, max);
     DRAW_AABB("AABB", boundingBox, vizkit3dDebugDrawings::Color::alloy_orange);
     
-    
-    //NOTE dont do configuration this late in the real world.
-    //     It is done here to ensure that all clone() methods are implemented correctly
-    CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
 
     
     drawVizkitType();

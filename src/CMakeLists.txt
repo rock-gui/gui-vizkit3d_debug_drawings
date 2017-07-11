@@ -5,7 +5,6 @@ rock_library(vizkit3d_debug_drawings
         DrawingManager.cpp
         DebugDrawing.cpp
         DebugDrawingColors.cpp
-        CommandDispatcher.cpp
         commands/DrawCommand.cpp
         commands/Command.cpp
         commands/RemoveDrawingCommand.cpp
@@ -23,13 +22,16 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawCylinderCommand.cpp
         commands/primitives/DrawAxesCommand.cpp
         commands/primitives/DrawAABBCommand.cpp
+        dispatch/CommandDispatcherFactory.cpp
+        dispatch/PortDispatcher.cpp
+        dispatch/StandaloneDispatcher.cpp
+        dispatch/ExistingWidgetDispatcher.cpp
         
     HEADERS 
         DebugDrawing.h
         Drawing.h
         DrawingManager.h
         DebugDrawingColors.h
-        CommandDispatcher.h
         PlotDataPoint.h
         commands/DrawCommand.h
         commands/Command.h
@@ -49,6 +51,11 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawAxesCommand.h
         commands/primitives/DrawAABBCommand.h
         commands/BoostSerializationExports.h
+        dispatch/ICommandDispatcher.hpp
+        dispatch/PortDispatcher.hpp
+        dispatch/CommandDispatcherFactory.hpp
+        dispatch/StandaloneDispatcher.hpp
+        dispatch/ExistingWidgetDispatcher.hpp
     DEPS_PKGCONFIG
         vizkit3d
         vizkit3d_plugin_information
@@ -58,3 +65,5 @@ rock_library(vizkit3d_debug_drawings
         orocos-rtt-${OROCOS_TARGET}
         orocos_cpp)
 
+
+add_subdirectory(dispatch)
