@@ -26,6 +26,7 @@
     #define DRAW_VIZKIT3D_TYPE(...) (void)0
     #define PLOT_2D(...) (void)0
     #define CLEAR_PLOT(...) (void)0
+    #define FLUSH_DRAWINGS(...) (void)0
     
     #define COMPLEX_DRAWING(...) (void)0
     
@@ -190,6 +191,9 @@ namespace vizkit3dDebugDrawings
      * I.e. the vizkit3d plugin will be kept and the users settings will be retained.
      * Use this if you want to animate movements.*/
     void CLEAR_DRAWING(const std::string& drawingName);
+    
+    /**Flush the drawing buffer */
+    void FLUSH_DRAWINGS();
     
     /**Use this if debug drawings need additional code that is only required for the drawing */
     #define COMPLEX_DRAWING(...) do { __VA_ARGS__; } while (0)

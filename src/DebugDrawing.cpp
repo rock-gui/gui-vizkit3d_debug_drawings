@@ -199,22 +199,21 @@ void CLEAR_PLOT(const std::string& plotName)
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
-/** Removes the drawing.
- * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
- * @note If you want to animate something, use CLEAR_DRAWING instead.*/
 void REMOVE_DRAWING(const std::string& drawingName)
 {
     RemoveDrawingCommand cmd(drawingName);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);      
 }
 
-/** Removes the content from a drawing but keeps the drawing itself.
- * I.e. the vizkit3d plugin will be kept and the users settings will be retained.
- * Use this if you want to animate movements.*/
 void CLEAR_DRAWING(const std::string& drawingName)
 {
     ClearDrawingCommand cmd(drawingName);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);  
+}
+
+void FLUSH_DRAWINGS()
+{
+    CommandDispatcherFactory::getThreadLocalInstance()->flush(); 
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
@@ -243,5 +242,3 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWid
     if(!CommandDispatcherFactory::instanceExists())
         CommandDispatcherFactory::createWidgetDispatcher(widget);
 }
-
-
