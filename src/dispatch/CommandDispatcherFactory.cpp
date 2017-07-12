@@ -13,7 +13,7 @@ void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContex
 {
     if(instanceExists())
     {
-        throw std::runtime_error("dispatcher already created");
+        throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
     }
     dispatcher.reset(new PortDispatcher(taskContext));
 }
@@ -22,7 +22,7 @@ void CommandDispatcherFactory::createStandaloneDispatcher()
 {
     if(instanceExists())
     {
-        throw std::runtime_error("dispatcher already created");
+        throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
     }
     dispatcher.reset(new StandaloneDispatcher());
 }
@@ -32,7 +32,7 @@ void CommandDispatcherFactory::createWidgetDispatcher(vizkit3d::Vizkit3DWidget* 
 {
     if(instanceExists())
     {
-        throw std::runtime_error("dispatcher already created");
+        throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
     }
     dispatcher.reset(new ExistingWidgetDispatcher(widget));
 }
@@ -43,7 +43,7 @@ std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::getThreadLocalInst
     {
         return dispatcher;
     }
-    throw std::runtime_error("Dispatcher not created");
+    throw std::runtime_error("vizkit3d_debug_drawings: Dispatcher not created.\n Are you invoking debug drawing methods from a different thread?");
 }
 
 bool CommandDispatcherFactory::instanceExists()
