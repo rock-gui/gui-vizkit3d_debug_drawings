@@ -99,6 +99,7 @@ void PortDispatcher::writePort(const std::string& drawingName, boost::shared_ptr
                 return;
             }
             taskContext->ports()->addPort(port->getName(), *(port));
+        }
         ports[drawingName] = port;
         marshaller = orogen_transports::getMarshallerFor(commandBufferTypeName);
         handle = marshaller->createHandle();
