@@ -37,7 +37,7 @@ PortDispatcher::PortDispatcher(RTT::TaskContext* taskContext) : taskContext(task
         }
         commandBufferInfo = RTT::types::TypeInfoRepository::Instance()->type(commandBufferTypeName);
     }    
-    assert(info != nullptr);
+    assert(commandBufferInfo != nullptr);
 }
 
     
@@ -86,18 +86,20 @@ void PortDispatcher::writePort(const std::string& drawingName, boost::shared_ptr
     //create port if it doesnt exist
     if(ports.find(drawingName) == ports.end())
     {
-        
         const std::string portName("debug_" + drawingName);
- 
-        port = commandBufferInfo->outputPort(portName);    
-        if (!port)
+        //try to get the port (might have been created in another thread)
+        port =  dynamic_cast<RTT::base::OutputPortInterface*>(taskContext->ports()->getPort(portName));
+        if(port == nullptr)
         {
-            LOG_ERROR_S << "Unable to create port '" << portName << "'";
-            return;
-        }
-        taskContext->ports()->addPort(port->getName(), *(port));
+            //either port does not exist or is not an output port.
+            port = commandBufferInfo->outputPort(portName);    
+            if (!port)
+            {
+                LOG_ERROR_S << "Unable to create port '" << portName << "'";
+                return;
+            }
+            taskContext->ports()->addPort(port->getName(), *(port));
         ports[drawingName] = port;
-        
         marshaller = orogen_transports::getMarshallerFor(commandBufferTypeName);
         handle = marshaller->createHandle();
         handles[drawingName] = handle;
