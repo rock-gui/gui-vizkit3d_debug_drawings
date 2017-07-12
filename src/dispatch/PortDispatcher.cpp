@@ -53,9 +53,10 @@ void PortDispatcher::dispatch(const Command& cmd)
 
     cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
     
-    //by default we flush every 100ms
+    //by default we flush every 1.5 seconds
+    //call flush manually if you want faster updates
     const base::Time now = base::Time::now();
-    if(now.toMilliseconds() - lastSend.toMilliseconds() >= 100)
+    if(now.toMilliseconds() - lastSend.toMilliseconds() >= 1500)
     {
         lastSend = now;
         flush();
