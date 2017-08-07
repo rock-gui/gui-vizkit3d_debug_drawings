@@ -4,6 +4,7 @@
 #include <boost/serialization/base_object.hpp>
 #include <boost_serialization/EigenTypes.hpp>
 #include <base/Eigen.hpp>
+#include <vector>
 
 namespace osgviz
 {
