@@ -29,6 +29,7 @@
     #define FLUSH_DRAWINGS(...) (void)0
     
     #define COMPLEX_DRAWING(...) (void)0
+    #define COMPLEX_DRAWING_NO_SCOPE(...) (void)0
     
     
 #else
@@ -195,8 +196,14 @@ namespace vizkit3dDebugDrawings
     /**Flush the drawing buffer */
     void FLUSH_DRAWINGS();
     
-    /**Use this if debug drawings need additional code that is only required for the drawing */
+    /**Use this if debug drawings need additional code that is only required for the drawing.
+     * @note This is scoped. I.e. variables created in here cannot be referenced from other scopes*/
     #define COMPLEX_DRAWING(...) do { __VA_ARGS__; } while (0)
+    
+    /**Use this if debug drawings need additional code that is requred for serveral drawings.
+     * @note no scope means that the content of this macro will be in the same scope as the macro
+     *       invokation. */
+    #define COMPLEX_DRAWING_NO_SCOPE(...) __VA_ARGS__;
     
 
 #endif
