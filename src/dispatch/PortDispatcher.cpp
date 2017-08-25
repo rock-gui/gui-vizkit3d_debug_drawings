@@ -3,7 +3,7 @@
 #include <base-logging/Logging.hpp>
 #include <orocos_cpp/PluginHelper.hpp>
 #include <orocos_cpp/TypeRegistry.hpp>
-
+#include <rtt/OutputPort.hpp>
 
 
 namespace vizkit3dDebugDrawings
@@ -13,12 +13,12 @@ PortDispatcher::~PortDispatcher()
 {}
 
 
-PortDispatcher::PortDispatcher(RTT::TaskContext* taskContext) : taskContext(taskContext),
-    commandBufferTypeName("/boost/shared_ptr</vizkit3dDebugDrawings/CommandBuffer>"),
+PortDispatcher::PortDispatcher(RTT::TaskContext* taskContext) : taskContext(taskContext),    
     lastSend(base::Time::now())
 {
+    std::string commandBufferTypeName("/boost/shared_ptr</vizkit3dDebugDrawings/CommandBuffer>");
     //load typeinfo
-    commandBufferInfo = RTT::types::TypeInfoRepository::Instance()->type(commandBufferTypeName);
+    RTT::types::TypeInfo *commandBufferInfo = RTT::types::TypeInfoRepository::Instance()->type(commandBufferTypeName);
     if(commandBufferInfo == nullptr)
     {
         //load typekit if not loaded
@@ -72,52 +72,46 @@ void PortDispatcher::flush()
         //FIXME not sure if we really need to copy anymore since writePort marshalls?! 
         //      Have to figure out if marshaller copys
         
-        boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(cmdBuffer[it.first]));
+        boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(it.second));
         writePort(it.first, copy);
+        
+        if(it.second.getCommands().size() > 300) 
+            std::cout << "CMD " << it.first << " has size " <<  it.second.getCommands().size() << std::endl;
     }
 }
 
 
 void PortDispatcher::writePort(const std::string& drawingName, boost::shared_ptr< CommandBuffer > buffer)
 {
-    orogen_transports::TypelibMarshallerBase* marshaller = nullptr;
-    orogen_transports::TypelibMarshallerBase::Handle* handle = nullptr;
-    RTT::base::OutputPortInterface* port = nullptr;
+    RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *typedPort;
+    
+    const auto &it = ports.find(drawingName);
     
     //create port if it doesnt exist
-    if(ports.find(drawingName) == ports.end())
+    if(it == ports.end())
     {
+        RTT::base::OutputPortInterface* port = nullptr;
         const std::string portName("debug_" + drawingName);
         //try to get the port (might have been created in another thread)
         port =  dynamic_cast<RTT::base::OutputPortInterface*>(taskContext->ports()->getPort(portName));
         if(port == nullptr)
         {
-            //either port does not exist or is not an output port.
-            port = commandBufferInfo->outputPort(portName);    
-            if (!port)
-            {
-                LOG_ERROR_S << "Unable to create port '" << portName << "'";
-                return;
-            }
+            typedPort = new RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>(portName, true);
+            port = typedPort;
             taskContext->ports()->addPort(port->getName(), *(port));
         }
+        else
+        {
+            typedPort = dynamic_cast<RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *>(port);
+        }
         ports[drawingName] = port;
-        marshaller = orogen_transports::getMarshallerFor(commandBufferTypeName);
-        handle = marshaller->createHandle();
-        handles[drawingName] = handle;
     }
     else
     {
-        port = ports[drawingName];
-        marshaller = orogen_transports::getMarshallerFor(commandBufferTypeName);
-        handle = handles[drawingName];
-        //NOTE no need to delete, we use shared_ptr
-        //marshaller->deleteOrocosSample(handle);
+        typedPort = dynamic_cast<RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *>(it->second);
     }
     
-    marshaller->setOrocosSample(handle, &buffer);
-    RTT::base::DataSourceBase::shared_ptr dataSource = marshaller->getDataSource(handle);
-    port->write(dataSource);
+    typedPort->write(buffer);
 }
 
 
