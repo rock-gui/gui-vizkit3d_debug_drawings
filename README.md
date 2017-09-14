@@ -30,7 +30,8 @@ DEPS_PKGCONFIG
     vizkit3d_debug_drawings
 ```
 By default all drawing code is disabled and will be removed by the compiler.
-To enable it *ENABLE_DEBUG_DRAWINGS* needs to be defined globally.
+To enable it *ENABLE_DEBUG_DRAWINGS* needs to be defined for every component
+containing debug drawing commands.
 ```
 add_definitions(-DENABLE_DEBUG_DRAWINGS)
 ```
@@ -44,7 +45,7 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widg
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext);
 ```
 
-Configuration is thread local. I.e. one of the configuration methods has to be called
+__Configuration is thread local.__ I.e. one of the configuration methods has to be called
 at startup of every new thread if the thread contains drawing code.
 An exception will be thrown if any drawing code is executed while V3DD is not
 configured.
@@ -105,7 +106,7 @@ COMPLEX_DRAWING(
 ```
 
 #### Clearing and Removing Drawings
-With a lot of drawings (especially inside loops) the visualization might get
+With a lot of drawings the visualization might get
 cluttered and laggy. To avoid that the user can clear drawings or remove them altogether. This is done by calling one of the following methods:
 ```c++
 void REMOVE_DRAWING(const std::string& drawingGroupName);
@@ -118,8 +119,44 @@ when you want to permanently remove a group.
 `CLEAR_DRAWING` will also remove all drawings belonging to the specified group. But it will not remove the plugin. It should be used when you intended to use the same group name again (e.g. during a later iteration) but want a clean canvas to draw on.
 
 
+#### Plotting 2D data
+In addition to 3D debug drawings, it is also possible to create simple 2D plots.
+```
+void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
+void CLEAR_PLOT(const std::string& plotName);
+
+```
+
+`PLOT_2D` will add a data point to an existing plot or create a new plot if
+the plot doesn't exist. Plots show up as docked widgets in the Vizkit3DWidget.
+
+At the time of writing plots can be cleared but not completely removed. This is likely to change in the future :)
+
+Example:
+```c++
+double x = 0.0;
+while(true)
+{
+    x += 0.1;
+    PLOT_2D("sin", {x,std::sin(x)});
+}
+```
+
+#### FLUSHING TODO
+
 Under the Hood
 -----------------
+
+#### Architecture
+
+
+#### Serialization
+
+
+
+
+#### Why is the Backend Thread-Local?
+As mentioned above the whole backend is thread-local. I.e. a separate instance of the backend exists for each thread. This design was chosen because this library is intended to be used inside the ROCK framework. Most of the time each ROCK task runs in its own thread. Thus to be able to distinguish between drawing commands from different tasks and attach the ports to the correct tasks the library needs to be thread local. Otherwise drawing commands from task *A* might be falsely send to a port on task *B*.
 
 
 
