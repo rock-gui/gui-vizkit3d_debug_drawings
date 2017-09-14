@@ -74,9 +74,6 @@ void PortDispatcher::flush()
         
         boost::shared_ptr<CommandBuffer> copy(new CommandBuffer(it.second));
         writePort(it.first, copy);
-        
-        if(it.second.getCommands().size() > 300) 
-            std::cout << "CMD " << it.first << " has size " <<  it.second.getCommands().size() << std::endl;
     }
 }
 
