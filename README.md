@@ -50,6 +50,13 @@ at startup of every new thread if the thread contains drawing code.
 An exception will be thrown if any drawing code is executed while V3DD is not
 configured.
 
+The configuration cannot be changed. Thus calling `CONFIGURE()` multiple times results in an exception. However sometimes it is convenient from a code perspective (e.g. to avoid the `ìf`) to call 'CONFIGURE()' multiple times. Special `NO_THROW` versions of some configuration methods exists for that case.
+
+```c++
+void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
+void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
+```
+
 At the time of writing the following modes exist:
 ###### CONFIGURE_DEBUG_DRAWINGS_STANDALONE
 In standalone mode a new QThread will be started containing a new QApplication context.
@@ -62,6 +69,8 @@ and a Vizkit3DWidget already exists. The existing widget will be used for visual
 ###### CONFIGURE_DEBUG_DRAWINGS_USE_PORT
 In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be
 visualized using rock-display.
+
+
 
 
 #### Simple Drawing
@@ -142,7 +151,20 @@ while(true)
 }
 ```
 
-#### FLUSHING TODO
+#### FLUSHING
+When sending drawing commands through rock ports the user needs to flush the
+send queue regularly. This should be done in the update loop of the corresponding
+task.
+
+```c++
+void SomeTask::updateHook()
+{
+    CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(this);
+    //your code here
+    FLUSH_DRAWINGS();
+    }
+```
+
 
 Under the Hood
 -----------------
@@ -152,13 +174,16 @@ Under the Hood
 
 
 #### Serialization
+Commands are serialized using boost to send them through rock ports as opaque type containing a binary blob with the serialized data. The Opaque conversion can be found [in this repository](https://github.com/arneboe/gui-orogen-vizkit3d_debug_drawings).
 
-
+Boost serialization was chosen over typekit serialization because typekit cannot handle virtual inheritance.
 
 
 #### Why is the Backend Thread-Local?
 As mentioned above the whole backend is thread-local. I.e. a separate instance of the backend exists for each thread. This design was chosen because this library is intended to be used inside the ROCK framework. Most of the time each ROCK task runs in its own thread. Thus to be able to distinguish between drawing commands from different tasks and attach the ports to the correct tasks the library needs to be thread local. Otherwise drawing commands from task *A* might be falsely send to a port on task *B*.
 
+#### Why is the whole drawing state sent through ports every time?
+The way rock-display connects ports allows for message loss. I.e. when too may messages are sent, they are dropped. This happens regularly. Thus we have to send the whole drawing state every time. Sending only incremental updates might lead to a corrupt state due to message loss.
 
 
 Inspiration
