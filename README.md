@@ -148,6 +148,7 @@ Under the Hood
 -----------------
 
 #### Architecture
+![Class diagram](https://github.com/arneboe/gui-vizkit3d_debug_drawings/raw/master/doc/class_diagram.png "Class Diagram")
 
 
 #### Serialization
