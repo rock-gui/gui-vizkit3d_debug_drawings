@@ -16,10 +16,10 @@ osg::ref_ptr< osgviz::Object > DrawArrowCommand::createPrimitive() const
     return prim;
 }
 
-DrawArrowCommand::DrawArrowCommand(const std::string& drawingName, const base::Vector3d& position,
+DrawArrowCommand::DrawArrowCommand(const std::string& drawingGroupName, const base::Vector3d& position,
                                    const base::Quaterniond& orientation, const base::Vector3d& scale,
                                    const base::Vector4d& colorRGBA) :
-        DrawCommand(drawingName), position(position), orientation(orientation), 
+        DrawCommand(drawingGroupName), position(position), orientation(orientation), 
         scale(scale), colorRGBA(colorRGBA)
 {}
     

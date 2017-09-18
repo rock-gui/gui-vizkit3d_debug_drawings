@@ -25,7 +25,7 @@ class DrawCommand : public Command
     }
     
 public:
-    DrawCommand(const std::string& drawingName);
+    DrawCommand(const std::string& drawingGroupName);
     
     /**Creates an osgviz::Object that represents the drawing*/
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const = 0;

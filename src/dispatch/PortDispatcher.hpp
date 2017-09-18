@@ -31,7 +31,7 @@ public:
     
 private:
     
-    void writePort(const std::string& drawingName, 
+    void writePort(const std::string& drawingGroupName, 
                    boost::shared_ptr<CommandBuffer> buffer);
     
     RTT::TaskContext* taskContext;//context in which ports will be created

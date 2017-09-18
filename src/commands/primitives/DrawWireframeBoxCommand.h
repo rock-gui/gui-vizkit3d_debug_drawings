@@ -30,7 +30,7 @@ class DrawWireframeBoxCommand : public DrawCommand
 public:
     DrawWireframeBoxCommand();
     
-    DrawWireframeBoxCommand(const std::string& drawingName, const base::Vector3d& position,
+    DrawWireframeBoxCommand(const std::string& drawingGroupName, const base::Vector3d& position,
                             const base::Quaterniond& orientation, const base::Vector3d& size,
                             const base::Vector4d& colorRGBA);
     

@@ -5,12 +5,12 @@
 
 namespace vizkit3dDebugDrawings
 {
-DrawTextCommand::DrawTextCommand(const std::string& drawingName,
+DrawTextCommand::DrawTextCommand(const std::string& drawingGroupName,
                                  const base::Vector3d& position,
                                  const base::Quaterniond& orientation,
                                  const std::string& text, double fontSize,
                                  const base::Vector4d& colorRGBA): 
-         DrawCommand(drawingName), position(position), orientation(orientation),
+         DrawCommand(drawingGroupName), position(position), orientation(orientation),
          text(text), fontSize(fontSize), colorRGBA(colorRGBA)
 {}
 

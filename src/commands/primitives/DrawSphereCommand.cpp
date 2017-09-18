@@ -12,11 +12,11 @@ DrawSphereCommand::DrawSphereCommand(): DrawCommand("default")
 
     
     
-DrawSphereCommand::DrawSphereCommand(const std::string& drawingName,
+DrawSphereCommand::DrawSphereCommand(const std::string& drawingGroupName,
                                                             const base::Vector3d& position,
                                                             double radius,
                                                             const base::Vector4d& colorRGBA) :
-        DrawCommand(drawingName), position(position), radius(radius), colorRGBA(colorRGBA)
+        DrawCommand(drawingGroupName), position(position), radius(radius), colorRGBA(colorRGBA)
 {}
 
 osg::ref_ptr<osgviz::Object> DrawSphereCommand::createPrimitive() const

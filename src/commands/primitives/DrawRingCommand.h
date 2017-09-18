@@ -34,7 +34,7 @@ class DrawRingCommand : public DrawCommand
 public:
     DrawRingCommand();
     
-    DrawRingCommand(const std::string& drawingName, const base::Vector3d& position,
+    DrawRingCommand(const std::string& drawingGroupName, const base::Vector3d& position,
                     const base::Quaterniond& orientation, double height,
                     double thickness, double radius, const base::Vector4d& colorRGBA);
     

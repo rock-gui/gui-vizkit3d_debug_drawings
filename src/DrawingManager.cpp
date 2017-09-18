@@ -33,19 +33,19 @@ namespace vizkit3dDebugDrawings
         return p->widget;
     }
     
-    void DrawingManager::addPrimitive(const std::string& drawingName, const osg::ref_ptr<osgviz::Object>& primitive)
+    void DrawingManager::addPrimitive(const std::string& drawingGroupName, const osg::ref_ptr<osgviz::Object>& primitive)
     {
-        checkStringNotEmpty(drawingName);
+        checkStringNotEmpty(drawingGroupName);
 
-        Drawing& d = p->drawings[drawingName];
+        Drawing& d = p->drawings[drawingGroupName];
         d.addPrimitive(primitive);
-        d.setName(drawingName); //d might be a new Drawing
+        d.setName(drawingGroupName); //d might be a new Drawing
         
-        if(p->drawingPlugins.find(drawingName) == p->drawingPlugins.end())
+        if(p->drawingPlugins.find(drawingGroupName) == p->drawingPlugins.end())
         {
             //new drawing, need new plugin
-            p->drawingPlugins[drawingName] = loadPlugin("DrawingVisualization");
-            assert(p->drawingPlugins[drawingName] != nullptr);
+            p->drawingPlugins[drawingGroupName] = loadPlugin("DrawingVisualization");
+            assert(p->drawingPlugins[drawingGroupName] != nullptr);
         }
         
         updateData(d);
@@ -80,38 +80,38 @@ namespace vizkit3dDebugDrawings
     }
 
     
-    void DrawingManager::removeDrawing(const std::string& drawingName)
+    void DrawingManager::removeDrawing(const std::string& drawingGroupName)
     {
-        checkStringNotEmpty(drawingName);
+        checkStringNotEmpty(drawingGroupName);
         
-        p->drawings.erase(drawingName);
+        p->drawings.erase(drawingGroupName);
         
-        if(p->drawingPlugins.find(drawingName) != p->drawingPlugins.end())
+        if(p->drawingPlugins.find(drawingGroupName) != p->drawingPlugins.end())
         {
             //async invoke slot to avoid any threading issues with the gui thread
             QMetaObject::invokeMethod(p->widget, "removePlugin", Qt::QueuedConnection,
-                                  Q_ARG(QObject*, p->drawingPlugins[drawingName]));
-            p->drawingPlugins.erase(drawingName);
+                                  Q_ARG(QObject*, p->drawingPlugins[drawingGroupName]));
+            p->drawingPlugins.erase(drawingGroupName);
         }
         
         //FIXME duplicate code?!
-//         if(p->plotPlugins.find(drawingName) != p->plotPlugins.end())
+//         if(p->plotPlugins.find(drawingGroupName) != p->plotPlugins.end())
 //         {
 //             QMetaObject::invokeMethod(p->widget, "removePlugin", Qt::QueuedConnection,
-//                                   Q_ARG(QObject*, p->plotPlugins[drawingName]));
-//             p->plotPlugins.erase(drawingName);
+//                                   Q_ARG(QObject*, p->plotPlugins[drawingGroupName]));
+//             p->plotPlugins.erase(drawingGroupName);
 //         }
         
     }
     
-    void DrawingManager::clearDrawing(const std::string& drawingName)
+    void DrawingManager::clearDrawing(const std::string& drawingGroupName)
     {
-        checkStringNotEmpty(drawingName);
+        checkStringNotEmpty(drawingGroupName);
         
-        if(p->drawings.find(drawingName) != p->drawings.end())
+        if(p->drawings.find(drawingGroupName) != p->drawings.end())
         {
-            p->drawings[drawingName].clear();
-            updateData(p->drawings[drawingName]);
+            p->drawings[drawingGroupName].clear();
+            updateData(p->drawings[drawingGroupName]);
         }        
     }
     
@@ -157,7 +157,7 @@ namespace vizkit3dDebugDrawings
     {
         if(str.empty())
         {
-            throw std::runtime_error("drawingName is empty");
+            throw std::runtime_error("drawingGroupName is empty");
         }
     }
 

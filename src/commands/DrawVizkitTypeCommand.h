@@ -32,7 +32,7 @@ class DrawVizkitTypeCommand : public Command
     }
     
 public:
-    DrawVizkitTypeCommand(const std::string& drawingName, const base::Vector3d& position,
+    DrawVizkitTypeCommand(const std::string& drawingGroupName, const base::Vector3d& position,
                           const base::Quaterniond& orientation, const std::string& typeName,
                           void* pData);
     DrawVizkitTypeCommand();

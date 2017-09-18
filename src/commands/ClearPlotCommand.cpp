@@ -14,8 +14,8 @@ void ClearPlotCommand::execute(DrawingManager* drawingManager) const
     drawingManager->clearPlot(getDrawingName());
 }
 
-ClearPlotCommand::ClearPlotCommand(const std::string& drawingName) :
-        Command(drawingName)
+ClearPlotCommand::ClearPlotCommand(const std::string& drawingGroupName) :
+        Command(drawingGroupName)
 {
     
 }

@@ -30,7 +30,7 @@ class DrawCylinderCommand : public DrawCommand
 public:
     DrawCylinderCommand();
     
-    DrawCylinderCommand(const std::string& drawingName, const base::Vector3d& position,
+    DrawCylinderCommand(const std::string& drawingGroupName, const base::Vector3d& position,
                      const base::Quaterniond& orientation, const base::Vector3d& size,
                       const base::Vector4d& colorRGBA);
     

@@ -27,7 +27,7 @@ class DrawAxesCommand : public DrawCommand
 public:
     DrawAxesCommand();
     
-    DrawAxesCommand(const std::string& drawingName, const base::Vector3d& position,
+    DrawAxesCommand(const std::string& drawingGroupName, const base::Vector3d& position,
                      const base::Quaterniond& orientation, const base::Vector3d& scale);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;

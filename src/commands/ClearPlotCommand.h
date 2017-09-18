@@ -22,7 +22,7 @@ class ClearPlotCommand : public Command
     }
     
 public:
-    ClearPlotCommand(const std::string& drawingName);
+    ClearPlotCommand(const std::string& drawingGroupName);
     ClearPlotCommand();
     
     virtual void execute(DrawingManager* drawingManager) const;

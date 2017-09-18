@@ -26,10 +26,10 @@ osg::ref_ptr< osgviz::Object > DrawPolyLineCommand::createPrimitive() const
     return prim;
 }
 
-DrawPolyLineCommand::DrawPolyLineCommand(const std::string& drawingName,
+DrawPolyLineCommand::DrawPolyLineCommand(const std::string& drawingGroupName,
                                          const base::Vector3d& position,
                                          const base::Vector4d& colorRGBA):
-        DrawCommand(drawingName), position(position), colorRGBA(colorRGBA)
+        DrawCommand(drawingGroupName), position(position), colorRGBA(colorRGBA)
 {}
  
 DrawPolyLineCommand::DrawPolyLineCommand(): DrawCommand("default")

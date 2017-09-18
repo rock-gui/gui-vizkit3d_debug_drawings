@@ -20,12 +20,12 @@ vizkit3dDebugDrawings::DrawVizkitTypeCommand::DrawVizkitTypeCommand() : Command(
 
 
 
-vizkit3dDebugDrawings::DrawVizkitTypeCommand::DrawVizkitTypeCommand(const std::string& drawingName,
+vizkit3dDebugDrawings::DrawVizkitTypeCommand::DrawVizkitTypeCommand(const std::string& drawingGroupName,
                                                                     const base::Vector3d& position,
                                                                     const base::Quaterniond& orientation,
                                                                     const std::string& typeName,
                                                                     void* pData) :
-    Command(drawingName), position(position), orientation(orientation), typeName(typeName)
+    Command(drawingGroupName), position(position), orientation(orientation), typeName(typeName)
 {
     marshall(typeName, pData);
 }

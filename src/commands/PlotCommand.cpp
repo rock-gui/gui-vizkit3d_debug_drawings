@@ -14,8 +14,8 @@ void PlotCommand::execute(DrawingManager* drawingManager) const
     drawingManager->addPlotDataPoint(getDrawingName(), dataPoint);
 }
 
-PlotCommand::PlotCommand(const std::string& drawingName, const base::Vector2d& dataPoint):
-        Command(drawingName), dataPoint(dataPoint)
+PlotCommand::PlotCommand(const std::string& drawingGroupName, const base::Vector2d& dataPoint):
+        Command(drawingGroupName), dataPoint(dataPoint)
 {}
 
 PlotCommand::PlotCommand() : Command("default"), dataPoint(base::Vector2d::Zero())

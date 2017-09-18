@@ -18,11 +18,11 @@ osg::ref_ptr< osgviz::Object > vizkit3dDebugDrawings::DrawAxesCommand::createPri
     return prim;
 }
 
-vizkit3dDebugDrawings::DrawAxesCommand::DrawAxesCommand(const std::string& drawingName,
+vizkit3dDebugDrawings::DrawAxesCommand::DrawAxesCommand(const std::string& drawingGroupName,
                                                         const base::Vector3d& position,
                                                         const base::Quaterniond& orientation,
                                                         const base::Vector3d& scale)
-    : DrawCommand(drawingName), position(position), orientation(orientation), scale(scale)
+    : DrawCommand(drawingGroupName), position(position), orientation(orientation), scale(scale)
 {
 
 }

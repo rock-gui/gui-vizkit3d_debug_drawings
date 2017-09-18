@@ -78,17 +78,17 @@ void PortDispatcher::flush()
 }
 
 
-void PortDispatcher::writePort(const std::string& drawingName, boost::shared_ptr< CommandBuffer > buffer)
+void PortDispatcher::writePort(const std::string& drawingGroupName, boost::shared_ptr< CommandBuffer > buffer)
 {
     RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *typedPort;
     
-    const auto &it = ports.find(drawingName);
+    const auto &it = ports.find(drawingGroupName);
     
     //create port if it doesnt exist
     if(it == ports.end())
     {
         RTT::base::OutputPortInterface* port = nullptr;
-        const std::string portName("debug_" + drawingName);
+        const std::string portName("debug_" + drawingGroupName);
         //try to get the port (might have been created in another thread)
         port =  dynamic_cast<RTT::base::OutputPortInterface*>(taskContext->ports()->getPort(portName));
         if(port == nullptr)
@@ -101,7 +101,7 @@ void PortDispatcher::writePort(const std::string& drawingName, boost::shared_ptr
         {
             typedPort = dynamic_cast<RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *>(port);
         }
-        ports[drawingName] = port;
+        ports[drawingGroupName] = port;
     }
     else
     {

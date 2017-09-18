@@ -15,16 +15,16 @@ namespace vizkit3dDebugDrawings
         template<class Archive>
         void serialize(Archive & ar, const unsigned int version)
         {
-            ar & drawingName;
+            ar & drawingGroupName;
         }
         
         /**The name (unique id) of the drawing that this primitive belongs to */
-        std::string drawingName;
+        std::string drawingGroupName;
         
     public:
         /** Execute this command on the @p drawingManager*/
         virtual void execute(DrawingManager* drawingManager) const;
-        Command(const std::string& drawingName);
+        Command(const std::string& drawingGroupName);
         Command();
         
         virtual ~Command();

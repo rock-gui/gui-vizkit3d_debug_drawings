@@ -22,174 +22,175 @@
 using namespace vizkit3dDebugDrawings;
 
 
-void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const base::Vector3d& position,
                         const base::Quaterniond& orientation, const base::Vector3d& size,
                         const base::Vector4d& colorRGBA)
 {
-    DrawWireframeBoxCommand cmd(drawingName, position, orientation, size, colorRGBA);
+    DrawWireframeBoxCommand cmd(drawingGroupName, position, orientation, size, colorRGBA);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);     
 }
 
-void DRAW_WIREFRAME_BOX(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const base::Vector3d& position,
                         const base::Vector3d& size, const base::Vector4d& colorRGBA)
 {
-    DRAW_WIREFRAME_BOX(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
+    DRAW_WIREFRAME_BOX(drawingGroupName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
 
-void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_ARROW(const std::string& drawingGroupName, const base::Vector3d& position,
                 const base::Quaterniond& orientation, const base::Vector3d& size,
                 const base::Vector4d& colorRGBA)
 {
-    DrawArrowCommand cmd(drawingName, position, orientation, size, colorRGBA);
+    DrawArrowCommand cmd(drawingGroupName, position, orientation, size, colorRGBA);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);   
 }
 
 
-void DRAW_ARROW(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_ARROW(const std::string& drawingGroupName, const base::Vector3d& position,
                 const base::Vector3d& size, const base::Vector4d& colorRGBA)
 {
-    DRAW_ARROW(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
+    DRAW_ARROW(drawingGroupName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
 
-void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_RING(const std::string& drawingGroupName, const base::Vector3d& position,
                const base::Quaterniond& orientation, double radius,
                double height, double thickness, const base::Vector4d& colorRGBA) 
 { 
-    DrawRingCommand cmd(drawingName, position, orientation, height, thickness, radius,
+    DrawRingCommand cmd(drawingGroupName, position, orientation, height, thickness, radius,
                         colorRGBA);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
 }
 
-void DRAW_RING(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_RING(const std::string& drawingGroupName, const base::Vector3d& position,
                double radius, double height, double thickness, const base::Vector4d& colorRGBA)
 {
-    DRAW_RING(drawingName, position, base::Quaterniond::Identity(), radius,
+    DRAW_RING(drawingGroupName, position, base::Quaterniond::Identity(), radius,
               height, thickness, colorRGBA);
 }
 
-void DRAW_SPHERE(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_SPHERE(const std::string& drawingGroupName, const base::Vector3d& position,
                  double radius, const base::Vector4d& colorRGBA)
 {
-    DrawSphereCommand cmd(drawingName, position, radius, colorRGBA);
+    DrawSphereCommand cmd(drawingGroupName, position, radius, colorRGBA);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
-void DRAW_SPHERE(const std::string& drawingName, double posX, double posY, double posZ,
+void DRAW_SPHERE(const std::string& drawingGroupName, double posX, double posY, double posZ,
                  double radius, const base::Vector4d& colorRGBA)
 {
-    DRAW_SPHERE(drawingName, base::Vector3d(posX, posY, posZ), radius, colorRGBA);
+    DRAW_SPHERE(drawingGroupName, base::Vector3d(posX, posY, posZ), radius, colorRGBA);
 }
 
-void DRAW_POLYLINE(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_POLYLINE(const std::string& drawingGroupName, const base::Vector3d& position,
                    const std::vector<base::Vector3d>& points, const base::Vector4d& colorRGBA)
 {
-    DrawPolyLineCommand cmd(drawingName, position, colorRGBA);
+    DrawPolyLineCommand cmd(drawingGroupName, position, colorRGBA);
     cmd.getPoints().insert(cmd.getPoints().begin(), points.begin(), points.end());
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
 }
 
 /** @param points realtive to (0, 0, 0) */
-void DRAW_POLYLINE(const std::string& drawingName, const std::vector<base::Vector3d>& points,
+void DRAW_POLYLINE(const std::string& drawingGroupName, const std::vector<base::Vector3d>& points,
                    const base::Vector4d& colorRGBA)
 {
-    DRAW_POLYLINE(drawingName, base::Vector3d(0, 0, 0), points, colorRGBA);
+    DRAW_POLYLINE(drawingGroupName, base::Vector3d(0, 0, 0), points, colorRGBA);
 }
 
 
-void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_TEXT(const std::string& drawingGroupName, const base::Vector3d& position,
                const base::Quaterniond& orientation, const std::string& text,
                double fontSize, const base::Vector4d& colorRGBA)
 {
     
-    DrawTextCommand cmd(drawingName, position, orientation, text, fontSize, colorRGBA);
+    DrawTextCommand cmd(drawingGroupName, position, orientation, text, fontSize, colorRGBA);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
-void DRAW_TEXT(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_TEXT(const std::string& drawingGroupName, const base::Vector3d& position,
                const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
 {
-    DRAW_TEXT(drawingName, position, base::Quaterniond::Identity(), text, fontSize, colorRGBA);
+    DRAW_TEXT(drawingGroupName, position, base::Quaterniond::Identity(), text, fontSize, colorRGBA);
 }
 
-void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
+void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
                double rotW, double rotX, double rotY, double rotZ,
                const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
 {
-    DRAW_TEXT(drawingName, base::Vector3d(posX, posY, posZ), base::Quaterniond(rotW, rotX, rotY, rotZ),
+    DRAW_TEXT(drawingGroupName, base::Vector3d(posX, posY, posZ), base::Quaterniond(rotW, rotX, rotY, rotZ),
                                           text, fontSize, colorRGBA);    
 }
 
-void DRAW_TEXT(const std::string& drawingName, double posX, double posY, double posZ,
+void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
                const std::string& text, double fontSize, const base::Vector4d& colorRGBA)
 {
-    DRAW_TEXT(drawingName, base::Vector3d(posX, posY, posZ), base::Quaterniond::Identity(),
+    DRAW_TEXT(drawingGroupName, base::Vector3d(posX, posY, posZ), base::Quaterniond::Identity(),
                                           text, fontSize, colorRGBA);     
 }
 
-void DRAW_LINE(const std::string& drawingName, const base::Vector3d& from, const base::Vector3d& to,
+void DRAW_LINE(const std::string& drawingGroupName, const base::Vector3d& from, const base::Vector3d& to,
                const base::Vector4d& colorRGBA)
 {
-    DrawPolyLineCommand cmd(drawingName, base::Vector3d(0, 0, 0), colorRGBA);
+    DrawPolyLineCommand cmd(drawingGroupName, base::Vector3d(0, 0, 0), colorRGBA);
     cmd.getPoints().push_back(from);
     cmd.getPoints().push_back(to);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
 }
 
-void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_CYLINDER(const std::string& drawingGroupName, const base::Vector3d& position,
                    const base::Quaterniond& orientation, const base::Vector3d& size,
                    const base::Vector4d& colorRGBA)
 {
-    DrawCylinderCommand cmd(drawingName, position, orientation, size, colorRGBA);
+    DrawCylinderCommand cmd(drawingGroupName, position, orientation, size, colorRGBA);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd); 
 }
 
-void DRAW_CYLINDER(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_CYLINDER(const std::string& drawingGroupName, const base::Vector3d& position,
                    const base::Vector3d& size, const base::Vector4d& colorRGBA)
 {
-    DRAW_CYLINDER(drawingName, position, base::Quaterniond::Identity(), size, colorRGBA);
+    DRAW_CYLINDER(drawingGroupName, position, base::Quaterniond::Identity(), size, colorRGBA);
 }
 
 
-void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_AXES(const std::string& drawingGroupName, const base::Vector3d& position,
                const base::Quaterniond& orientation, const base::Vector3d& size)
 {
-    DrawAxesCommand cmd(drawingName,position, orientation, size);
+    DrawAxesCommand cmd(drawingGroupName,position, orientation, size);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
-void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_AXES(const std::string& drawingGroupName, const base::Vector3d& position,
                const base::Quaterniond& orientation)
 {
-    DRAW_AXES(drawingName, position, orientation, base::Vector3d(1, 1, 1));
+    DRAW_AXES(drawingGroupName, position, orientation, base::Vector3d(1, 1, 1));
 }
 
-void DRAW_AXES(const std::string& drawingName, const base::Vector3d& position)
+void DRAW_AXES(const std::string& drawingGroupName, const base::Vector3d& position)
 {
-    DRAW_AXES(drawingName, position, base::Quaterniond::Identity());
+    DRAW_AXES(drawingGroupName, position, base::Quaterniond::Identity());
 }
 
-void DRAW_AABB(const std::string& drawingName, Eigen::AlignedBox3d box, 
+void DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box, 
                const base::Vector4d& colorRGBA)
 {
 
-    DrawAABBCommand cmd(drawingName, box.min(), box.max(), colorRGBA);
+    DrawAABBCommand cmd(drawingGroupName, box.min(), box.max(), colorRGBA);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
 
-void DRAW_VIZKIT3D_TYPE(const std::string& drawingName, const base::Vector3d& position,
+void DRAW_VIZKIT3D_TYPE(const std::string& drawingGroupName, const base::Vector3d& position,
                         const base::Quaterniond& orientation, const std::string& typeName,
                         void* data)
 {
-    DrawVizkitTypeCommand cmd(drawingName, position, orientation, typeName, data);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
+    throw std::runtime_error("DRAW_VIZKIT3D_TYPE not implemented");
+//     DrawVizkitTypeCommand cmd(drawingGroupName, position, orientation, typeName, data);
+//     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
-void PLOT_2D(const std::string& drawingName, const base::Vector2d& dataPoint)
+void PLOT_2D(const std::string& drawingGroupName, const base::Vector2d& dataPoint)
 {
-    PlotCommand cmd(drawingName, dataPoint);
+    PlotCommand cmd(drawingGroupName, dataPoint);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
@@ -199,15 +200,15 @@ void CLEAR_PLOT(const std::string& plotName)
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
-void REMOVE_DRAWING(const std::string& drawingName)
+void REMOVE_DRAWING(const std::string& drawingGroupName)
 {
-    RemoveDrawingCommand cmd(drawingName);
+    RemoveDrawingCommand cmd(drawingGroupName);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);      
 }
 
-void CLEAR_DRAWING(const std::string& drawingName)
+void CLEAR_DRAWING(const std::string& drawingGroupName)
 {
-    ClearDrawingCommand cmd(drawingName);
+    ClearDrawingCommand cmd(drawingGroupName);
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);  
 }
 

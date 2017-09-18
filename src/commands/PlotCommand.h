@@ -23,7 +23,7 @@ class PlotCommand : public Command
     }
     
 public:
-    PlotCommand(const std::string& drawingName, const base::Vector2d& dataPoint);
+    PlotCommand(const std::string& drawingGroupName, const base::Vector2d& dataPoint);
     PlotCommand();
     
     virtual void execute(DrawingManager* drawingManager) const;

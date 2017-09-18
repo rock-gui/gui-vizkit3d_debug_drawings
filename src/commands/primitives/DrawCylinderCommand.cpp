@@ -16,12 +16,12 @@ osg::ref_ptr< osgviz::Object > DrawCylinderCommand::createPrimitive() const
     return prim;
 }
 
-DrawCylinderCommand::DrawCylinderCommand(const std::string& drawingName,
+DrawCylinderCommand::DrawCylinderCommand(const std::string& drawingGroupName,
                                          const base::Vector3d& position,
                                          const base::Quaterniond& orientation,
                                          const base::Vector3d& size,
                                          const base::Vector4d& colorRGBA):
-        DrawCommand(drawingName), position(position), orientation(orientation),
+        DrawCommand(drawingGroupName), position(position), orientation(orientation),
         size(size), colorRGBA(colorRGBA)
 {}
 

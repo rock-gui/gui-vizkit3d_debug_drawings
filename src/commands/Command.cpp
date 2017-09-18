@@ -19,14 +19,14 @@ Command* Command::clone() const
 
 const std::string& Command::getDrawingName() const
 {
-    return drawingName;
+    return drawingGroupName;
 }
 
-Command::Command(const std::string& drawingName) : drawingName(drawingName)
+Command::Command(const std::string& drawingGroupName) : drawingGroupName(drawingGroupName)
 {
     
 }
-Command::Command() : drawingName("default")
+Command::Command() : drawingGroupName("default")
 {
 
 }
