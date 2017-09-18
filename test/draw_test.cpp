@@ -8,16 +8,6 @@
 #include <random>
 
 
-void drawVizkitType()
-{
-    base::samples::RigidBodyState rbs;
-    rbs.position << 0, 0, 0;
-    rbs.orientation = base::Quaterniond::Identity();    
-    const base::Vector3d pos(3, 3, 3);
-    const base::Quaterniond rot = base::Quaterniond::Identity();
-    DRAW_VIZKIT3D_TYPE("vizkitType", pos, rot, "/base/samples/RigidBodyState", &rbs);
-}
-
 int main()
 {
     CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
@@ -96,9 +86,6 @@ int main()
     Eigen::AlignedBox3d boundingBox(min, max);
     DRAW_AABB("AABB", boundingBox, vizkit3dDebugDrawings::Color::alloy_orange);
     
-
-    
-    drawVizkitType();
 
     
     double x = 0;

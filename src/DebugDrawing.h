@@ -24,7 +24,6 @@
     #define DRAW_AABB(...) (void)0
     #define DRAW_ARROW(...) (void)0
     #define DRAW_CYLINDER(...) (void)0
-    #define DRAW_VIZKIT3D_TYPE(...) (void)0
     #define PLOT_2D(...) (void)0
     #define CLEAR_PLOT(...) (void)0
     #define FLUSH_DRAWINGS(...) (void)0
@@ -173,12 +172,7 @@ namespace vizkit3dDebugDrawings
     /** draw axis aligned bounding box */
     void DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box,
                    const base::Vector4d& colorRGBA);
-    
-    void DRAW_VIZKIT3D_TYPE(const std::string& drawingGroupName, const base::Vector3d& position,
-                            const base::Quaterniond& orientation, const std::string& typeName,
-                            void* data);
-    
-    
+
     void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
     
     void CLEAR_PLOT(const std::string& plotName);

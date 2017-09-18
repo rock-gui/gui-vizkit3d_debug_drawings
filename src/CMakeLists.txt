@@ -12,7 +12,6 @@ rock_library(vizkit3d_debug_drawings
         commands/CommandBuffer.cpp
         commands/PlotCommand.cpp
         commands/ClearPlotCommand.cpp
-        commands/DrawVizkitTypeCommand.cpp
         commands/primitives/DrawSphereCommand.cpp
         commands/primitives/DrawTextCommand.cpp
         commands/primitives/DrawRingCommand.cpp
@@ -40,7 +39,6 @@ rock_library(vizkit3d_debug_drawings
         commands/CommandBuffer.h
         commands/PlotCommand.h
         commands/ClearPlotCommand.h
-        commands/DrawVizkitTypeCommand.h
         commands/primitives/DrawSphereCommand.h
         commands/primitives/DrawTextCommand.h
         commands/primitives/DrawRingCommand.h

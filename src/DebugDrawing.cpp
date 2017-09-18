@@ -12,7 +12,6 @@
 #include "commands/ClearDrawingCommand.h"
 #include "commands/PlotCommand.h"
 #include "commands/ClearPlotCommand.h"
-#include "commands/DrawVizkitTypeCommand.h"
 #include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
 
 #include "dispatch/CommandDispatcherFactory.hpp"
@@ -178,15 +177,6 @@ void DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box,
     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
 }
 
-
-void DRAW_VIZKIT3D_TYPE(const std::string& drawingGroupName, const base::Vector3d& position,
-                        const base::Quaterniond& orientation, const std::string& typeName,
-                        void* data)
-{
-    throw std::runtime_error("DRAW_VIZKIT3D_TYPE not implemented");
-//     DrawVizkitTypeCommand cmd(drawingGroupName, position, orientation, typeName, data);
-//     CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
-}
 
 void PLOT_2D(const std::string& drawingGroupName, const base::Vector2d& dataPoint)
 {
