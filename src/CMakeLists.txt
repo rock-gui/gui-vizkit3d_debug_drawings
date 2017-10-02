@@ -58,6 +58,7 @@ rock_library(vizkit3d_debug_drawings
         vizkit3d
         vizkit3d_plugin_information
         osgViz
+        PrimitivesFactory
         base-types
         boost_serialization
         orocos-rtt-${OROCOS_TARGET}
