@@ -27,7 +27,7 @@ Nothing special has to be done to compile inside ROCK. Just call *amake* and wai
 
 #### Compiling standalone
 
-Several dependencies need to be compiled and installed using a common install folder *<PATH_TO_INSTALL_PREFIX>*.
+Several dependencies need to be compiled and installed using a common install prefix.
 
 ##### Prepare environment
 Create env.sh with following content and source it:
