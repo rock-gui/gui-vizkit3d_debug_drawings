@@ -79,7 +79,7 @@ template <class T>
 void compare(const std::vector<T>& a, const std::vector<T>& b)
 {
     BOOST_CHECK(a.size() == b.size());
-    for(int i = 0; i < a.size(); ++i)
+    for(size_t i = 0; i < a.size(); ++i)
     {
         compare(a[i], b[i]);
     }
