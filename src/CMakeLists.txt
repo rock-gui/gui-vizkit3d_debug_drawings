@@ -56,7 +56,6 @@ rock_library(vizkit3d_debug_drawings
         dispatch/ExistingWidgetDispatcher.hpp
     DEPS_PKGCONFIG
         vizkit3d
-        vizkit3d_plugin_information
         osgViz
         PrimitivesFactory
         base-types
