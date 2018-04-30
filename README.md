@@ -19,6 +19,64 @@ Features
 
 
 
+Compiling
+-----------------
+
+#### Compiling inside ROCK
+Nothing special has to be done to compile inside ROCK. Just call *amake* and wait.
+
+#### Compiling standalone
+
+Several dependencies need to be compiled and installed using a common install folder *<PATH_TO_INSTALL_PREFIX>*.
+
+##### Prepare environment
+Create env.sh with following content and source it:
+```
+export CMAKE_PREFIX_PATH=<PATH_TO_INSTALL_PREFIX>
+export PKG_CONFIG_PATH=<PATH_TO_INSTALL_PREFIX>/lib/pkgconfig:<PATH_TO_INSTALL_PREFIX>/share/pkgconfig:<PATH_TO_INSTALL_PREFIX>/lib64/pkgconfig:$PKG_CONFIG_PATH
+export LD_LIBRARY_PATH=<PATH_TO_INSTALL_PREFIX>/lib:<PATH_TO_INSTALL_PREFIX>/lib64:$PKG_CONFIG_PATH
+export PATH=<PATH_TO_INSTALL_PREFIX>/bin:$PATH
+export VIZKIT_PLUGIN_RUBY_PATH=<PATH_TO_INSTALL_PREFIX>/lib
+```
+
+Most of the environment is only needed while building. The only thing that needs to be exported to be able to run the code is
+*VIZKIT_PLUGIN_RUBY_PATH*. This variable is used by vizkit3d to locate the visualization plugins.
+
+##### install osgviz
+```
+git clone git@github.com:rock-gui/gui-osgviz-osgviz.git
+cd gui-osgviz-osgviz
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=<PATH_TO_INSTALL_PREFIX> ..
+make -j install
+```
+##### install vizkit3d
+```
+git clone git@github.com:envire/gui-vizkit3d.git
+cd gui-vizkit3d
+git checkout osgviz
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=<PATH_TO_INSTALL_PREFIX> ..
+make -j install
+```
+
+##### Build V3DD
+Port support needs to be disabled with *WITH_PORTS=OFF* because ports are not availabled without ROCK.
+Set *DROCK_TEST_ENABLED=ON* to build the tests.
+
+```
+git clone git@github.com:arneboe/gui-vizkit3d_debug_drawings.git
+cd gui-vizkit3d_debug_drawings
+mkdir build
+cmake -DCMAKE_INSTALL_PREFIX=/home/arne/git/debug3d_install -DWITH_PORTS=OFF -DROCK_TEST_ENABLED=ON ..
+make -j install
+```
+
+Run *draw_test* in *build/test* to check if everything works.
+
+
 Usage
 -----------------
 
