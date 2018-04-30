@@ -1,7 +1,7 @@
 #pragma once
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 #include <string>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 
 namespace osg
@@ -29,17 +29,17 @@ class DrawSphereCommand : public DrawCommand
 public:
     DrawSphereCommand();
     
-    DrawSphereCommand(const std::string& drawingGroupName, const base::Vector3d& position, double radius,
-                      const base::Vector4d& colorRGBA);
+    DrawSphereCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position, double radius,
+                      const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
     virtual DrawSphereCommand* clone() const;
     
 private:
-    base::Vector3d position;
+    Eigen::Vector3d position;
     double radius;
-    base::Vector4d colorRGBA;
+    Eigen::Vector4d colorRGBA;
 
 };
 }

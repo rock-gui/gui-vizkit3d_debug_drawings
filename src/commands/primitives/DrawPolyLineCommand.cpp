@@ -2,11 +2,10 @@
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 
-
 namespace vizkit3dDebugDrawings
 {
 
-std::vector< base::Vector3d >& DrawPolyLineCommand::getPoints()
+std::vector< Eigen::Vector3d >& DrawPolyLineCommand::getPoints()
 {
     return points;
 }
@@ -16,7 +15,7 @@ osg::ref_ptr< osgviz::Object > DrawPolyLineCommand::createPrimitive() const
 {
     osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
     std::vector<osg::Vec3> osgPoints;
-    for(const base::Vector3d& p : points)
+    for(const Eigen::Vector3d& p : points)
     {
         osgPoints.emplace_back(p.x(), p.y(), p.z());
     }
@@ -27,8 +26,8 @@ osg::ref_ptr< osgviz::Object > DrawPolyLineCommand::createPrimitive() const
 }
 
 DrawPolyLineCommand::DrawPolyLineCommand(const std::string& drawingGroupName,
-                                         const base::Vector3d& position,
-                                         const base::Vector4d& colorRGBA):
+                                         const Eigen::Vector3d& position,
+                                         const Eigen::Vector4d& colorRGBA):
         DrawCommand(drawingGroupName), position(position), colorRGBA(colorRGBA)
 {}
  

@@ -1,7 +1,7 @@
 #pragma once
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 #include <string>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 #include <boost/serialization/vector.hpp>
 
@@ -29,18 +29,18 @@ class DrawPolyLineCommand : public DrawCommand
 public:
     DrawPolyLineCommand();
     
-    DrawPolyLineCommand(const std::string& drawingGroupName, const base::Vector3d& position, const base::Vector4d& colorRGBA);
+    DrawPolyLineCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position, const Eigen::Vector4d& colorRGBA);
         
-    std::vector<base::Vector3d>& getPoints();
+    std::vector<Eigen::Vector3d>& getPoints();
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
     virtual DrawPolyLineCommand* clone() const;
     
 private:
-    base::Vector3d position;
-    std::vector<base::Vector3d> points;
-    base::Vector4d colorRGBA;
+    Eigen::Vector3d position;
+    std::vector<Eigen::Vector3d> points;
+    Eigen::Vector4d colorRGBA;
     
 };
 }

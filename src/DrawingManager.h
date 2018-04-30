@@ -2,7 +2,7 @@
 #include <string>
 #include <memory>
 #include <osg/ref_ptr>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 
 namespace vizkit3d 
 {
@@ -31,7 +31,7 @@ namespace vizkit3dDebugDrawings
          * @param drawingGroupName May not be empty*/
         void addPrimitive(const std::string& drawingGroupName, const osg::ref_ptr<osgviz::Object>&);
         
-        void addPlotDataPoint(const std::string& plotName, const base::Vector2d& dataPoint);
+        void addPlotDataPoint(const std::string& plotName, const Eigen::Vector2d& dataPoint);
         
         void clearPlot(const std::string& plotName);
       

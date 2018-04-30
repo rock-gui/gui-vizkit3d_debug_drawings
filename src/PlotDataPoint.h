@@ -1,5 +1,5 @@
 #pragma once
-#include <base/Eigen.hpp>
+#include<Eigen/Core>
 
 namespace vizkit3dDebugDrawings
 {
@@ -7,6 +7,6 @@ namespace vizkit3dDebugDrawings
     struct PlotDataPoint
     {
         std::string name; //name of the plot
-        base::Vector2d data;
+        Eigen::Vector2d data;
     };
 }

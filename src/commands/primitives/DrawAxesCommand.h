@@ -1,7 +1,7 @@
 #pragma once
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 #include <string>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 
 namespace osg
@@ -27,17 +27,17 @@ class DrawAxesCommand : public DrawCommand
 public:
     DrawAxesCommand();
     
-    DrawAxesCommand(const std::string& drawingGroupName, const base::Vector3d& position,
-                     const base::Quaterniond& orientation, const base::Vector3d& scale);
+    DrawAxesCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& scale);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
     virtual DrawAxesCommand* clone() const;
     
 private:
-    base::Vector3d position;
-    base::Quaterniond orientation;
-    base::Vector3d scale;
+    Eigen::Vector3d position;
+    Eigen::Quaterniond orientation;
+    Eigen::Vector3d scale;
 
 };
 }

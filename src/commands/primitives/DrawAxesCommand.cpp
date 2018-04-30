@@ -19,9 +19,9 @@ osg::ref_ptr< osgviz::Object > vizkit3dDebugDrawings::DrawAxesCommand::createPri
 }
 
 vizkit3dDebugDrawings::DrawAxesCommand::DrawAxesCommand(const std::string& drawingGroupName,
-                                                        const base::Vector3d& position,
-                                                        const base::Quaterniond& orientation,
-                                                        const base::Vector3d& scale)
+                                                        const Eigen::Vector3d& position,
+                                                        const Eigen::Quaterniond& orientation,
+                                                        const Eigen::Vector3d& scale)
     : DrawCommand(drawingGroupName), position(position), orientation(orientation), scale(scale)
 {
 

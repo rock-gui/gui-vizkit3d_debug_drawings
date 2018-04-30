@@ -3,7 +3,7 @@
 
 #pragma once
 #include <string>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 
 namespace osg
@@ -34,21 +34,21 @@ class DrawRingCommand : public DrawCommand
 public:
     DrawRingCommand();
     
-    DrawRingCommand(const std::string& drawingGroupName, const base::Vector3d& position,
-                    const base::Quaterniond& orientation, double height,
-                    double thickness, double radius, const base::Vector4d& colorRGBA);
+    DrawRingCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                    const Eigen::Quaterniond& orientation, double height,
+                    double thickness, double radius, const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
     virtual DrawRingCommand* clone() const;
     
 private:
-    base::Vector3d position;
-    base::Quaterniond orientation;
+    Eigen::Vector3d position;
+    Eigen::Quaterniond orientation;
     double height;
     double thickness;
     double radius;
-    base::Vector4d colorRGBA;
+    Eigen::Vector4d colorRGBA;
     
 };
 }

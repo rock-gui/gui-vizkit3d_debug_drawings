@@ -52,7 +52,7 @@ namespace vizkit3dDebugDrawings
     }
     
     void DrawingManager::addPlotDataPoint(const std::string& plotName,
-                                          const base::Vector2d& dataPoint)
+                                          const Eigen::Vector2d& dataPoint)
     {
         checkStringNotEmpty(plotName);
         

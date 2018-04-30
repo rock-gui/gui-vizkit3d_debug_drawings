@@ -1,7 +1,7 @@
 #pragma once
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 #include <string>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 
 namespace osg
@@ -30,19 +30,19 @@ class DrawCylinderCommand : public DrawCommand
 public:
     DrawCylinderCommand();
     
-    DrawCylinderCommand(const std::string& drawingGroupName, const base::Vector3d& position,
-                     const base::Quaterniond& orientation, const base::Vector3d& size,
-                      const base::Vector4d& colorRGBA);
+    DrawCylinderCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
+                      const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
     virtual DrawCylinderCommand* clone() const;
     
 private:
-    base::Vector3d position;
-    base::Quaterniond orientation;
-    base::Vector3d size;
-    base::Vector4d colorRGBA;
+    Eigen::Vector3d position;
+    Eigen::Quaterniond orientation;
+    Eigen::Vector3d size;
+    Eigen::Vector4d colorRGBA;
 
 };
 }

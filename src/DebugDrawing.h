@@ -35,9 +35,9 @@
 
 #include <string>
 #include <vector>
-#include <base/Eigen.hpp>
-#include "DebugDrawingColors.h"
 #include <boost/shared_ptr.hpp>
+#include <Eigen/Core>
+#include "DebugDrawingColors.h"
 
 
 namespace vizkit3d
@@ -93,87 +93,87 @@ namespace vizkit3dDebugDrawings
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
 
     /** @param position center of the box  */
-    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const base::Vector3d& position,
-                            const base::Quaterniond& orientation, const base::Vector3d& size,
-                            const base::Vector4d& colorRGBA);
+    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                            const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
+                            const Eigen::Vector4d& colorRGBA);
     
     /** @param position center of the box*/
-    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const base::Vector3d& position,
-                            const base::Vector3d& size, const base::Vector4d& colorRGBA);
+    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                            const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
     
     /** @param position Position of the tip of the arrow
      *  @param orientation Identity points in z-direction*/
-    void DRAW_ARROW(const std::string& drawingGroupName, const base::Vector3d& position,
-                    const base::Quaterniond& orientation, const base::Vector3d& size,
-                    const base::Vector4d& colorRGBA);
+    void DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                    const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
+                    const Eigen::Vector4d& colorRGBA);
     
     /** @param position Position of the tip of the arrow */
-    void DRAW_ARROW(const std::string& drawingGroupName, const base::Vector3d& position,
-                    const base::Vector3d& size, const base::Vector4d& colorRGBA);
+    void DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                    const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
 
-    void DRAW_RING(const std::string& drawingGroupName, const base::Vector3d& position,
-                   const base::Quaterniond& orientation, double radius,
-                   double height, double thickness, const base::Vector4d& colorRGBA);
+    void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                   const Eigen::Quaterniond& orientation, double radius,
+                   double height, double thickness, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_RING(const std::string& drawingGroupName, const base::Vector3d& position,
-                   double radius, double height, double thickness, const base::Vector4d& colorRGBA);
+    void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                   double radius, double height, double thickness, const Eigen::Vector4d& colorRGBA);
     
     void DRAW_SPHERE(const std::string& drawingGroupName, double posX, double posY, double posZ,
-                     double radius, const base::Vector4d& colorRGBA);
+                     double radius, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_SPHERE(const std::string& drawingGroupName, const base::Vector3d& position,
-                     double radius, const base::Vector4d& colorRGBA);
+    void DRAW_SPHERE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                     double radius, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_CYLINDER(const std::string& drawingGroupName, const base::Vector3d& position,
-                       const base::Quaterniond& orientation, const base::Vector3d& size,
-                       const base::Vector4d& colorRGBA);
+    void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                       const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
+                       const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_CYLINDER(const std::string& drawingGroupName, const base::Vector3d& position,
-                       const base::Vector3d& size, const base::Vector4d& colorRGBA);
+    void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                       const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
     
     /** @param position origin of the line
      *  @param points relative to @p position.*/
-    void DRAW_POLYLINE(const std::string& drawingGroupName, const base::Vector3d& position,
-                       const std::vector<base::Vector3d>& points, const base::Vector4d& colorRGBA);
+    void DRAW_POLYLINE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                       const std::vector<Eigen::Vector3d>& points, const Eigen::Vector4d& colorRGBA);
     
     /** @param points realtive to (0, 0, 0) */
-    void DRAW_POLYLINE(const std::string& drawingGroupName, const std::vector<base::Vector3d>& points,
-                       const base::Vector4d& colorRGBA);
+    void DRAW_POLYLINE(const std::string& drawingGroupName, const std::vector<Eigen::Vector3d>& points,
+                       const Eigen::Vector4d& colorRGBA);
     
     /** @param from relative to (0, 0, 0)
      *  @param to   relative to (0, 0, 0) */
-    void DRAW_LINE(const std::string& drawingGroupName, const base::Vector3d& from, const base::Vector3d& to,
-                   const base::Vector4d& colorRGBA);
+    void DRAW_LINE(const std::string& drawingGroupName, const Eigen::Vector3d& from, const Eigen::Vector3d& to,
+                   const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, const base::Vector3d& position,
-                   const base::Quaterniond& orientation,
-                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
+    void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                   const Eigen::Quaterniond& orientation,
+                   const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, const base::Vector3d& position,
-                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
+    void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                   const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
     void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
                    double rotW, double rotX, double rotY, double rotZ,
-                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
+                   const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
     void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
-                   const std::string& text, double fontSize, const base::Vector4d& colorRGBA);
+                   const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
     
     /** @param position position of the center of the axes */
-    void DRAW_AXES(const std::string& drawingGroupName, const base::Vector3d& position,
-                   const base::Quaterniond& orientation, const base::Vector3d& size);
+    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                   const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size);
     
-    void DRAW_AXES(const std::string& drawingGroupName, const base::Vector3d& position,
-                   const base::Quaterniond& orientation);
+    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                   const Eigen::Quaterniond& orientation);
     
-    void DRAW_AXES(const std::string& drawingGroupName, const base::Vector3d& position);
+    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position);
     
     /** draw axis aligned bounding box */
     void DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box,
-                   const base::Vector4d& colorRGBA);
+                   const Eigen::Vector4d& colorRGBA);
 
-    void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
+    void PLOT_2D(const std::string& plotName, const Eigen::Vector2d& dataPoint);
     
     void CLEAR_PLOT(const std::string& plotName);
     

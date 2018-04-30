@@ -1,7 +1,7 @@
 #pragma once
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 #include <string>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 
 namespace osg
@@ -27,16 +27,16 @@ class DrawAABBCommand : public DrawCommand
 public:
     DrawAABBCommand();
     
-    DrawAABBCommand(const std::string& drawingGroupName, const base::Vector3d& min,
-                    const base::Vector3d& max, const base::Vector4d& colorRGBA);
+    DrawAABBCommand(const std::string& drawingGroupName, const Eigen::Vector3d& min,
+                    const Eigen::Vector3d& max, const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
     virtual DrawAABBCommand* clone() const;
     
 private:
-    base::Vector3d min;
-    base::Vector3d max;
-    base::Vector4d colorRGBA;
+    Eigen::Vector3d min;
+    Eigen::Vector3d max;
+    Eigen::Vector4d colorRGBA;
 };
 }

@@ -13,9 +13,9 @@ DrawSphereCommand::DrawSphereCommand(): DrawCommand("default")
     
     
 DrawSphereCommand::DrawSphereCommand(const std::string& drawingGroupName,
-                                                            const base::Vector3d& position,
+                                                            const Eigen::Vector3d& position,
                                                             double radius,
-                                                            const base::Vector4d& colorRGBA) :
+                                                            const Eigen::Vector4d& colorRGBA) :
         DrawCommand(drawingGroupName), position(position), radius(radius), colorRGBA(colorRGBA)
 {}
 

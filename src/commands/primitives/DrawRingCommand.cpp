@@ -6,9 +6,9 @@
 namespace vizkit3dDebugDrawings
 {
     
-DrawRingCommand::DrawRingCommand(const std::string& drawingGroupName, const base::Vector3d& position,
-                                 const base::Quaterniond& orientation, double height,
-                                 double thickness, double radius, const base::Vector4d& colorRGBA):
+DrawRingCommand::DrawRingCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                                 const Eigen::Quaterniond& orientation, double height,
+                                 double thickness, double radius, const Eigen::Vector4d& colorRGBA):
         DrawCommand(drawingGroupName), position(position), orientation(orientation),
         height(height), thickness(thickness), radius(radius), colorRGBA(colorRGBA)
 {}

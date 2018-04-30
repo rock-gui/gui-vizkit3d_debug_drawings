@@ -2,7 +2,7 @@
 #include <string>
 #include "Command.h"
 #include <boost/serialization/base_object.hpp>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 
 
@@ -23,7 +23,7 @@ class PlotCommand : public Command
     }
     
 public:
-    PlotCommand(const std::string& drawingGroupName, const base::Vector2d& dataPoint);
+    PlotCommand(const std::string& drawingGroupName, const Eigen::Vector2d& dataPoint);
     PlotCommand();
     
     virtual void execute(DrawingManager* drawingManager) const;
@@ -33,6 +33,6 @@ public:
     virtual ~PlotCommand();
     
 private:
-    base::Vector2d dataPoint;
+    Eigen::Vector2d dataPoint;
 };
 }

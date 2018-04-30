@@ -1,7 +1,7 @@
 #pragma once
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 #include <string>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <boost_serialization/EigenTypes.hpp>
 
 namespace osg
@@ -31,20 +31,20 @@ class DrawTextCommand : public DrawCommand
 public:
     DrawTextCommand();
     
-    DrawTextCommand(const std::string& drawingGroupName, const base::Vector3d& position,
-                    const base::Quaterniond& orientation, const std::string& text,
-                    double fontSize, const base::Vector4d& colorRGBA);
+    DrawTextCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                    const Eigen::Quaterniond& orientation, const std::string& text,
+                    double fontSize, const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
     virtual DrawTextCommand* clone() const;
     
 private:
-    base::Vector3d position;
-    base::Quaterniond orientation;
+    Eigen::Vector3d position;
+    Eigen::Quaterniond orientation;
     std::string text;
     double fontSize;
-    base::Vector4d colorRGBA;
+    Eigen::Vector4d colorRGBA;
     
 };
 }
