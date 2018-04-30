@@ -9,6 +9,7 @@ namespace vizkit3dDebugDrawings
 
 thread_local std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::dispatcher = nullptr;
     
+#ifdef USE_PORTS
 void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext)
 {
     if(instanceExists())
@@ -17,6 +18,7 @@ void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContex
     }
     dispatcher.reset(new PortDispatcher(taskContext));
 }
+#endif
 
 void CommandDispatcherFactory::createStandaloneDispatcher()
 {

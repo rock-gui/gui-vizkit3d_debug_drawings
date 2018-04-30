@@ -20,7 +20,10 @@ namespace vizkit3dDebugDrawings
     class CommandDispatcherFactory
     {
     public:
+      
+#ifdef USE_PORTS
         static void createPortDispatcher(RTT::TaskContext* taskContext);
+#endif
         static void createStandaloneDispatcher();
         static void createWidgetDispatcher(vizkit3d::Vizkit3DWidget* widget);
         

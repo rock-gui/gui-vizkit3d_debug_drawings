@@ -1,6 +1,6 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-option(WITH_PORTS "Build with rock port support" ON)
+option(WITH_PORTS "Build with rock port support" OFF)
 
 
 set(SOURCE_FILES
@@ -66,6 +66,7 @@ set(DEPS
 
 
 if(WITH_PORTS)
+
   message("Building with port support")
   
   set(OROCOS_TARGET "$ENV{OROCOS_TARGET}") #is needed when using orocos-rtt
@@ -73,6 +74,7 @@ if(WITH_PORTS)
   set(SOURCE_FILES ${SOURCE_FILES} dispatch/PortDispatcher.cpp)
   set(HEADER_FILES ${HEADER_FILES} dispatch/PortDispatcher.hpp)
   set(DEPS ${DEPS} boost_serialization  orocos-rtt-${OROCOS_TARGET} orocos_cpp)
+  add_definitions(-DUSE_PORTS)
   
 else()
 
