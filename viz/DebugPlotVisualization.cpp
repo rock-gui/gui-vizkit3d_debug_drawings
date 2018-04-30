@@ -1,7 +1,7 @@
 #include <iostream>
 #include "DebugPlotVisualization.hpp"
 #include <QLabel>
-#include <rock_widget_collection/qcustomplot.h>
+#include "qcustomplot.h"
 #include <deque>
 #include <base/Eigen.hpp>
 #include <QAction>
