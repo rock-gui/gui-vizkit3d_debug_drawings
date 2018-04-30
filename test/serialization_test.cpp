@@ -10,7 +10,8 @@
 #include <vizkit3d_debug_drawings/commands/ClearDrawingCommand.h>
 #include <vizkit3d_debug_drawings/commands/RemoveDrawingCommand.h>
 
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/iostreams/device/array.hpp>
@@ -45,20 +46,20 @@ T serializeAndDeserialize(const T& data)
     return data2;
 }
 
-void compare(const base::Vector3d& a, const base::Vector3d& b)
+void compare(const Eigen::Vector3d& a, const Eigen::Vector3d& b)
 {
     BOOST_CHECK(a.x() == b.x());
     BOOST_CHECK(a.y() == b.y());
     BOOST_CHECK(a.z() == b.z());
 }
 
-void compare(const base::Vector4d& a, const base::Vector4d& b)
+void compare(const Eigen::Vector4d& a, const Eigen::Vector4d& b)
 {
     for(int i = 0; i < 4; ++i)
         BOOST_CHECK(a[i] == b[i]);
 }
 
-void compare(const base::Quaterniond& a, const base::Quaterniond& b)
+void compare(const Eigen::Quaterniond& a, const Eigen::Quaterniond& b)
 {
     for(int i = 0; i < 4; ++i)
         BOOST_CHECK(a.vec()[i] == b.vec()[i]);    
@@ -88,7 +89,7 @@ BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawSphereCommand);
 
 BOOST_AUTO_TEST_CASE(serialize_base_test)
 {
-    Command* cmd = new DrawSphereCommand("test123", base::Vector3d(1,42,0), 0.42, base::Vector4d(1, 0, 0, 1));
+    Command* cmd = new DrawSphereCommand("test123", Eigen::Vector3d(1,42,0), 0.42, Eigen::Vector4d(1, 0, 0, 1));
     
     std::vector<char> buffer;
     
@@ -117,7 +118,7 @@ BOOST_AUTO_TEST_CASE(serialize_base_test)
 
 BOOST_AUTO_TEST_CASE(sphere_cmd_test)
 {
-    DrawSphereCommand a("test123", base::Vector3d(1,42,0), 0.42, base::Vector4d(1, 0, 0, 1));
+    DrawSphereCommand a("test123", Eigen::Vector3d(1,42,0), 0.42, Eigen::Vector4d(1, 0, 0, 1));
     DrawSphereCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
@@ -127,7 +128,7 @@ BOOST_AUTO_TEST_CASE(sphere_cmd_test)
 
 BOOST_AUTO_TEST_CASE(arrow_cmd_test)
 {
-    DrawArrowCommand a("lala", base::Vector3d(1,42,0), base::Quaterniond(1,1,1,1), base::Vector3d(0.1, 0.2, 0.3),
+    DrawArrowCommand a("lala", Eigen::Vector3d(1,42,0), Eigen::Quaterniond(1,1,1,1), Eigen::Vector3d(0.1, 0.2, 0.3),
                        vizkit3dDebugDrawings::Color::red);
     DrawArrowCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
@@ -139,7 +140,7 @@ BOOST_AUTO_TEST_CASE(arrow_cmd_test)
 
 BOOST_AUTO_TEST_CASE(cylinder_cmd_test)
 {
-    DrawCylinderCommand a("lala", base::Vector3d(1,42,0), base::Quaterniond(1,1,1,1), base::Vector3d(0.1, 0.2, 0.3),
+    DrawCylinderCommand a("lala", Eigen::Vector3d(1,42,0), Eigen::Quaterniond(1,1,1,1), Eigen::Vector3d(0.1, 0.2, 0.3),
                        vizkit3dDebugDrawings::Color::red);
     DrawCylinderCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
@@ -152,7 +153,7 @@ BOOST_AUTO_TEST_CASE(cylinder_cmd_test)
 
 BOOST_AUTO_TEST_CASE(polyline_cmd_test)
 {
-    DrawPolyLineCommand a("polypp", base::Vector3d(1,42,0.23), vizkit3dDebugDrawings::Color::green_ncs);
+    DrawPolyLineCommand a("polypp", Eigen::Vector3d(1,42,0.23), vizkit3dDebugDrawings::Color::green_ncs);
     
     a.getPoints().emplace_back(0, 1, 2);
     a.getPoints().emplace_back(0.03, 1, 22);
@@ -168,7 +169,7 @@ BOOST_AUTO_TEST_CASE(polyline_cmd_test)
 
 BOOST_AUTO_TEST_CASE(ring_cmd_test)
 {
-    DrawRingCommand a("ringaa", base::Vector3d(1,422,0), base::Quaterniond(1,0,09.4,1), 0.3, 1.42, 1.22, vizkit3dDebugDrawings::Color::neon_carrot);
+    DrawRingCommand a("ringaa", Eigen::Vector3d(1,422,0), Eigen::Quaterniond(1,0,09.4,1), 0.3, 1.42, 1.22, vizkit3dDebugDrawings::Color::neon_carrot);
     DrawRingCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
@@ -181,7 +182,7 @@ BOOST_AUTO_TEST_CASE(ring_cmd_test)
 
 BOOST_AUTO_TEST_CASE(text_cmd_test)
 {
-    DrawTextCommand a("qqq", base::Vector3d(1,422,0), base::Quaterniond(1,0,09.4,1), "bla bla bu", 42.042, vizkit3dDebugDrawings::Color::yale_blue);
+    DrawTextCommand a("qqq", Eigen::Vector3d(1,422,0), Eigen::Quaterniond(1,0,09.4,1), "bla bla bu", 42.042, vizkit3dDebugDrawings::Color::yale_blue);
     DrawTextCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
@@ -193,7 +194,7 @@ BOOST_AUTO_TEST_CASE(text_cmd_test)
 
 BOOST_AUTO_TEST_CASE(wireframe_cmd_test)
 {
-    DrawWireframeBoxCommand a("law", base::Vector3d(12,422,0), base::Quaterniond(11,0,09.4,1), base::Vector3d(1,2,3), vizkit3dDebugDrawings::Color::zaffre);
+    DrawWireframeBoxCommand a("law", Eigen::Vector3d(12,422,0), Eigen::Quaterniond(11,0,09.4,1), Eigen::Vector3d(1,2,3), vizkit3dDebugDrawings::Color::zaffre);
     DrawWireframeBoxCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
