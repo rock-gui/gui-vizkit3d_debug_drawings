@@ -8,4 +8,3 @@ rock_init(vizkit3d_debug_drawings 0.1)
 rock_find_qt4()
 rock_standard_layout()
 
-# add_subdirectory(test)
