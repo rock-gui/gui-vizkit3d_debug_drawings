@@ -1,7 +1,9 @@
-set(OROCOS_TARGET "$ENV{OROCOS_TARGET}") #is needed when using orocos-rtt
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-rock_library(vizkit3d_debug_drawings
-    SOURCES
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+option(WITH_PORTS "Build with rock port support" ON)
+
+
+set(SOURCE_FILES
         DrawingManager.cpp
         DebugDrawing.cpp
         DebugDrawingColors.cpp
@@ -22,11 +24,11 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawAxesCommand.cpp
         commands/primitives/DrawAABBCommand.cpp
         dispatch/CommandDispatcherFactory.cpp
-        dispatch/PortDispatcher.cpp
         dispatch/StandaloneDispatcher.cpp
         dispatch/ExistingWidgetDispatcher.cpp
-        
-    HEADERS 
+)
+
+set(HEADER_FILES
         DebugDrawing.h
         Drawing.h
         DrawingManager.h
@@ -50,17 +52,38 @@ rock_library(vizkit3d_debug_drawings
         commands/primitives/DrawAABBCommand.h
         commands/BoostSerializationExports.h
         dispatch/ICommandDispatcher.hpp
-        dispatch/PortDispatcher.hpp
         dispatch/CommandDispatcherFactory.hpp
         dispatch/StandaloneDispatcher.hpp
         dispatch/ExistingWidgetDispatcher.hpp
-    DEPS_PKGCONFIG
+)
+
+set(DEPS 
         vizkit3d
         osgViz
         PrimitivesFactory
-        boost_serialization
-        orocos-rtt-${OROCOS_TARGET}
-        orocos_cpp)
+)
 
 
-add_subdirectory(dispatch)
+
+if(WITH_PORTS)
+  message("Building with port support")
+  
+  set(OROCOS_TARGET "$ENV{OROCOS_TARGET}") #is needed when using orocos-rtt
+  
+  set(SOURCE_FILES ${SOURCE_FILES} dispatch/PortDispatcher.cpp)
+  set(HEADER_FILES ${HEADER_FILES} dispatch/PortDispatcher.hpp)
+  set(DEPS ${DEPS} boost_serialization  orocos-rtt-${OROCOS_TARGET} orocos_cpp)
+  
+else()
+
+  message("Building without port support")
+  
+endif(WITH_PORTS)
+
+
+
+rock_library(vizkit3d_debug_drawings
+    SOURCES ${SOURCE_FILES}
+    HEADERS ${HEADER_FILES}
+    DEPS_PKGCONFIG ${DEPS}
+)
