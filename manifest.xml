@@ -7,7 +7,6 @@
   <url>http://</url>
   <logo>http://</logo>
   <depend package="base/cmake" />
-  <depend package="base/types" />
   <depend package="gui/vizkit3d" />
   <depend package="gui/osgviz/osgviz" />
   <depend package="gui/vizkit3d_plugin_information" />
