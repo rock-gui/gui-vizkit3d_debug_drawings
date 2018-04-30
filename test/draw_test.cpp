@@ -5,7 +5,6 @@
 #include <thread>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <base/samples/RigidBodyState.hpp>
 #include <random>
 
 

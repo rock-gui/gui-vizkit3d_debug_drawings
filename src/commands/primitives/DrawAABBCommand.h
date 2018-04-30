@@ -2,7 +2,7 @@
 #include <vizkit3d_debug_drawings/commands/DrawCommand.h>
 #include <string>
 #include <Eigen/Core>
-#include <boost_serialization/EigenTypes.hpp>
+#include <vizkit3d_debug_drawings/commands/BoostSerializationHelpers.hpp>
 
 namespace osg
 {

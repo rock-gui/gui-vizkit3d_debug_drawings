@@ -6,3 +6,5 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(ROCK_TEST_ENABLED ON)
 rock_init(vizkit3d_debug_drawings 0.1)
 rock_standard_layout()
+
+add_subdirectory(test)

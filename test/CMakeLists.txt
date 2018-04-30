@@ -6,6 +6,10 @@ rock_executable(draw_test draw_test.cpp
 
 find_package(Boost COMPONENTS serialization iostreams)
 
+
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
 rock_testsuite(serialization_test 
     suite.cpp
     serialization_test.cpp

@@ -2,6 +2,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 option(WITH_PORTS "Build with rock port support" OFF)
 
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
+find_package(Boost REQUIRED COMPONENTS serialization)
 
 set(SOURCE_FILES
         DrawingManager.cpp
@@ -89,3 +93,8 @@ rock_library(vizkit3d_debug_drawings
     HEADERS ${HEADER_FILES}
     DEPS_PKGCONFIG ${DEPS}
 )
+
+#FIXME this sould work using DEPS_CMAKE but it doesnt?
+target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES} )
+
+

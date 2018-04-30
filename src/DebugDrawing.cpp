@@ -217,12 +217,12 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * wid
     CommandDispatcherFactory::createWidgetDispatcher(widget);
 }
 
+#ifdef USE_PORTS
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext)
 {
     CommandDispatcherFactory::createPortDispatcher(taskContext);
 }
 
-#ifdef USE_PORTS
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext)
 {
     if(!CommandDispatcherFactory::instanceExists())

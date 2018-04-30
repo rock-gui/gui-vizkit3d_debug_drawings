@@ -2,8 +2,6 @@
 #include <string>
 #include "Command.h"
 #include <boost/serialization/base_object.hpp>
-#include <base/Eigen.hpp>
-#include <boost_serialization/EigenTypes.hpp>
 
 
 namespace vizkit3dDebugDrawings

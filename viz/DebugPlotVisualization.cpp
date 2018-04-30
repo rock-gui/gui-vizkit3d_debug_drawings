@@ -3,14 +3,14 @@
 #include <QLabel>
 #include "qcustomplot.h"
 #include <deque>
-#include <base/Eigen.hpp>
+#include <Eigen/Core>
 #include <QAction>
 #include <mutex>
 
 using namespace vizkit3d;
 
 struct DebugPlotVisualization::Data {
-    std::deque<base::Vector2d> data;
+    std::deque<Eigen::Vector2d> data;
     std::mutex dataMutex;
     QDockWidget* dock;
     QCustomPlot* plot;
@@ -94,7 +94,7 @@ void DebugPlotVisualization::updateUi()
     
     while(!p->data.empty())
     {
-        base::Vector2d dataPoint;
+        Eigen::Vector2d dataPoint;
         {
             std::lock_guard<std::mutex> lock(p->dataMutex);
             

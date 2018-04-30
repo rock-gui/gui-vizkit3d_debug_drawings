@@ -1,3 +1,8 @@
+
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
+
 rock_vizkit_plugin(vizkit3d_debug_drawings-viz
     DrawingVisualization.cpp
     DEPS

@@ -1,7 +1,11 @@
 #include "CommandDispatcherFactory.hpp"
-#include "PortDispatcher.hpp"
 #include "StandaloneDispatcher.hpp"
 #include "ExistingWidgetDispatcher.hpp"
+
+#ifdef USE_PORTS
+  #include "PortDispatcher.hpp"
+#endif
+
 #include <stdexcept>
 
 namespace vizkit3dDebugDrawings

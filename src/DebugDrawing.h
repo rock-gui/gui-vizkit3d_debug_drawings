@@ -85,9 +85,9 @@ namespace vizkit3dDebugDrawings
     /**@throw std::runtime_error if already configured */
     void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext); 
 
-#ifdef USE_PORTS
+#ifdef USE_PORTS    
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext); 
     /**Same as above but does nothing if already configured. */
     void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
 #endif

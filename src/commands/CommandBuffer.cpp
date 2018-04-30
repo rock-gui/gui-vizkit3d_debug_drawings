@@ -5,7 +5,6 @@
 #include "RemoveDrawingCommand.h"
 #include "ClearPlotCommand.h"
 #include <vizkit3d_debug_drawings/DrawingManager.h>
-#include <base-logging/Logging.hpp>
 
 //need to be included. otherwise BOOST_CLASS_EXPORT wont work (http://www.boost.org/doc/libs/1_46_1/libs/serialization/doc/special.html)
 #include <boost/archive/binary_oarchive.hpp>
@@ -38,7 +37,7 @@ void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
     if(commands.size() > maxBufferSize)
     {
         commands.pop_front();
-        LOG_WARN_S << "Commandbuffer is full. Dropping old commands."; 
+        std::cerr << "Commandbuffer is full. Dropping old commands."; 
     }
 }
 
