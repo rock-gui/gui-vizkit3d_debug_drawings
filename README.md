@@ -39,8 +39,7 @@ export PATH=<PATH_TO_INSTALL_PREFIX>/bin:$PATH
 export VIZKIT_PLUGIN_RUBY_PATH=<PATH_TO_INSTALL_PREFIX>/lib
 ```
 
-Most of the environment is only needed while building. The only thing that needs to be exported to be able to run the code is
-*VIZKIT_PLUGIN_RUBY_PATH*. This variable is used by vizkit3d to locate the visualization plugins.
+Most of the environment variables are only needed while compiling. Only *VIZKIT_PLUGIN_RUBY_PATH* needs to be exported for execution. This variable is used by vizkit3d to locate the visualization plugins.
 
 ##### install osgviz
 ```
