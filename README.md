@@ -41,6 +41,19 @@ export VIZKIT_PLUGIN_RUBY_PATH=<PATH_TO_INSTALL_PREFIX>/lib
 
 Most of the environment variables are only needed while compiling. Only *VIZKIT_PLUGIN_RUBY_PATH* needs to be exported for execution. This variable is used by vizkit3d to locate the visualization plugins.
 
+##### install base-cmake
+base-cmake contains special cmake macros that are used in osgviz, vizkit3d and V3DD. 
+
+```
+git clone git@github.com:rock-core/base-cmake.git
+cd base-cmake
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=<PATH_TO_INSTALL_PREFIX> ..
+make -j install
+```
+
+
 ##### install osgviz
 ```
 git clone git@github.com:rock-gui/gui-osgviz-osgviz.git
