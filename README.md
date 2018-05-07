@@ -105,6 +105,12 @@ containing debug drawing commands.
 ```
 add_definitions(-DENABLE_DEBUG_DRAWINGS)
 ```
+If you do ***not*** use pkg-config and want to use the port features you have to define *USE_PORTS* aswell.
+pkg-config knows about this flag and sets it automatically if the library has been built with port support.
+```
+add_definitions(-DUSE_PORTS)
+```
+
 
 #### Configuration at Runtime
 At runtime you need to choose which operation mode should be used to visualize
