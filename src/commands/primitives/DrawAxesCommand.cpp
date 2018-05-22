@@ -10,7 +10,7 @@ vizkit3dDebugDrawings::DrawAxesCommand* vizkit3dDebugDrawings::DrawAxesCommand::
 
 osg::ref_ptr< osgviz::Object > vizkit3dDebugDrawings::DrawAxesCommand::createPrimitive() const
 {
-    osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
+    auto const & fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
     auto prim = fac->createAxes();
     prim->setScale(scale.x(), scale.y(), scale.z());
     prim->setPosition(position.x(), position.y(), position.z());
