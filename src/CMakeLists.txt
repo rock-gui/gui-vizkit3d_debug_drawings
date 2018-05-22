@@ -79,6 +79,7 @@ if(WITH_PORTS)
   set(HEADER_FILES ${HEADER_FILES} dispatch/PortDispatcher.hpp)
   set(DEPS ${DEPS} boost_serialization  orocos-rtt-${OROCOS_TARGET} orocos_cpp)
   add_definitions(-DUSE_PORTS)
+  set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
   
 else()
 
