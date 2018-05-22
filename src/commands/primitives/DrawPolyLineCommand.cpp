@@ -13,7 +13,7 @@ std::vector< Eigen::Vector3d >& DrawPolyLineCommand::getPoints()
 
 osg::ref_ptr< osgviz::Object > DrawPolyLineCommand::createPrimitive() const
 {
-    osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
+    auto const & fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
     std::vector<osg::Vec3> osgPoints;
     for(const Eigen::Vector3d& p : points)
     {

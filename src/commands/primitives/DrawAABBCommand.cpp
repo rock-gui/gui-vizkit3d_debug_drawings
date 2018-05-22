@@ -10,7 +10,7 @@ namespace vizkit3dDebugDrawings
 
 osg::ref_ptr< osgviz::Object > DrawAABBCommand::createPrimitive() const
 {
-    osgviz::PrimitivesFactory* fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
+    auto const & fac = osgviz::OsgViz::getInstance()->getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
     const Eigen::Vector3d size = max - min;
     const Eigen::Vector3d center = min + size * 0.5;
     const osg::Vec4 color(colorRGBA[0], colorRGBA[1], colorRGBA[2], colorRGBA[3]);
