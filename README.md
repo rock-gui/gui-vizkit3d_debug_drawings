@@ -56,7 +56,7 @@ make -j install
 
 ##### install osgviz
 ```
-git clone git@github.com:rock-gui/gui-osgviz-osgviz.git
+git@github.com:/rock-core/gui-osgviz.git
 cd gui-osgviz-osgviz
 mkdir build
 cd build
