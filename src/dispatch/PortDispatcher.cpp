@@ -24,7 +24,7 @@ PortDispatcher::PortDispatcher(RTT::TaskContext* taskContext) : taskContext(task
         //load typekit if not loaded
         std::string typekitName;
         orocos_cpp::TypeRegistry reg;
-        reg.loadTypelist();
+        reg.loadTypeRegistries();
         if(!reg.getTypekitDefiningType(commandBufferTypeName, typekitName))
         {
             LOG_ERROR_S << "vizkit3d_debug_drawings: Failed to load typekit for: " << commandBufferTypeName;
