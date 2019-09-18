@@ -250,7 +250,7 @@ Under the Hood
 
 
 #### Serialization
-Commands are serialized using boost to send them through rock ports as opaque type containing a binary blob with the serialized data. The Opaque conversion can be found [in this repository](https://github.com/arneboe/gui-orogen-vizkit3d_debug_drawings).
+Commands are serialized using boost to send them through rock ports as opaque type containing a binary blob with the serialized data. The Opaque conversion can be found [in this repository](https://github.com/rock-gui/gui-orogen-vizkit3d_debug_drawings).
 
 Boost serialization was chosen over typekit serialization because typekit cannot handle virtual inheritance.
 
