@@ -274,3 +274,8 @@ The way rock-display connects ports allows for message loss. I.e. when too may m
 This project was heavily inspired by the inline drawing macros that can be found
 in the [B-Human](https://b-human.de) framework.
 See: https://github.com/bhuman/BHumanCodeRelease/blob/master/Src/Tools/Debugging/DebugDrawings3D.h
+
+== Maintenance and development
+DFKI GmbH - Robotics Innovation Center
+[link=https://robotik.dfki-bremen.de/en/startpage.html]
+image::https://www.dfki.de/fileadmin/user_upload/DFKI/Medien/Logos/Logos_DFKI/DFKI_Logo.png[DFKI Logo]
