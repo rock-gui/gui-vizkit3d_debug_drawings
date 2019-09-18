@@ -10,12 +10,12 @@ Features
 * Drawings can be enabled/disabled using compile switch
 * No runtime overhead if disabled
 * Three different operation modes:
- * *Standalone mode:* A standalone window pops up automatically to visualize the drawings
- * *Embedded mode:* Drawings can be visualized using an existing Vizkit3DWidget and QApplication context.
- * *Port mode*: Drawings are published using rock ports and can be visualized using rock-display.
+  * *Standalone mode:* A standalone window pops up automatically to visualize the drawings
+  * *Embedded mode:* Drawings can be visualized using an existing Vizkit3DWidget and QApplication context.
+  * *Port mode*: Drawings are published using rock ports and can be visualized using rock-display.
 * Available 3d primitives include:
- * Box, Arrow, Ring, Sphere, Cylinder, Line, Polyline, Text, AABB, Axes, etc.
- * New primitives can be added by implementing a simple interface (command pattern)
+  * Box, Arrow, Ring, Sphere, Cylinder, Line, Polyline, Text, AABB, Axes, etc.
+* New primitives can be added by implementing a simple interface (command pattern)
 
 
 
