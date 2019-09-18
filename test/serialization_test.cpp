@@ -27,14 +27,18 @@ using namespace boost;
 template <class T>
 T serializeAndDeserialize(const T& data)
 {
+    
+    //ATTENTION Very similar serialization code is used in orogen/vizkit3d_debug_drawings. If you find a bug in here please also take a look at the code over there!
+    
     std::vector<char> buffer;
     
-    iostreams::back_insert_device<std::vector<char>> sink{buffer};
-    iostreams::stream<iostreams::back_insert_device<std::vector<char>>> os{sink};
-    archive::binary_oarchive oa(os);
-    
-    oa << data;
-    os.close();
+    {
+        iostreams::back_insert_device<std::vector<char>> sink{buffer};
+        iostreams::stream<iostreams::back_insert_device<std::vector<char>>> os{sink};
+        archive::binary_oarchive oa(os);
+        
+        oa << data;
+    }
     
     BOOST_CHECK(buffer.size() > 0);
     
@@ -93,12 +97,14 @@ BOOST_AUTO_TEST_CASE(serialize_base_test)
     
     std::vector<char> buffer;
     
-    iostreams::back_insert_device<std::vector<char>> sink{buffer};
-    iostreams::stream<iostreams::back_insert_device<std::vector<char>>> os{sink};
-    archive::binary_oarchive oa(os);
-    
-    oa << cmd;
-    os.close();
+    //the scope is important because the binary_oarchive does some magic in its destructor... 
+    {
+        iostreams::back_insert_device<std::vector<char>> sink{buffer};
+        iostreams::stream<iostreams::back_insert_device<std::vector<char>>> os{sink};
+        archive::binary_oarchive oa(os);
+        
+        oa << cmd;
+    }
     
     BOOST_CHECK(buffer.size() > 0);
     
@@ -125,7 +131,7 @@ BOOST_AUTO_TEST_CASE(sphere_cmd_test)
     compare(a.radius, b.radius);
     compare(a.getDrawingName(), b.getDrawingName());
 }
-
+// 
 BOOST_AUTO_TEST_CASE(arrow_cmd_test)
 {
     DrawArrowCommand a("lala", Eigen::Vector3d(1,42,0), Eigen::Quaterniond(1,1,1,1), Eigen::Vector3d(0.1, 0.2, 0.3),
