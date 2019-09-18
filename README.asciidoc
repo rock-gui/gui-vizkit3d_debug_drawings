@@ -1,10 +1,13 @@
 = V3DD (vitkit3d_debug_drawings)
-A ROCK (http://rock-robotics.org) library that provides methods to create 3d drawings and plot data from inside any code for debugging purpose.
-
 :toc: macro
 :toclevels: 5
 
 toc::[]
+
+== About
+A ROCK (http://rock-robotics.org) library that provides methods to create 3d drawings and plot data from inside any code for debugging purpose.
+
+
 
 == Build and Test Status
 There is no CI, yet. But this is planned for the next week
