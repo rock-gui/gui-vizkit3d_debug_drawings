@@ -1,9 +1,17 @@
-V3DD (vitkit3d_debug_drawings)
-==================
+= V3DD (vitkit3d_debug_drawings)
 A ROCK (http://rock-robotics.org) library that provides methods to create 3d drawings and plot data from inside any code for debugging purpose.
 
-Features
------------------
+:toc: macro
+:toclevels: 5
+
+toc::[]
+
+== Build and Test Status
+There is no CI, yet. But this is planned for the next week
+
+
+== Features
+
 * Create and manipulate simple 3D drawings from inside any code
 * Create and manipulate 2D plots from inside any code
 * Minimal configuration needed
@@ -19,17 +27,15 @@ Features
 
 
 
-Compiling
------------------
-
-#### Compiling inside ROCK
+== Compiling
+=== Compiling inside ROCK
 Nothing special has to be done to compile inside ROCK. Just call *amake* and wait.
 
-#### Compiling standalone
+=== Compiling standalone
 
 Several dependencies need to be compiled and installed using a common install prefix.
 
-##### Prepare environment
+==== Prepare environment
 Create env.sh with following content and source it:
 ```
 export CMAKE_PREFIX_PATH=<PATH_TO_INSTALL_PREFIX>
@@ -41,7 +47,7 @@ export VIZKIT_PLUGIN_RUBY_PATH=<PATH_TO_INSTALL_PREFIX>/lib
 
 Most of the environment variables are only needed while compiling. Only *VIZKIT_PLUGIN_RUBY_PATH* needs to be exported for execution. This variable is used by vizkit3d to locate the visualization plugins.
 
-##### install base-cmake
+==== install base-cmake
 base-cmake contains special cmake macros that are used in osgviz, vizkit3d and V3DD. 
 
 ```
@@ -54,7 +60,7 @@ make -j install
 ```
 
 
-##### install osgviz
+==== install osgviz
 ```
 git@github.com:/rock-core/gui-osgviz.git
 cd gui-osgviz-osgviz
@@ -63,7 +69,7 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX=<PATH_TO_INSTALL_PREFIX> ..
 make -j install
 ```
-##### install vizkit3d
+==== install vizkit3d
 ```
 git clone git@github.com:envire/gui-vizkit3d.git
 cd gui-vizkit3d
@@ -74,7 +80,7 @@ cmake -DCMAKE_INSTALL_PREFIX=<PATH_TO_INSTALL_PREFIX> ..
 make -j install
 ```
 
-##### Build V3DD
+==== Build V3DD
 Port support needs to be disabled with *WITH_PORTS=OFF* because ports are not availabled without ROCK.
 Set *DROCK_TEST_ENABLED=ON* to build the tests.
 
@@ -89,10 +95,9 @@ make -j install
 Run *draw_test* in *build/test* to check if everything works.
 
 
-Usage
------------------
+== Usage
 
-#### Configuration at Compile Time
+=== Configuration at Compile Time
 
 Every component that contains drawing code needs to link against *libvizkit3d_debug_drawings*.
 ```
@@ -111,8 +116,7 @@ pkg-config knows about this flag and sets it automatically if the library has be
 add_definitions(-DUSE_PORTS)
 ```
 
-
-#### Configuration at Runtime
+=== Configuration at Runtime
 At runtime you need to choose which operation mode should be used to visualize
 the drawings. This is done by executing one of the following methods at startup:
 ```c++
@@ -134,22 +138,22 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
 ```
 
 At the time of writing the following modes exist:
-###### CONFIGURE_DEBUG_DRAWINGS_STANDALONE
+==== CONFIGURE_DEBUG_DRAWINGS_STANDALONE
 In standalone mode a new QThread will be started containing a new QApplication context.
 This thread is used to display a Vizkit3DWidget which is used for visualization.
 
-###### CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET
+==== CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET
 In embedded mode the application expects that there already is a QApplication context
 and a Vizkit3DWidget already exists. The existing widget will be used for visualization.
 
-###### CONFIGURE_DEBUG_DRAWINGS_USE_PORT
+==== CONFIGURE_DEBUG_DRAWINGS_USE_PORT
 In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be
 visualized using rock-display.
 
 
 
 
-#### Simple Drawing
+=== Simple Drawing
 Once configured you can start adding drawing commands anywhere inside your code.
 The commands will be executed when the corresponding code path is executed.
 Take a look at `vizkit3d_debug_drawings/DebugDrawing.h` for an overview of all available commands.
@@ -174,7 +178,7 @@ port. Thus a user can enable or disable the visualizations on a
 per group basis. Groups are __not__ limited to a certain type of drawing. They can contain any mix of drawing types.
 
 
-#### Complex Drawings
+=== Complex Drawings
 Sometimes a lot of extra instructions (e.g. coordinate transformations) are needed before a drawing command can be issued. While the drawing command itself would be removed when debug drawings are disabled, the extra instructions would remain.
 TO avoid this the `COMPLEX_DRAWING` macro can be used. This macro should enclose all code that is only necessary to issue the drawing command. When debug drawings are disabled, the whole macro becomes a noop.
 
@@ -190,7 +194,7 @@ COMPLEX_DRAWING(
 );
 ```
 
-#### Clearing and Removing Drawings
+=== Clearing and Removing Drawings
 With a lot of drawings the visualization might get
 cluttered and laggy. To avoid that the user can clear drawings or remove them altogether. This is done by calling one of the following methods:
 ```c++
@@ -204,7 +208,7 @@ when you want to permanently remove a group.
 `CLEAR_DRAWING` will also remove all drawings belonging to the specified group. But it will not remove the plugin. It should be used when you intended to use the same group name again (e.g. during a later iteration) but want a clean canvas to draw on.
 
 
-#### Plotting 2D data
+=== Plotting 2D data
 In addition to 3D debug drawings, it is also possible to create simple 2D plots.
 ```
 void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
@@ -227,7 +231,7 @@ while(true)
 }
 ```
 
-#### FLUSHING
+=== FLUSHING
 When sending drawing commands through rock ports the user needs to flush the
 send queue regularly. This should be done in the update loop of the corresponding
 task.
@@ -242,28 +246,28 @@ void SomeTask::updateHook()
 ```
 
 
-Under the Hood
------------------
+== Under the Hood
 
-#### Architecture
+
+=== Architecture
 ![Class diagram](https://github.com/arneboe/gui-vizkit3d_debug_drawings/raw/master/doc/class_diagram.png "Class Diagram")
 
 
-#### Serialization
+=== Serialization
 Commands are serialized using boost to send them through rock ports as opaque type containing a binary blob with the serialized data. The Opaque conversion can be found [in this repository](https://github.com/rock-gui/gui-orogen-vizkit3d_debug_drawings).
 
 Boost serialization was chosen over typekit serialization because typekit cannot handle virtual inheritance.
 
 
-#### Why is the Backend Thread-Local?
+=== Why is the Backend Thread-Local?
 As mentioned above the whole backend is thread-local. I.e. a separate instance of the backend exists for each thread. This design was chosen because this library is intended to be used inside the ROCK framework. Most of the time each ROCK task runs in its own thread. Thus to be able to distinguish between drawing commands from different tasks and attach the ports to the correct tasks the library needs to be thread local. Otherwise drawing commands from task *A* might be falsely send to a port on task *B*.
 
-#### Why is the whole drawing state sent through ports every time?
+=== Why is the whole drawing state sent through ports every time?
 The way rock-display connects ports allows for message loss. I.e. when too may messages are sent, they are dropped. This happens regularly. Thus we have to send the whole drawing state every time. Sending only incremental updates might lead to a corrupt state due to message loss.
 
 
-Inspiration
------------------
+== Inspiration
+
 This project was heavily inspired by the inline drawing macros that can be found
 in the [B-Human](https://b-human.de) framework.
 See: https://github.com/bhuman/BHumanCodeRelease/blob/master/Src/Tools/Debugging/DebugDrawings3D.h
