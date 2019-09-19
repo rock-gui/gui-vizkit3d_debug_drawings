@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#define private public //HACK to compare members of DrawSphereCommand
+#define private public //HACK to compare members directly DrawSphereCommand
 #include <vizkit3d_debug_drawings/commands/primitives/DrawSphereCommand.h>
 #include <vizkit3d_debug_drawings/commands/primitives/DrawArrowCommand.h>
 #include <vizkit3d_debug_drawings/commands/primitives/DrawCylinderCommand.h>
@@ -65,8 +65,10 @@ void compare(const Eigen::Vector4d& a, const Eigen::Vector4d& b)
 
 void compare(const Eigen::Quaterniond& a, const Eigen::Quaterniond& b)
 {
-    for(int i = 0; i < 4; ++i)
-        BOOST_CHECK(a.vec()[i] == b.vec()[i]);    
+    BOOST_CHECK(a.x() == b.x());
+    BOOST_CHECK(a.y() == b.y());
+    BOOST_CHECK(a.z() == b.z());
+    BOOST_CHECK(a.w() == b.w());
 }
 
 void compare(double a, double b)
@@ -88,8 +90,6 @@ void compare(const std::vector<T>& a, const std::vector<T>& b)
         compare(a[i], b[i]);
     }
 }
-
-BOOST_CLASS_EXPORT(vizkit3dDebugDrawings::DrawSphereCommand);
 
 BOOST_AUTO_TEST_CASE(serialize_base_test)
 {

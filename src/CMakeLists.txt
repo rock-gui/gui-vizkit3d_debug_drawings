@@ -5,8 +5,6 @@ option(WITH_PORTS "Build with rock port support" ON)
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-find_package(Boost REQUIRED COMPONENTS serialization)
-
 set(SOURCE_FILES
         DrawingManager.cpp
         DebugDrawing.cpp
@@ -67,6 +65,7 @@ set(DEPS
         PrimitivesFactory
 )
 
+set(DEPSPLAIN )
 
 
 if(WITH_PORTS)
@@ -77,7 +76,11 @@ if(WITH_PORTS)
   
   set(SOURCE_FILES ${SOURCE_FILES} dispatch/PortDispatcher.cpp)
   set(HEADER_FILES ${HEADER_FILES} dispatch/PortDispatcher.hpp)
-  set(DEPS ${DEPS} boost_serialization  orocos-rtt-${OROCOS_TARGET} orocos_cpp)
+  set(DEPS ${DEPS} orocos-rtt-${OROCOS_TARGET} orocos_cpp)
+  
+  find_package(Boost REQUIRED COMPONENTS serialization)
+  set(DEPSPLAIN Boost_SERIALIZATION)
+  
   add_definitions(-DUSE_PORTS)
   set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
   
@@ -93,9 +96,11 @@ rock_library(vizkit3d_debug_drawings
     SOURCES ${SOURCE_FILES}
     HEADERS ${HEADER_FILES}
     DEPS_PKGCONFIG ${DEPS}
+    DEPS_PLAIN ${DEPSPLAIN}
 )
 
-#FIXME this sould work using DEPS_CMAKE but it doesnt?
-target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES} )
-
+if(WITH_PORTS)
+    #FIXME this should work using DEPS_CMAKE but it doesnt?
+    target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES} )
+endif(WITH_PORTS)
 
