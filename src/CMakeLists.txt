@@ -65,7 +65,8 @@ set(DEPS
         PrimitivesFactory
 )
 
-set(DEPSPLAIN )
+find_package(Boost REQUIRED COMPONENTS serialization)
+set(DEPSPLAIN Boost_SERIALIZATION)
 
 
 if(WITH_PORTS)
@@ -77,10 +78,7 @@ if(WITH_PORTS)
   set(SOURCE_FILES ${SOURCE_FILES} dispatch/PortDispatcher.cpp)
   set(HEADER_FILES ${HEADER_FILES} dispatch/PortDispatcher.hpp)
   set(DEPS ${DEPS} orocos-rtt-${OROCOS_TARGET} orocos_cpp)
-  
-  find_package(Boost REQUIRED COMPONENTS serialization)
-  set(DEPSPLAIN Boost_SERIALIZATION)
-  
+   
   add_definitions(-DUSE_PORTS)
   set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
   
@@ -99,8 +97,6 @@ rock_library(vizkit3d_debug_drawings
     DEPS_PLAIN ${DEPSPLAIN}
 )
 
-if(WITH_PORTS)
-    #FIXME this should work using DEPS_CMAKE but it doesnt?
-    target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES} )
-endif(WITH_PORTS)
+target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES} )
+
 
