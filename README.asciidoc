@@ -251,6 +251,10 @@ void SomeTask::updateHook()
 A minimal standlone example can be found in `test/draw_test.cpp`.
 Take a look at `test/CMakeLists.txt` to learn about the neccessary flags to build the example.
 
+
+=== A minimal embedded Example
+TODO As of yet there is no example :(
+
 === A minimal ROCK Task
 If you want to output debug drawings through the ports of a ROCK task the following needs to be done:
 
