@@ -307,6 +307,7 @@ void Task::updateHook()
     FLUSH_DRAWINGS();
 }
 ```
+The `NO_THROW` part is important, otherwise the library will throw an exception when the updateHook is called for the second time.
 
 
 
