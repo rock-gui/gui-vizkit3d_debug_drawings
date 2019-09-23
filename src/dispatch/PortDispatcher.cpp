@@ -1,8 +1,6 @@
 #include <rtt/TaskContext.hpp> //has to be included first FIXME why?
 #include "PortDispatcher.hpp"
 #include <base-logging/Logging.hpp>
-#include <orocos_cpp/PluginHelper.hpp>
-#include <orocos_cpp/TypeRegistry.hpp>
 #include <rtt/OutputPort.hpp>
 
 
@@ -15,30 +13,7 @@ PortDispatcher::~PortDispatcher()
 
 PortDispatcher::PortDispatcher(RTT::TaskContext* taskContext) : taskContext(taskContext),    
     lastSend(base::Time::now())
-{
-    std::string commandBufferTypeName("/boost/shared_ptr</vizkit3dDebugDrawings/CommandBuffer>");
-    //load typeinfo
-    RTT::types::TypeInfo *commandBufferInfo = RTT::types::TypeInfoRepository::Instance()->type(commandBufferTypeName);
-    if(commandBufferInfo == nullptr)
-    {
-        //load typekit if not loaded
-        std::string typekitName;
-        orocos_cpp::TypeRegistry reg;
-        reg.loadTypeRegistries();
-        if(!reg.getTypekitDefiningType(commandBufferTypeName, typekitName))
-        {
-            LOG_ERROR_S << "vizkit3d_debug_drawings: Failed to load typekit for: " << commandBufferTypeName;
-            return;
-        }
-        if(!orocos_cpp::PluginHelper::loadTypekitAndTransports(typekitName))
-        {
-            LOG_ERROR_S << "vizkit3d_debug_drawings: Failed to load typekit: " << typekitName;
-            return;
-        }
-        commandBufferInfo = RTT::types::TypeInfoRepository::Instance()->type(commandBufferTypeName);
-    }    
-    assert(commandBufferInfo != nullptr);
-}
+{}
 
     
 void PortDispatcher::dispatch(const Command& cmd)

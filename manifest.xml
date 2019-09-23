@@ -11,7 +11,6 @@
   <depend package="gui/osgviz" />
   <depend package="gui/rock_widget_collection" />
   <depend package="rtt" />
-  <depend package="tools/orocos_cpp" />
   <!-- gui/orogen/vizkit3d_debug_drawings is required if you need support for ports, however we cannot add it as dependency without causing a dependency cycle! -->
 <!--   <depend package="gui/orogen/vizkit3d_debug_drawings" optional="1" /> -->
   
