@@ -252,7 +252,7 @@ A minimal standlone example can be found in `test/draw_test.cpp`.
 Take a look at `test/CMakeLists.txt` to learn about the neccessary flags to build the example.
 
 === A minimal ROCK Task
-For a ROCK task several things need to be done:
+If you want to output debug drawings through the ports of a ROCK task the following needs to be done:
 
 
 Add dependencies::
@@ -264,7 +264,8 @@ A minimal `manifest.xml` should look like this:
   <depend package="gui/vizkit3d_debug_drawings" />  
 </package>
 ```
-Add build flags::
+
+Modify CMakeLists::
 Modify the `src/CMakeLists.txt` and add the following:
 ```
 find_package(PkgConfig REQUIRED)
@@ -280,6 +281,31 @@ Add include directories and linker flags:
 ```
 target_include_directories(${DEBUG_DRAWING_TEST_TASKLIB_NAME} PUBLIC ${V3DD_INCLUDE_DIRS})    
 target_compile_options(${DEBUG_DRAWING_TEST_TASKLIB_NAME} PUBLIC ${V3DD_CFLAGS_OTHER}) 
+```
+
+Modify orogen file::
+To be able to output data through ports you need to tell orogen to load the typekit.
+Add the following to the orogen file:
+```
+using_library "vizkit3d_debug_drawings"
+import_types_from "vizkit3d_debug_drawings"
+```
+And add a dynamic port to every Task that outputs debug data:
+```
+dynamic_output_port /^debug_/, "/boost/shared_ptr</vizkit3dDebugDrawings/CommandBuffer>"
+```
+
+Modify Task::
+Within the task the library has to be configured for port output. Keep in mind that the debug drawings are thread_local. I.e. you have to configure them for every thread that should output debug drawings. This is important because, depending on your configuration, the `configureHook()` and `updateHook()` are executed in different threads.
+Therefore you have to configure the debug drawings at the beginning of the `updateHook()`:
+```
+void Task::updateHook()
+{
+    TaskBase::updateHook();
+    CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(this);
+    //your code here
+    FLUSH_DRAWINGS();
+}
 ```
 
 
