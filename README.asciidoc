@@ -10,7 +10,8 @@ A ROCK (http://rock-robotics.org) library that provides methods to create 3d dra
 
 
 == Build and Test Status
-There is no CI, yet. But this is planned for the next week
+[link=https://circleci.com/gh/rock-gui/gui-vizkit3d_debug_drawings]
+image::https://circleci.com/gh/rock-gui/gui-vizkit3d_debug_drawings.svg?style=svg?style=svg[Build Status]
 
 
 == Features
