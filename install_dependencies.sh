@@ -25,7 +25,7 @@ function build {
   mkdir $3/build
   cd $3/build
   cmake .. $4
-  make -j install
+  make install
   cd ../../
 }
 
@@ -46,6 +46,10 @@ echo "export OROCOS_TARGET=gnulinux" >> env.sh
 echo "export VIZKIT_PLUGIN_RUBY_PATH=$ABS_PREFIX/lib" >> env.sh
 
 source env.sh
+else
+
+echo "Please specify a prefix. If you want system wide installation use '/usr/local' as prefix."
+exit -1
   
 fi
 

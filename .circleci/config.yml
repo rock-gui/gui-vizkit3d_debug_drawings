@@ -6,14 +6,14 @@ jobs:
     steps:
       - run:
           name: apt-get
-          command: apt update && apt -y install build-essential gcc g++ cmake git wget libgoogle-glog-dev libboost-test-dev libboost-filesystem-dev libboost-serialization-dev libboost-system-dev pkg-config libeigen3-dev libclass-loader-dev libtinyxml-dev librosconsole-bridge-dev
+          command: apt update && apt -y install build-essential gcc g++ cmake git wget  libboost-filesystem-dev libboost-serialization-dev libboost-system-dev pkg-config libeigen3-dev libopenscenegraph-dev doxygen
       - checkout
       - run:
           name: chmod install script
           command: chmod +x install_dependencies.sh
       - run:
           name: run install script
-          command: ./install_dependencies.sh
+          command: ./install_dependencies.sh /usr/local
       - run:
           name: compile
           command: mkdir build && cd build && cmake -DROCK_TEST_ENABLED=ON -DWITH_PORTS=ON .. && make -j4 install
