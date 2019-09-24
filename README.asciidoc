@@ -50,20 +50,18 @@ Install local depndencies::
 This will create an `env.sh`. Source it before continuing.
 
 Build V3DD::
-Port support doesn't make much sense when building outside rock. It can bebe disabled with *WITH_PORTS=OFF*.
+Port support doesn't make much sense when building outside rock. It can be disabled with *WITH_PORTS=OFF*.
 If ports are disabled you may skip the rtt dependency (remove it from the `install_dependencies.sh` script).
 
 Set *DROCK_TEST_ENABLED=ON* to build the tests.
 
 ```
-git clone git@github.com:arneboe/gui-vizkit3d_debug_drawings.git
-cd gui-vizkit3d_debug_drawings
 mkdir build
-cmake -DCMAKE_INSTALL_PREFIX=/home/arne/git/debug3d_install -DWITH_PORTS=OFF -DROCK_TEST_ENABLED=ON ..
+cmake -DCMAKE_INSTALL_PREFIX=<path_to_prefix> -DWITH_PORTS=ON -DROCK_TEST_ENABLED=ON ..
 make -j install
 ```
 
-Run *draw_test* in *build/test* to check if everything works.
+Run *draw_test_standalone* in *build/test* to check if everything works.
 
 
 == Usage
