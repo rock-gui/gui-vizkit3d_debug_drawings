@@ -39,12 +39,15 @@ Nothing special has to be done to compile inside ROCK. Just call *amake* and wai
 Install all system dependencies::
 ```
 sudo apt install TODO
+
+
 ```
 
 Install local depndencies::
 ```
 ./install_dependencies.sh <path_to_prefix>
 ```
+This will create an `env.sh`. Source it before continuing.
 
 Build V3DD::
 Port support doesn't make much sense when building outside rock. It can bebe disabled with *WITH_PORTS=OFF*.
