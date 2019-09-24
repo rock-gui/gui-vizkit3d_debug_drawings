@@ -42,16 +42,19 @@ echo "export CMAKE_PREFIX_PATH=$ABS_PREFIX" >> env.sh
 echo "export PKG_CONFIG_PATH=$ABS_PREFIX/lib/pkgconfig:$ABS_PREFIX/share/pkgconfig:$ABS_PREFIX/lib64/pkgconfig:\$PKG_CONFIG_PATH" >> env.sh
 echo "export LD_LIBRARY_PATH=$ABS_PREFIX/lib:$ABS_PREFIX/lib64:\$LD_LIBRARY_PATH" >> env.sh
 echo "export PATH=$ABS_PREFIX/bin:\$PATH" >> env.sh
+echo "export OROCOS_TARGET=gnulinux" >> env.sh
+echo "export VIZKIT_PLUGIN_RUBY_PATH=$ABS_PREFIX/lib" >> env.sh
 
 source env.sh
   
 fi
 
 build https://github.com/rock-core/base-cmake.git master base-cmake "$PREFIX"
+build https://github.com/arneboe/base-types.git master base-types "-DBINDINGS_RUBY=OFF -DUSE_SISL=OFF -DROCK_VIZ_ENABLED=TRUE $PREFIX"
 build https://github.com/rock-core/gui-osgviz.git master gui-osgviz "$PREFIX"
 build https://github.com/orocos-toolchain/rtt.git master rtt "$PREFIX"
 build https://github.com/rock-core/gui-vizkit3d.git master gui-vizkit3d "$PREFIX"
-build https://github.com/rock-core/gui-rock_widget_collection.git master gui-rock_widget_collection "$PREFIX"
+
 
 
 
