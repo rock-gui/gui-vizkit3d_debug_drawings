@@ -248,15 +248,22 @@ void SomeTask::updateHook()
 == Examples
 
 === A minimal standalone Example
-A minimal standlone example can be found in `test/draw_test.cpp`.
+A minimal standlone example can be found in `test/draw_test_standalone.cpp`.
 Take a look at `test/CMakeLists.txt` to learn about the neccessary flags to build the example.
 
 
 === A minimal embedded Example
-TODO As of yet there is no example :(
+An example attaching to an existing `Vizkit3DWidget` can be found in `test/draw_test_attach.cpp`.
 
 === A minimal ROCK Task
 If you want to output debug drawings through the ports of a ROCK task the following needs to be done:
+
+Build V3DD with port support::
+For the port output to work you need to enable port support. Compile the V3DD library with
+```
+add_definitions(-DUSE_PORTS)
+```
+Without this flag the commands for port output will not be available.
 
 
 Add dependencies::
@@ -289,6 +296,8 @@ target_compile_options(${DEBUG_DRAWING_TEST_TASKLIB_NAME} PUBLIC ${V3DD_CFLAGS_O
 
 Modify orogen file::
 To be able to output data through ports you need to tell orogen to load the typekit.
+If you do not do this, rock-display will not be able to deserialize the debug messages. It will shown an error instead.
+
 Add the following to the orogen file:
 ```
 using_library "vizkit3d_debug_drawings"

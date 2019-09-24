@@ -1,5 +1,12 @@
 add_definitions(-DENABLE_DEBUG_DRAWINGS)
-rock_executable(draw_test draw_test.cpp
+rock_executable(draw_test_standalone draw_test_standalone.cpp
+    DEPS 
+        vizkit3d_debug_drawings
+)
+
+find_package(Boost COMPONENTS serialization iostreams)
+
+rock_executable(draw_test_attach draw_test_attach.cpp
     DEPS 
         vizkit3d_debug_drawings
 )
@@ -9,7 +16,7 @@ rock_executable(draw_test draw_test.cpp
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-find_package(Boost COMPONENTS serialization iostreams)
+
 rock_testsuite(serialization_test 
     suite.cpp
     serialization_test.cpp
