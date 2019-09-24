@@ -1,7 +1,7 @@
 #include <rtt/TaskContext.hpp> //has to be included first FIXME why?
 #include "PortDispatcher.hpp"
-#include <base-logging/Logging.hpp>
 #include <rtt/OutputPort.hpp>
+
 
 
 namespace vizkit3dDebugDrawings
@@ -12,7 +12,7 @@ PortDispatcher::~PortDispatcher()
 
 
 PortDispatcher::PortDispatcher(RTT::TaskContext* taskContext) : taskContext(taskContext),    
-    lastSend(base::Time::now())
+    lastSend(std::chrono::system_clock::now())
 {}
 
     
@@ -30,8 +30,8 @@ void PortDispatcher::dispatch(const Command& cmd)
     
     //by default we flush every 1.5 seconds
     //call flush manually if you want faster updates
-    const base::Time now = base::Time::now();
-    if(now.toMilliseconds() - lastSend.toMilliseconds() >= 1500)
+    const std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+    if(now - lastSend >= std::chrono::milliseconds(1500))
     {
         lastSend = now;
         flush();

@@ -65,8 +65,8 @@ set(DEPS
         PrimitivesFactory
 )
 
-find_package(Boost REQUIRED COMPONENTS serialization)
-set(DEPSPLAIN Boost_SERIALIZATION)
+find_package(Boost REQUIRED COMPONENTS serialization system)
+set(DEPSPLAIN Boost_SERIALIZATION BOOST_SYSTEM)
 
 
 if(WITH_PORTS)
@@ -97,6 +97,6 @@ rock_library(vizkit3d_debug_drawings
     DEPS_PLAIN ${DEPSPLAIN}
 )
 
-target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES} )
+target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES})
 
 

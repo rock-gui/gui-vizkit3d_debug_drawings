@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include "../commands/CommandBuffer.h" //FIXME relative include
-#include <base/Time.hpp>
+#include <chrono>
 
 namespace RTT
 {
@@ -37,7 +37,7 @@ private:
     RTT::TaskContext* taskContext;//context in which ports will be created
     std::unordered_map<std::string, RTT::base::OutputPortInterface*> ports; //drawing name to port mapping
     std::unordered_map<std::string, CommandBuffer>  cmdBuffer;
-    base::Time lastSend;
+    std::chrono::system_clock::time_point lastSend;
 };
     
 }
