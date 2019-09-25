@@ -6,7 +6,7 @@ jobs:
     steps:
       - run:
           name: apt-get
-          command: apt update && apt -y install build-essential gcc g++ cmake git wget  libboost-filesystem-dev libboost-serialization-dev libboost-system-dev pkg-config libeigen3-dev libopenscenegraph-dev  doxygen libqt4-dev
+          command: apt update && apt -y install build-essential gcc g++ cmake git wget  libboost-filesystem-dev libboost-serialization-dev libboost-system-dev pkg-config libeigen3-dev libopenscenegraph-dev  doxygen libqt4-dev ruby-dev libboost-thread-dev libboost-test-dev
       - checkout
       - run:
           name: chmod install script
@@ -16,5 +16,5 @@ jobs:
           command: ./install_dependencies.sh /usr/local
       - run:
           name: compile
-          command: mkdir build && cd build && cmake -DROCK_TEST_ENABLED=ON -DWITH_PORTS=ON .. && make -j4 install
+          command: source env.sh && mkdir build && cd build && cmake -DROCK_TEST_ENABLED=ON -DWITH_PORTS=ON .. && make -j4 install
 
