@@ -35,7 +35,6 @@
 
 #include <string>
 #include <vector>
-#include <boost/shared_ptr.hpp>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include "DebugDrawingColors.h"
