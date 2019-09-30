@@ -6,6 +6,8 @@
 
 int main()
 {
+    //NOTE an empty vizkit window should pop up
+    
     QtThreadedWidget<vizkit3d::Vizkit3DWidget> thread;
     thread.start();
     V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(thread.getWidget());
@@ -14,3 +16,4 @@ int main()
     draw();   
     return 0;
 }
+

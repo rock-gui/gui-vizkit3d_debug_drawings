@@ -5,30 +5,30 @@
 
 #ifndef ENABLE_DEBUG_DRAWINGS
 
-    #define CONFIGURE_DEBUG_DRAWINGS_STANDALONE(...)  (void)0
-    #define CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...)  (void)0
-    #define CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...)  (void)0
-    #define CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(...)  (void)0
-    #define CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...)  (void)0
+    #define V3DD_CONFIGURE_DEBUG_DRAWINGS_STANDALONE(...)  (void)0
+    #define V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...)  (void)0
+    #define V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...)  (void)0
+    #define V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(...)  (void)0
+    #define V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...)  (void)0
     
-    #define DRAW_RING(...) (void)0
-    #define DRAW_PRIMITIVE(...) (void)0
-    #define DRAW_WIREFRAME_BOX(...) (void) 0
-    #define REMOVE_DRAWING(...) (void) 0
-    #define CLEAR_DRAWING(...) (void) 0
-    #define DRAW_SPHERE(...) (void)0
-    #define DRAW_POLYLINE(...) (void)0
-    #define DRAW_TEXT(...) (void)0
-    #define DRAW_LINE(...) (void)0
-    #define DRAW_AXES(...) (void)0
-    #define DRAW_AABB(...) (void)0
-    #define DRAW_ARROW(...) (void)0
-    #define DRAW_CYLINDER(...) (void)0
-    #define PLOT_2D(...) (void)0
-    #define CLEAR_PLOT(...) (void)0
-    #define FLUSH_DRAWINGS(...) (void)0
+    #define V3DD_DRAW_RING(...) (void)0
+    #define V3DD_DRAW_PRIMITIVE(...) (void)0
+    #define V3DD_DRAW_WIREFRAME_BOX(...) (void) 0
+    #define V3DD_REMOVE_DRAWING(...) (void) 0
+    #define V3DD_CLEAR_DRAWING(...) (void) 0
+    #define V3DD_DRAW_SPHERE(...) (void)0
+    #define V3DD_DRAW_POLYLINE(...) (void)0
+    #define V3DD_DRAW_TEXT(...) (void)0
+    #define V3DD_DRAW_LINE(...) (void)0
+    #define V3DD_DRAW_AXES(...) (void)0
+    #define V3DD_DRAW_AABB(...) (void)0
+    #define V3DD_DRAW_ARROW(...) (void)0
+    #define V3DD_DRAW_CYLINDER(...) (void)0
+    #define V3DD_PLOT_2D(...) (void)0
+    #define V3DD_CLEAR_PLOT(...) (void)0
+    #define V3DD_FLUSH_DRAWINGS(...) (void)0
     
-    #define COMPLEX_DRAWING(...) (void)0
+    #define V3DD_COMPLEX_DRAWING(...) (void)0
     
     
 #else
@@ -83,119 +83,119 @@ namespace vizkit3dDebugDrawings
  *       executed in the same thread.  */
 
     /**@throw std::runtime_error if already configured */
-    void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
-    void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
+    void V3DD_CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
+    void V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
 
 #ifdef USE_PORTS    
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext); 
+    void V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext); 
     /**Same as above but does nothing if already configured. */
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
+    void V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
 #endif
     
     /**Same as above but does nothing if already configured */
-    void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
+    void V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
 
     /** @param position center of the box  */
-    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                             const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
                             const Eigen::Vector4d& colorRGBA);
     
     /** @param position center of the box*/
-    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                             const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
     
     /** @param position Position of the tip of the arrow
      *  @param orientation Identity points in z-direction*/
-    void DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
                     const Eigen::Vector4d& colorRGBA);
     
     /** @param position Position of the tip of the arrow */
-    void DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                     const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
 
-    void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation, double radius,
                    double height, double thickness, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                    double radius, double height, double thickness, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_SPHERE(const std::string& drawingGroupName, double posX, double posY, double posZ,
+    void V3DD_DRAW_SPHERE(const std::string& drawingGroupName, double posX, double posY, double posZ,
                      double radius, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_SPHERE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_SPHERE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                      double radius, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                        const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
                        const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                        const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
     
     /** @param position origin of the line
      *  @param points relative to @p position.*/
-    void DRAW_POLYLINE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_POLYLINE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                        const std::vector<Eigen::Vector3d>& points, const Eigen::Vector4d& colorRGBA);
     
     /** @param points realtive to (0, 0, 0) */
-    void DRAW_POLYLINE(const std::string& drawingGroupName, const std::vector<Eigen::Vector3d>& points,
+    void V3DD_DRAW_POLYLINE(const std::string& drawingGroupName, const std::vector<Eigen::Vector3d>& points,
                        const Eigen::Vector4d& colorRGBA);
     
     /** @param from relative to (0, 0, 0)
      *  @param to   relative to (0, 0, 0) */
-    void DRAW_LINE(const std::string& drawingGroupName, const Eigen::Vector3d& from, const Eigen::Vector3d& to,
+    void V3DD_DRAW_LINE(const std::string& drawingGroupName, const Eigen::Vector3d& from, const Eigen::Vector3d& to,
                    const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
+    void V3DD_DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
                    double rotW, double rotX, double rotY, double rotZ,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
+    void V3DD_DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
     
     /** @param position position of the center of the axes */
-    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size);
     
-    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void V3DD_DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation);
     
-    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position);
+    void V3DD_DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position);
     
     /** draw axis aligned bounding box */
-    void DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box,
+    void V3DD_DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box,
                    const Eigen::Vector4d& colorRGBA);
 
-    void PLOT_2D(const std::string& plotName, const Eigen::Vector2d& dataPoint);
+    void V3DD_PLOT_2D(const std::string& plotName, const Eigen::Vector2d& dataPoint);
     
-    void CLEAR_PLOT(const std::string& plotName);
+    void V3DD_CLEAR_PLOT(const std::string& plotName);
     
     /** Removes the drawing.
      * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
      * @note If you want to animate something, use CLEAR_DRAWING instead.*/
-    void REMOVE_DRAWING(const std::string& drawingGroupName);
+    void V3DD_REMOVE_DRAWING(const std::string& drawingGroupName);
     
     /** Removes the content from a drawing but keeps the drawing itself.
      * I.e. the vizkit3d plugin will be kept and the users settings will be retained.
      * Use this if you want to animate movements.*/
-    void CLEAR_DRAWING(const std::string& drawingGroupName);
+    void V3DD_CLEAR_DRAWING(const std::string& drawingGroupName);
     
     /**Flush the drawing buffer */
-    void FLUSH_DRAWINGS();
+    void V3DD_FLUSH_DRAWINGS();
     
     /**Use this if debug drawings need additional code that is only required for the drawing.
      * @note This is scoped. I.e. variables created in here cannot be referenced from other scopes*/
-    #define COMPLEX_DRAWING(...) do { __VA_ARGS__; } while (0)
+    #define V3DD_COMPLEX_DRAWING(...) do { __VA_ARGS__; } while (0)
 
 #endif
 
