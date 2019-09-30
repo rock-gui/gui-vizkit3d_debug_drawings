@@ -133,13 +133,13 @@ Take a look at `vizkit3d_debug_drawings/DebugDrawing.h` for an overview of all a
 ```
 Example:
 ```c++
-base::Vector3d pos(-3, -3, -3);
+Eigen::Vector3d pos(-3, -3, -3);
 DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
 ```
 
 All drawing commands follow the same structure. The first parameter is always the
 name of the drawing group, the last parameter is always the color.
- A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.h`. If none of the named colors suits you, you can always define your own. A color is just a `base::Vector4d` containing RGBA values.
+ A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.h`. If none of the named colors suits you, you can always define your own. A color is just a `Eigen::Vector4d` containing RGBA values.
 
 The drawing group has special relevance. All drawings that belong to a group
 will be visualized by the same instance of a Vizkit3DPlugin or send through the same
@@ -154,7 +154,7 @@ TO avoid this the `COMPLEX_DRAWING` macro can be used. This macro should enclose
 Example:
 ```c++
 COMPLEX_DRAWING(
-   base::Vector3d size;
+   Eigen::Vector3d size;
    size.x() = std::abs(areaToExplore.getBox().max().x() - areaToExplore.getBox().min().x());
    size.y() = std::abs(areaToExplore.getBox().max().y() - areaToExplore.getBox().min().y());
    size.z() = std::abs(areaToExplore.getBox().max().z() - areaToExplore.getBox().min().z());
@@ -180,7 +180,7 @@ when you want to permanently remove a group.
 === Plotting 2D data
 In addition to 3D debug drawings, it is also possible to create simple 2D plots.
 ```
-void PLOT_2D(const std::string& plotName, const base::Vector2d& dataPoint);
+void PLOT_2D(const std::string& plotName, const Eigen::Vector2d& dataPoint);
 void CLEAR_PLOT(const std::string& plotName);
 
 ```
