@@ -93,6 +93,29 @@ namespace vizkit3dDebugDrawings
     
     /**Same as above but does nothing if already configured */
     void V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
+    
+    #define V3DD_DECLARE_DEBUG_DRAWING(drawingGroupName) \
+        namespace V3DD_STATIC_DECLARATIONS \
+        { \
+            class V3DD_STATIC_DECLARE_##drawingGroupName_INITIALIZER \
+            { \
+                public: V3DD_STATIC_DECLARE_##drawingGroupName_INITIALIZER() \
+                { \
+                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
+                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
+                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
+                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
+                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
+                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
+                }\
+            };\
+            V3DD_STATIC_DECLARE_##drawingGroupName_INITIALIZER init_##drawingGroupName = V3DD_STATIC_DECLARE_##drawingGroupName_INITIALIZER(); \
+        }
+    
+
+    
+    //TODO
+    void V3DD_DECLARE_DEBUG_PLOT(const std::string& plotName);
 
     /** @param position center of the box  */
     void V3DD_DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
