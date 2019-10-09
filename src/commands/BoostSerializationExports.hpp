@@ -5,20 +5,20 @@
 
 #pragma once
 
-#include "Command.h"
-#include "DrawCommand.h"
-#include "RemoveDrawingCommand.h"
-#include "ClearDrawingCommand.h"
-#include "PlotCommand.h"
-#include "primitives/DrawArrowCommand.h"
-#include "primitives/DrawCylinderCommand.h"
-#include "primitives/DrawPolyLineCommand.h"
-#include "primitives/DrawRingCommand.h"
-#include "primitives/DrawSphereCommand.h"
-#include "primitives/DrawTextCommand.h"
-#include "primitives/DrawWireframeBoxCommand.h"
-#include "primitives/DrawAxesCommand.h"
-#include "primitives/DrawAABBCommand.h"
+#include "Command.hpp"
+#include "DrawCommand.hpp"
+#include "RemoveDrawingCommand.hpp"
+#include "ClearDrawingCommand.hpp"
+#include "PlotCommand.hpp"
+#include "primitives/DrawArrowCommand.hpp"
+#include "primitives/DrawCylinderCommand.hpp"
+#include "primitives/DrawPolyLineCommand.hpp"
+#include "primitives/DrawRingCommand.hpp"
+#include "primitives/DrawSphereCommand.hpp"
+#include "primitives/DrawTextCommand.hpp"
+#include "primitives/DrawWireframeBoxCommand.hpp"
+#include "primitives/DrawAxesCommand.hpp"
+#include "primitives/DrawAABBCommand.hpp"
 
 //NOTE needs to be included last
 #include <boost/serialization/export.hpp>

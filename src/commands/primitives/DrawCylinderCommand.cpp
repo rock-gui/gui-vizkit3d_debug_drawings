@@ -1,4 +1,4 @@
-#include "DrawCylinderCommand.h"
+#include "DrawCylinderCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

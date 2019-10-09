@@ -1,18 +1,18 @@
 #define ENABLE_DEBUG_DRAWINGS //to get the right version of the header
-#include "commands/primitives/DrawSphereCommand.h"
-#include "commands/primitives/DrawTextCommand.h"
-#include "commands/primitives/DrawRingCommand.h"
-#include "commands/primitives/DrawWireframeBoxCommand.h"
-#include "commands/primitives/DrawArrowCommand.h"
-#include "commands/primitives/DrawPolyLineCommand.h"
-#include "commands/primitives/DrawCylinderCommand.h"
-#include "commands/primitives/DrawAxesCommand.h"
-#include "commands/primitives/DrawAABBCommand.h"
-#include "commands/RemoveDrawingCommand.h"
-#include "commands/ClearDrawingCommand.h"
-#include "commands/PlotCommand.h"
-#include "commands/ClearPlotCommand.h"
-#include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
+#include "commands/primitives/DrawSphereCommand.hpp"
+#include "commands/primitives/DrawTextCommand.hpp"
+#include "commands/primitives/DrawRingCommand.hpp"
+#include "commands/primitives/DrawWireframeBoxCommand.hpp"
+#include "commands/primitives/DrawArrowCommand.hpp"
+#include "commands/primitives/DrawPolyLineCommand.hpp"
+#include "commands/primitives/DrawCylinderCommand.hpp"
+#include "commands/primitives/DrawAxesCommand.hpp"
+#include "commands/primitives/DrawAABBCommand.hpp"
+#include "commands/RemoveDrawingCommand.hpp"
+#include "commands/ClearDrawingCommand.hpp"
+#include "commands/PlotCommand.hpp"
+#include "commands/ClearPlotCommand.hpp"
+#include <vizkit3d_debug_drawings/commands/CommandBuffer.hpp>
 
 #include "dispatch/CommandDispatcherFactory.hpp"
 #include <vizkit3d/Vizkit3DWidget.hpp>

@@ -1,5 +1,5 @@
-#include <vizkit3d_debug_drawings/DebugDrawing.h>
-#include "draw.h"
+#include <vizkit3d_debug_drawings/DebugDrawing.hpp>
+#include "draw.hpp"
 
 
 int main()

@@ -9,7 +9,7 @@
 
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
-#include "Command.h" //needs to be included for serialization to work :/
+#include "Command.hpp" //needs to be included for serialization to work :/
 
 namespace vizkit3dDebugDrawings
 {

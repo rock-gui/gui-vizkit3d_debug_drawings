@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Command.h"
+#include "Command.hpp"
 #include <boost/serialization/base_object.hpp>
 
 namespace vizkit3dDebugDrawings

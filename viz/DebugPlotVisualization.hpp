@@ -3,7 +3,7 @@
 #include <boost/noncopyable.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <osg/Geode>
-#include <vizkit3d_debug_drawings/PlotDataPoint.h>
+#include <vizkit3d_debug_drawings/PlotDataPoint.hpp>
 #include<memory>
 
 

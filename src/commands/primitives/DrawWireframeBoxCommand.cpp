@@ -1,4 +1,4 @@
-#include "DrawWireframeBoxCommand.h"
+#include "DrawWireframeBoxCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

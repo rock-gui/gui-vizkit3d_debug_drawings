@@ -1,5 +1,5 @@
 #pragma once
-#include <vizkit3d_debug_drawings/commands/DrawCommand.h>
+#include <vizkit3d_debug_drawings/commands/DrawCommand.hpp>
 #include <string>
 #include <Eigen/Core>
 #include <vizkit3d_debug_drawings/commands/BoostSerializationHelpers.hpp>
@@ -11,7 +11,7 @@ namespace osg
 
 namespace vizkit3dDebugDrawings
 {
-class DrawCylinderCommand : public DrawCommand
+class DrawAxesCommand : public DrawCommand
 {
     friend class boost::serialization::access;
     template<class Archive>
@@ -21,28 +21,23 @@ class DrawCylinderCommand : public DrawCommand
         ar & boost::serialization::base_object<DrawCommand>(*this);
         ar & position;
         ar & orientation;
-        ar & size;
-        ar & colorRGBA;
+        ar & scale;
     }
     
-
-    
 public:
-    DrawCylinderCommand();
+    DrawAxesCommand();
     
-    DrawCylinderCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
-                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
-                      const Eigen::Vector4d& colorRGBA);
+    DrawAxesCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& scale);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
-    virtual DrawCylinderCommand* clone() const;
+    virtual DrawAxesCommand* clone() const;
     
 private:
     Eigen::Vector3d position;
     Eigen::Quaterniond orientation;
-    Eigen::Vector3d size;
-    Eigen::Vector4d colorRGBA;
+    Eigen::Vector3d scale;
 
 };
 }

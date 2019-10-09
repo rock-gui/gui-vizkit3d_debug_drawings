@@ -1,5 +1,5 @@
-#include "PlotCommand.h"
-#include <vizkit3d_debug_drawings/DrawingManager.h>
+#include "PlotCommand.hpp"
+#include <vizkit3d_debug_drawings/DrawingManager.hpp>
 
 namespace vizkit3dDebugDrawings
 {

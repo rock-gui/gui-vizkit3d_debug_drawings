@@ -1,4 +1,4 @@
-#include "DrawTextCommand.h"
+#include "DrawTextCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

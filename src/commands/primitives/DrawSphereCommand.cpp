@@ -1,4 +1,4 @@
-#include "DrawSphereCommand.h"
+#include "DrawSphereCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

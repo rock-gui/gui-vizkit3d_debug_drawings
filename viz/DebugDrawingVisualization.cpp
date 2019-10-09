@@ -1,5 +1,5 @@
 #include "DebugDrawingVisualization.hpp"
-#include <vizkit3d_debug_drawings/DrawingManager.h>
+#include <vizkit3d_debug_drawings/DrawingManager.hpp>
 #include <memory>
 
 using namespace vizkit3d;

@@ -1,7 +1,7 @@
 #include "ICommandDispatcher.hpp"
 #include <unordered_map>
 #include <string>
-#include "../commands/CommandBuffer.h" //FIXME relative include
+#include "../commands/CommandBuffer.hpp" //FIXME relative include
 #include <chrono>
 
 namespace RTT

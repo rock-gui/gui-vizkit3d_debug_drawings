@@ -1,4 +1,4 @@
-#include "DrawRingCommand.h"
+#include "DrawRingCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

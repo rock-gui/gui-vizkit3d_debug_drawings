@@ -1,4 +1,4 @@
-#include "DrawArrowCommand.h"
+#include "DrawArrowCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

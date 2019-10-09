@@ -1,5 +1,5 @@
 #pragma once
-#include <vizkit3d_debug_drawings/commands/DrawCommand.h>
+#include <vizkit3d_debug_drawings/commands/DrawCommand.hpp>
 #include <string>
 #include <Eigen/Core>
 #include <vizkit3d_debug_drawings/commands/BoostSerializationHelpers.hpp>
@@ -11,7 +11,7 @@ namespace osg
 
 namespace vizkit3dDebugDrawings
 {
-class DrawWireframeBoxCommand : public DrawCommand
+class DrawCylinderCommand : public DrawCommand
 {
     friend class boost::serialization::access;
     template<class Archive>
@@ -28,21 +28,21 @@ class DrawWireframeBoxCommand : public DrawCommand
 
     
 public:
-    DrawWireframeBoxCommand();
+    DrawCylinderCommand();
     
-    DrawWireframeBoxCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
-                            const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
-                            const Eigen::Vector4d& colorRGBA);
+    DrawCylinderCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
+                      const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
-    virtual DrawWireframeBoxCommand* clone() const;
+    virtual DrawCylinderCommand* clone() const;
     
 private:
     Eigen::Vector3d position;
     Eigen::Quaterniond orientation;
     Eigen::Vector3d size;
     Eigen::Vector4d colorRGBA;
-    
+
 };
 }

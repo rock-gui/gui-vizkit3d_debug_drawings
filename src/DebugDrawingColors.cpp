@@ -1,4 +1,4 @@
-#include "DebugDrawingColors.h"
+#include "DebugDrawingColors.hpp"
 
 namespace vizkit3dDebugDrawings
 {

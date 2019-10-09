@@ -1,7 +1,7 @@
-#include <vizkit3d_debug_drawings/DebugDrawing.h>
+#include <vizkit3d_debug_drawings/DebugDrawing.hpp>
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
-#include "draw.h"
+#include "draw.hpp"
 
 
 int main()
