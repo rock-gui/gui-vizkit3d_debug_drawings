@@ -193,8 +193,12 @@ namespace vizkit3dDebugDrawings
     void V3DD_FLUSH_DRAWINGS();
     
     /**Use this if debug drawings need additional code that is only required for the drawing.
-     * @note This is scoped. I.e. variables created in here cannot be referenced from other scopes*/
-    #define V3DD_COMPLEX_DRAWING(...) do { __VA_ARGS__; } while (0)
+     * See documentation for example*/
+    template <class T>
+    void V3DD_COMPLEX_DRAWING(T&& f)
+    {
+        f();
+    }
 
 #endif
 

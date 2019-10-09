@@ -77,14 +77,18 @@ void draw()
     V3DD_DRAW_LINE("line", Eigen::Vector3d(-1, -1, -1), Eigen::Vector3d(0, 1, 2), vizkit3dDebugDrawings::Color::cyan);
     
 
-    Eigen::Vector3d min, max;
-    min << -1, -1, -1;
-    max << 1, 1, 1;
-    Eigen::AlignedBox3d boundingBox(min, max);
-    V3DD_DRAW_AABB("AABB", boundingBox, vizkit3dDebugDrawings::Color::alloy_orange);
+
+    V3DD_COMPLEX_DRAWING([]()
+    {
+        Eigen::Vector3d min, max;
+        min << -1, -1, -1;
+        max << 1, 1, 1;
+        Eigen::AlignedBox3d boundingBox(min, max);
+        V3DD_DRAW_AABB("Complex", boundingBox, vizkit3dDebugDrawings::Color::alloy_orange);
+         V3DD_DRAW_SPHERE("Complex", -7, 1, 1, 1, vizkit3dDebugDrawings::Color::magenta);
+    });
     
 
-    
     double x = 0;
     size_t i = 0;
     while(true)
