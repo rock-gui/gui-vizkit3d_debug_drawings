@@ -1,5 +1,5 @@
 #include "ExistingWidgetDispatcher.hpp"
-#include "../commands/Command.h"
+#include "../commands/Command.hpp"
 
 namespace vizkit3dDebugDrawings
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include <vizkit3d_debug_drawings/commands/DrawCommand.h>
+#include <vizkit3d_debug_drawings/commands/DrawCommand.hpp>
 #include <string>
 #include <Eigen/Core>
 #include <vizkit3d_debug_drawings/commands/BoostSerializationHelpers.hpp>
@@ -11,7 +11,7 @@ namespace osg
 
 namespace vizkit3dDebugDrawings
 {
-class DrawTextCommand : public DrawCommand
+class DrawAABBCommand : public DrawCommand
 {
     friend class boost::serialization::access;
     template<class Archive>
@@ -19,32 +19,24 @@ class DrawTextCommand : public DrawCommand
     {
         // serialize base class information
         ar & boost::serialization::base_object<DrawCommand>(*this);
-        ar & position;
-        ar & orientation;
-        ar & text;
-        ar & fontSize;
+        ar & min;
+        ar & max;
         ar & colorRGBA;
     }
     
-
-    
 public:
-    DrawTextCommand();
+    DrawAABBCommand();
     
-    DrawTextCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
-                    const Eigen::Quaterniond& orientation, const std::string& text,
-                    double fontSize, const Eigen::Vector4d& colorRGBA);
+    DrawAABBCommand(const std::string& drawingGroupName, const Eigen::Vector3d& min,
+                    const Eigen::Vector3d& max, const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;
     
-    virtual DrawTextCommand* clone() const;
+    virtual DrawAABBCommand* clone() const;
     
 private:
-    Eigen::Vector3d position;
-    Eigen::Quaterniond orientation;
-    std::string text;
-    double fontSize;
+    Eigen::Vector3d min;
+    Eigen::Vector3d max;
     Eigen::Vector4d colorRGBA;
-    
 };
 }

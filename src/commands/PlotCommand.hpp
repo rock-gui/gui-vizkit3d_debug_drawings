@@ -1,14 +1,16 @@
 #pragma once
 #include <string>
-#include "Command.h"
+#include "Command.hpp"
 #include <boost/serialization/base_object.hpp>
+#include <Eigen/Core>
+#include <vizkit3d_debug_drawings/commands/BoostSerializationHelpers.hpp>
 
 
 namespace vizkit3dDebugDrawings
 {
     
 /**A command that draws a primitive */
-class ClearPlotCommand : public Command
+class PlotCommand : public Command
 {
     
     friend class boost::serialization::access;
@@ -17,16 +19,20 @@ class ClearPlotCommand : public Command
     {
         // serialize base class information
         ar & boost::serialization::base_object<Command>(*this);
+        ar & dataPoint;
     }
     
 public:
-    ClearPlotCommand(const std::string& drawingGroupName);
-    ClearPlotCommand();
+    PlotCommand(const std::string& drawingGroupName, const Eigen::Vector2d& dataPoint);
+    PlotCommand();
     
     virtual void execute(DrawingManager* drawingManager) const;
 
-    virtual ClearPlotCommand* clone() const;
+    virtual PlotCommand* clone() const;
     
-    virtual ~ClearPlotCommand();
+    virtual ~PlotCommand();
+    
+private:
+    Eigen::Vector2d dataPoint;
 };
 }

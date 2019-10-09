@@ -1,4 +1,4 @@
-#include "DrawPolyLineCommand.h"
+#include "DrawPolyLineCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

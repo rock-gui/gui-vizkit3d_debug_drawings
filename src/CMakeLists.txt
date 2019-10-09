@@ -31,28 +31,28 @@ set(SOURCE_FILES
 )
 
 set(HEADER_FILES
-        DebugDrawing.h
-        Drawing.h
-        DrawingManager.h
-        DebugDrawingColors.h
-        PlotDataPoint.h
-        commands/DrawCommand.h
-        commands/Command.h
-        commands/RemoveDrawingCommand.h
-        commands/ClearDrawingCommand.h
-        commands/CommandBuffer.h
-        commands/PlotCommand.h
-        commands/ClearPlotCommand.h
-        commands/primitives/DrawSphereCommand.h
-        commands/primitives/DrawTextCommand.h
-        commands/primitives/DrawRingCommand.h
-        commands/primitives/DrawWireframeBoxCommand.h
-        commands/primitives/DrawArrowCommand.h
-        commands/primitives/DrawPolyLineCommand.h
-        commands/primitives/DrawPolyLineCommand.h
-        commands/primitives/DrawAxesCommand.h
-        commands/primitives/DrawAABBCommand.h
-        commands/BoostSerializationExports.h
+        DebugDrawing.hpp
+        Drawing.hpp
+        DrawingManager.hpp
+        DebugDrawingColors.hpp
+        PlotDataPoint.hpp
+        commands/DrawCommand.hpp
+        commands/Command.hpp
+        commands/RemoveDrawingCommand.hpp
+        commands/ClearDrawingCommand.hpp
+        commands/CommandBuffer.hpp
+        commands/PlotCommand.hpp
+        commands/ClearPlotCommand.hpp
+        commands/primitives/DrawSphereCommand.hpp
+        commands/primitives/DrawTextCommand.hpp
+        commands/primitives/DrawRingCommand.hpp
+        commands/primitives/DrawWireframeBoxCommand.hpp
+        commands/primitives/DrawArrowCommand.hpp
+        commands/primitives/DrawPolyLineCommand.hpp
+        commands/primitives/DrawPolyLineCommand.hpp
+        commands/primitives/DrawAxesCommand.hpp
+        commands/primitives/DrawAABBCommand.hpp
+        commands/BoostSerializationExports.hpp
         dispatch/ICommandDispatcher.hpp
         dispatch/CommandDispatcherFactory.hpp
         dispatch/StandaloneDispatcher.hpp

@@ -1,6 +1,6 @@
 #pragma once
 #include "ICommandDispatcher.hpp"
-#include "../DrawingManager.h"
+#include "../DrawingManager.hpp"
 
 namespace vizkit3d 
 {

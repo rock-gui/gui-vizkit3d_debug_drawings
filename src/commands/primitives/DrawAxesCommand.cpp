@@ -1,4 +1,4 @@
-#include "DrawAxesCommand.h"
+#include "DrawAxesCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

@@ -2,7 +2,7 @@
 #include "ICommandDispatcher.hpp"
 #include <vizkit3d/QtThreadedWidget.hpp>
 #include <vizkit3d/Vizkit3DWidget.hpp>
-#include "../DrawingManager.h"
+#include "../DrawingManager.hpp"
 
 namespace vizkit3dDebugDrawings
 {

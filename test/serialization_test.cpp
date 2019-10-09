@@ -1,14 +1,14 @@
 #include <boost/test/unit_test.hpp>
 #define private public //HACK to compare members directly DrawSphereCommand
-#include <vizkit3d_debug_drawings/commands/primitives/DrawSphereCommand.h>
-#include <vizkit3d_debug_drawings/commands/primitives/DrawArrowCommand.h>
-#include <vizkit3d_debug_drawings/commands/primitives/DrawCylinderCommand.h>
-#include <vizkit3d_debug_drawings/commands/primitives/DrawPolyLineCommand.h>
-#include <vizkit3d_debug_drawings/commands/primitives/DrawRingCommand.h>
-#include <vizkit3d_debug_drawings/commands/primitives/DrawTextCommand.h>
-#include <vizkit3d_debug_drawings/commands/primitives/DrawWireframeBoxCommand.h>
-#include <vizkit3d_debug_drawings/commands/ClearDrawingCommand.h>
-#include <vizkit3d_debug_drawings/commands/RemoveDrawingCommand.h>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawSphereCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawArrowCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawCylinderCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawPolyLineCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawRingCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawTextCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/primitives/DrawWireframeBoxCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/ClearDrawingCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/RemoveDrawingCommand.hpp>
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -17,7 +17,7 @@
 #include <boost/iostreams/device/array.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/stream.hpp>
-#include <vizkit3d_debug_drawings/DebugDrawingColors.h>
+#include <vizkit3d_debug_drawings/DebugDrawingColors.hpp>
 #include <boost/serialization/export.hpp>
 
 using namespace vizkit3dDebugDrawings;

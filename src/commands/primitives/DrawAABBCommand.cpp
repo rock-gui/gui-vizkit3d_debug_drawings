@@ -1,4 +1,4 @@
-#include "DrawAABBCommand.h"
+#include "DrawAABBCommand.hpp"
 #include <osgViz/modules/viz/Primitives/PrimitivesFactory.h>
 #include <osgViz/OsgViz.hpp>
 

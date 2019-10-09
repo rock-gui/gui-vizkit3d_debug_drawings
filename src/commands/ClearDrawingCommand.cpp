@@ -1,5 +1,5 @@
-#include "ClearDrawingCommand.h"
-#include <vizkit3d_debug_drawings/DrawingManager.h>
+#include "ClearDrawingCommand.hpp"
+#include <vizkit3d_debug_drawings/DrawingManager.hpp>
 
 
 namespace vizkit3dDebugDrawings

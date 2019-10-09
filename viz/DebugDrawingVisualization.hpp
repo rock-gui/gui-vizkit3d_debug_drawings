@@ -2,7 +2,7 @@
 #include <boost/noncopyable.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <osg/Geode>
-#include <vizkit3d_debug_drawings/commands/CommandBuffer.h>
+#include <vizkit3d_debug_drawings/commands/CommandBuffer.hpp>
 #include <boost/shared_ptr.hpp>
 
 

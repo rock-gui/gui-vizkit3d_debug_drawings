@@ -1,16 +1,16 @@
-#include "CommandBuffer.h"
-#include "Command.h"
-#include "DrawCommand.h"
-#include "ClearDrawingCommand.h"
-#include "RemoveDrawingCommand.h"
-#include "ClearPlotCommand.h"
-#include <vizkit3d_debug_drawings/DrawingManager.h>
+#include "CommandBuffer.hpp"
+#include "Command.hpp"
+#include "DrawCommand.hpp"
+#include "ClearDrawingCommand.hpp"
+#include "RemoveDrawingCommand.hpp"
+#include "ClearPlotCommand.hpp"
+#include "vizkit3d_debug_drawings/DrawingManager.hpp"
 
 //need to be included. otherwise BOOST_CLASS_EXPORT wont work (http://www.boost.org/doc/libs/1_46_1/libs/serialization/doc/special.html)
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 
-#include "BoostSerializationExports.h"
+#include "BoostSerializationExports.hpp"
 
 using namespace vizkit3dDebugDrawings;
 

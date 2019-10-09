@@ -1,6 +1,6 @@
-#include "DrawingManager.h"
-#include "Drawing.h"
-#include "PlotDataPoint.h"
+#include "DrawingManager.hpp"
+#include "Drawing.hpp"
+#include "PlotDataPoint.hpp"
 #include <vizkit3d/Vizkit3DWidget.hpp>
 #include <vizkit3d/Vizkit3DPlugin.hpp>
 #include <unordered_map>

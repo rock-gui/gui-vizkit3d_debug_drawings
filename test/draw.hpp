@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vizkit3d_debug_drawings/DebugDrawing.h>
-#include <vizkit3d_debug_drawings/DebugDrawingColors.h>
+#include <vizkit3d_debug_drawings/DebugDrawing.hpp>
+#include <vizkit3d_debug_drawings/DebugDrawingColors.hpp>
 #include <chrono>
 #include <Eigen/Core>
 #include <Eigen/Geometry>

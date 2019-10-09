@@ -1,5 +1,5 @@
-#include "DrawCommand.h"
-#include <vizkit3d_debug_drawings/DrawingManager.h>
+#include "DrawCommand.hpp"
+#include <vizkit3d_debug_drawings/DrawingManager.hpp>
 #include <osgViz/Object.h>
 #include <boost/serialization/export.hpp>
 namespace vizkit3dDebugDrawings

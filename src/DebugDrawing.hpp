@@ -37,7 +37,7 @@
 #include <vector>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include "DebugDrawingColors.h"
+#include "DebugDrawingColors.hpp"
 
 
 namespace vizkit3d

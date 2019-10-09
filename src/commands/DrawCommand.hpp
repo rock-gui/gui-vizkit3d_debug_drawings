@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Command.h"
+#include "Command.hpp"
 #include <osg/ref_ptr>
 #include <boost/serialization/base_object.hpp>
 
