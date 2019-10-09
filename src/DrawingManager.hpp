@@ -25,7 +25,7 @@ namespace vizkit3dDebugDrawings
         /** @p widget The widget that this manager should draw on */
         DrawingManager(vizkit3d::Vizkit3DWidget* widget);
         ~DrawingManager();
-        
+
         /** Adds @p prim to the drawing named @p drawingGroupName.
          * If @p drawingGroupName does not exist, it is created.
          * @param drawingGroupName May not be empty*/

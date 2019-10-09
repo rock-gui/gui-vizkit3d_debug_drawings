@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include <mutex>
 #include "ICommandDispatcher.hpp"
 
 namespace RTT
@@ -31,12 +30,12 @@ namespace vizkit3dDebugDrawings
         static bool instanceExists();
         
         
-        /** @return a thread_local instance of the CommandDispatcher.
+        /** @return The single instance of the CommandDispatcher.
          *  @throws std::runtime_error if no dispatcher has been created prior 
          *                             to this call*/
-        static std::shared_ptr<ICommandDispatcher> getThreadLocalInstance();
+        static std::shared_ptr<ICommandDispatcher> getInstance();
 
     private:
-        static thread_local std::shared_ptr<ICommandDispatcher> dispatcher;
+        static std::shared_ptr<ICommandDispatcher> dispatcher;
     };
 }

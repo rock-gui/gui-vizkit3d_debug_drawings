@@ -33,6 +33,7 @@ namespace vizkit3dDebugDrawings
         return p->widget;
     }
     
+  
     void DrawingManager::addPrimitive(const std::string& drawingGroupName, const osg::ref_ptr<osgviz::Object>& primitive)
     {
         checkStringNotEmpty(drawingGroupName);

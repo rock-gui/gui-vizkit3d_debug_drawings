@@ -11,7 +11,7 @@
 namespace vizkit3dDebugDrawings
 {
 
-thread_local std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::dispatcher = nullptr;
+std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::dispatcher = nullptr;
     
 #ifdef USE_PORTS
 void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext)
@@ -43,13 +43,13 @@ void CommandDispatcherFactory::createWidgetDispatcher(vizkit3d::Vizkit3DWidget* 
     dispatcher.reset(new ExistingWidgetDispatcher(widget));
 }
 
-std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::getThreadLocalInstance()
+std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::getInstance()
 {
     if(dispatcher)
     {
         return dispatcher;
     }
-    throw std::runtime_error("vizkit3d_debug_drawings: Dispatcher not created.\n Are you invoking debug drawing methods from a different thread?");
+    throw std::runtime_error("vizkit3d_debug_drawings: Dispatcher not created.\n Call one of the createDispatcher methods first.");
 }
 
 bool CommandDispatcherFactory::instanceExists()
