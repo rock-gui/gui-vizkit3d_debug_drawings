@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <vector>
 #include <osgViz/Object.h>
+#include "DeclaredDrawingManager.hpp"
 
 namespace vizkit3dDebugDrawings
 {

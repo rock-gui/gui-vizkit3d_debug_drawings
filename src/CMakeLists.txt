@@ -9,6 +9,7 @@ set(SOURCE_FILES
         DrawingManager.cpp
         DebugDrawing.cpp
         DebugDrawingColors.cpp
+        DeclaredDrawingManager.cpp
         commands/DrawCommand.cpp
         commands/Command.cpp
         commands/RemoveDrawingCommand.cpp
@@ -34,6 +35,7 @@ set(HEADER_FILES
         DebugDrawing.hpp
         Drawing.hpp
         DrawingManager.hpp
+        DeclaredDrawingManager.hpp
         DebugDrawingColors.hpp
         PlotDataPoint.hpp
         commands/DrawCommand.hpp

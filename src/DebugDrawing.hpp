@@ -11,6 +11,8 @@
     #define V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(...)  (void)0
     #define V3DD_CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...)  (void)0
     
+    #define V3DD_DECLARE_DEBUG_DRAWING(...) (void)0
+    
     #define V3DD_DRAW_RING(...) (void)0
     #define V3DD_DRAW_PRIMITIVE(...) (void)0
     #define V3DD_DRAW_WIREFRAME_BOX(...) (void) 0
@@ -38,6 +40,7 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include "DebugDrawingColors.hpp"
+#include "DeclaredDrawingManager.hpp"
 
 
 namespace vizkit3d
@@ -101,12 +104,7 @@ namespace vizkit3dDebugDrawings
             { \
                 public: V3DD_STATIC_DECLARE_##drawingGroupName_INITIALIZER() \
                 { \
-                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
-                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
-                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
-                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
-                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
-                    std::cout << "TEEEEEEEEEEEEEEEEST" << std::endl; \
+                    vizkit3dDebugDrawings::DeclaredDrawingManager::getInstance()->declareDrawingGroup(#drawingGroupName); \
                 }\
             };\
             V3DD_STATIC_DECLARE_##drawingGroupName_INITIALIZER init_##drawingGroupName = V3DD_STATIC_DECLARE_##drawingGroupName_INITIALIZER(); \
