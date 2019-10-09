@@ -1,17 +1,31 @@
 <package>
   <description brief="">
-  
+     A library that provides methods to create 3d drawings and plot data from inside any code for debugging purpose.
   </description>
-  <author>/arne.boeckmann@dfki.de</author>
-  <license></license>
-  <url>http://</url>
-  <logo>http://</logo>
+  <author>Arne Böckmann/arne.boeckmann@dfki.de</author>
+  <maintainer>Arne Böckmann/arne.boeckmann@dfki.de</maintainer>
+  <license>See LICENSE file</license>
+  <url>https://github.com/rock-gui/gui-vizkit3d_debug_drawings</url>
   <depend package="base/cmake" />
   <depend package="gui/vizkit3d" />
   <depend package="gui/osgviz" />
   <depend package="rtt" />
   <!-- gui/orogen/vizkit3d_debug_drawings is required if you need support for ports, however we cannot add it as dependency without causing a dependency cycle! -->
 <!--   <depend package="gui/orogen/vizkit3d_debug_drawings" optional="1" /> -->
-  
-  
+  <stage>1</stage>
+  <keywords>
+    <keyword>utilities</keyword>
+    <keyword>debugging</keyword>
+    <keyword>vizkit3d</keyword>
+    <keyword>c++</keyword>
+    <keyword>visualization</keyword>
+  </keywords>
+  <use>multi project</use>
+  <activity>active</activity>
+  <classifiers>
+    <classifier>gui</classifier>
+    <classifier>ruby</classifier>
+    <classifier>rock</classifier>
+    <classifier>ubuntu</classifier>
+  </classifiers>  
 </package>
