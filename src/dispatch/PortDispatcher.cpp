@@ -31,6 +31,7 @@ void PortDispatcher::registerDrawingNamesWithTask(RTT::TaskContext* taskContext,
             throw std::runtime_error("Drawing '" + drawingName + "' has already been registered to Task '" + taskContext->getName() + "'");
         }
         drawingNames2Tasks[drawingName] = taskContext;
+        createPort(drawingName, taskContext);
     }
 }
 
@@ -76,12 +77,8 @@ void PortDispatcher::flush()
 }
 
 
-void PortDispatcher::writePort(const std::string& drawingGroupName, boost::shared_ptr< CommandBuffer > buffer)
+void PortDispatcher::createPort(const std::string& drawingGroupName, RTT::TaskContext* taskContext)
 {
-    RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *typedPort;
-    
-    const auto &it = ports.find(drawingGroupName);
-    
     
     //TODO think about if there is a better way to handle this case?
     if(drawingNames2Tasks.find(drawingGroupName) == drawingNames2Tasks.end())
@@ -90,32 +87,39 @@ void PortDispatcher::writePort(const std::string& drawingGroupName, boost::share
         return;
     }
     
+    //only create port if we havent created it before
+    //FIXME this happens when multiple ports use the same drawing name
+    if(ports.find(drawingGroupName) != ports.end())
+    {
+        std::cout << "ERROR: Tried to create port for drawing '" << drawingGroupName << "' but port already exists" << std::endl;
+        return;
+    }
+    
+    const std::string portName("debug_" + drawingGroupName);
+    //check if someone else has created the port, the user might have created the port manually on the orogen file
+    //if yes use it, if not create it
+    RTT::base::OutputPortInterface* port =  dynamic_cast<RTT::base::OutputPortInterface*>(taskContext->ports()->getPort(portName));
+    if(port == nullptr)
+    {
+        auto typedPort = new RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>(portName, true);
+        port = typedPort;
+        taskContext->ports()->addPort(port->getName(), *(port));
+    }
+    ports[drawingGroupName] = port;   
+}
+
+
+void PortDispatcher::writePort(const std::string& drawingGroupName, boost::shared_ptr< CommandBuffer > buffer)
+{   
+    const auto &it = ports.find(drawingGroupName);
     //create port if it doesnt exist
     if(it == ports.end())
     {
-        RTT::base::OutputPortInterface* port = nullptr;
-        const std::string portName("debug_" + drawingGroupName);
-        //try to get the port (might have been created in another thread)
-        
-        RTT::TaskContext* taskContext = drawingNames2Tasks[drawingGroupName];
-        port =  dynamic_cast<RTT::base::OutputPortInterface*>(taskContext->ports()->getPort(portName));
-        if(port == nullptr)
-        {
-            typedPort = new RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>>(portName, true);
-            port = typedPort;
-            taskContext->ports()->addPort(port->getName(), *(port));
-        }
-        else
-        {
-            typedPort = dynamic_cast<RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *>(port);
-        }
-        ports[drawingGroupName] = port;
-    }
-    else
-    {
-        typedPort = dynamic_cast<RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *>(it->second);
+        std::cout << "ERROR: Port for drawing '" <<  drawingGroupName << "' does not exist" << std::endl;
+        return;
     }
     
+    auto typedPort = dynamic_cast<RTT::OutputPort<boost::shared_ptr<vizkit3dDebugDrawings::CommandBuffer>> *>(it->second);
     typedPort->write(buffer);
 }
 

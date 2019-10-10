@@ -38,6 +38,9 @@ private:
     void writePort(const std::string& drawingGroupName, 
                    boost::shared_ptr<CommandBuffer> buffer);
     
+    /** Create a port with name "debug_[drawingGroupName]" on the @p taskContext */
+    void createPort(const std::string& drawingGroupName, RTT::TaskContext* taskContext);
+    
     std::unordered_map<std::string, RTT::TaskContext*> drawingNames2Tasks; //maps each drawing name to a task
     std::unordered_map<std::string, RTT::base::OutputPortInterface*> ports; //drawing name to port mapping
     std::unordered_map<std::string, CommandBuffer>  cmdBuffer;
