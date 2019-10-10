@@ -135,7 +135,7 @@ BOOST_AUTO_TEST_CASE(sphere_cmd_test)
 BOOST_AUTO_TEST_CASE(arrow_cmd_test)
 {
     DrawArrowCommand a("lala", Eigen::Vector3d(1,42,0), Eigen::Quaterniond(1,1,1,1), Eigen::Vector3d(0.1, 0.2, 0.3),
-                       vizkit3dDebugDrawings::Color::red);
+                       V3DD::Color::red);
     DrawArrowCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE(arrow_cmd_test)
 BOOST_AUTO_TEST_CASE(cylinder_cmd_test)
 {
     DrawCylinderCommand a("lala", Eigen::Vector3d(1,42,0), Eigen::Quaterniond(1,1,1,1), Eigen::Vector3d(0.1, 0.2, 0.3),
-                       vizkit3dDebugDrawings::Color::red);
+                       V3DD::Color::red);
     DrawCylinderCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE(cylinder_cmd_test)
 
 BOOST_AUTO_TEST_CASE(polyline_cmd_test)
 {
-    DrawPolyLineCommand a("polypp", Eigen::Vector3d(1,42,0.23), vizkit3dDebugDrawings::Color::green_ncs);
+    DrawPolyLineCommand a("polypp", Eigen::Vector3d(1,42,0.23), V3DD::Color::green_ncs);
     
     a.getPoints().emplace_back(0, 1, 2);
     a.getPoints().emplace_back(0.03, 1, 22);
@@ -175,7 +175,7 @@ BOOST_AUTO_TEST_CASE(polyline_cmd_test)
 
 BOOST_AUTO_TEST_CASE(ring_cmd_test)
 {
-    DrawRingCommand a("ringaa", Eigen::Vector3d(1,422,0), Eigen::Quaterniond(1,0,09.4,1), 0.3, 1.42, 1.22, vizkit3dDebugDrawings::Color::neon_carrot);
+    DrawRingCommand a("ringaa", Eigen::Vector3d(1,422,0), Eigen::Quaterniond(1,0,09.4,1), 0.3, 1.42, 1.22, V3DD::Color::neon_carrot);
     DrawRingCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
@@ -188,7 +188,7 @@ BOOST_AUTO_TEST_CASE(ring_cmd_test)
 
 BOOST_AUTO_TEST_CASE(text_cmd_test)
 {
-    DrawTextCommand a("qqq", Eigen::Vector3d(1,422,0), Eigen::Quaterniond(1,0,09.4,1), "bla bla bu", 42.042, vizkit3dDebugDrawings::Color::yale_blue);
+    DrawTextCommand a("qqq", Eigen::Vector3d(1,422,0), Eigen::Quaterniond(1,0,09.4,1), "bla bla bu", 42.042, V3DD::Color::yale_blue);
     DrawTextCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE(text_cmd_test)
 
 BOOST_AUTO_TEST_CASE(wireframe_cmd_test)
 {
-    DrawWireframeBoxCommand a("law", Eigen::Vector3d(12,422,0), Eigen::Quaterniond(11,0,09.4,1), Eigen::Vector3d(1,2,3), vizkit3dDebugDrawings::Color::zaffre);
+    DrawWireframeBoxCommand a("law", Eigen::Vector3d(12,422,0), Eigen::Quaterniond(11,0,09.4,1), Eigen::Vector3d(1,2,3), V3DD::Color::zaffre);
     DrawWireframeBoxCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);

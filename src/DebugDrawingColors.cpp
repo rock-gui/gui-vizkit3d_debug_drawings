@@ -1,6 +1,6 @@
 #include "DebugDrawingColors.hpp"
 
-namespace vizkit3dDebugDrawings
+namespace V3DD
 {
     Eigen::Vector4d Color::air_force_blue_raf = Eigen::Vector4d(0.3647058824,0.5411764706,0.6588235294,1);
     Eigen::Vector4d Color::air_force_blue_usaf = Eigen::Vector4d(0,0.1882352941,0.5607843137,1);

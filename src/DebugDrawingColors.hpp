@@ -1,7 +1,7 @@
 #pragma once
 #include <Eigen/Core>
 
-namespace vizkit3dDebugDrawings
+namespace V3DD
 {
     class Color
     {

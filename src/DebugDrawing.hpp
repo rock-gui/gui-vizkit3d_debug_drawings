@@ -73,7 +73,7 @@ namespace RTT
     class TaskContext;
 }
 
-namespace v3dd_internal
+namespace vizkit3dDebugDrawings
 {
     class CommandBuffer;
 }
