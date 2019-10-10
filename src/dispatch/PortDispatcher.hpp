@@ -3,6 +3,7 @@
 #include <string>
 #include "../commands/CommandBuffer.hpp" //FIXME relative include
 #include <chrono>
+#include <mutex>
 
 namespace RTT
 {
@@ -41,6 +42,8 @@ private:
     std::unordered_map<std::string, RTT::base::OutputPortInterface*> ports; //drawing name to port mapping
     std::unordered_map<std::string, CommandBuffer>  cmdBuffer;
     std::chrono::system_clock::time_point lastSend;
+    std::mutex drawingNames2TasksMutex;
+    std::mutex cmdBufferMutex;
 };
     
 }

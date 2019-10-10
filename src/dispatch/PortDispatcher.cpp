@@ -5,6 +5,8 @@
 
 
 
+//TODO locking is very simple right now. If this becomes a problem turn this into an active thread
+
 namespace vizkit3dDebugDrawings
 {
     
@@ -18,6 +20,8 @@ PortDispatcher::PortDispatcher() : lastSend(std::chrono::system_clock::now())
 
 void PortDispatcher::registerDrawingNamesWithTask(RTT::TaskContext* taskContext, std::vector<std::string>drawingGroupNames)
 {
+    std::lock_guard<std::mutex> lock(drawingNames2TasksMutex);
+    
     for(const std::string& drawingName : drawingGroupNames)
     {
         //TODO figure out a way to support multiple tasks using the same drawing name?
@@ -40,8 +44,11 @@ void PortDispatcher::dispatch(const Command& cmd)
     * be reproduced on the other end of the port. Thus we have to send the
     * whole state every time. */
     boost::shared_ptr<Command> pCmd(cmd.clone());
-
-    cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
+    
+    {
+        std::lock_guard<std::mutex> lock(cmdBufferMutex);
+        cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
+    }
     
     //by default we flush every 1.5 seconds
     //call flush manually if you want faster updates
@@ -55,6 +62,7 @@ void PortDispatcher::dispatch(const Command& cmd)
 
 void PortDispatcher::flush()
 {
+    std::lock_guard<std::mutex> lock(cmdBufferMutex);
     for(auto it : cmdBuffer)
     {
         //need to copy because the buffer will switch threads when beeing written to the port.
