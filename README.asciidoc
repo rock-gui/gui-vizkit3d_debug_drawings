@@ -278,7 +278,7 @@ dynamic_output_port /^debug_/, "/boost/shared_ptr</vizkit3dDebugDrawings/Command
 
 Modify Task::
 You have to tell the library the debug drawings that should be associated with the current tasks.
-For each drawing a `debug_XXX` port will be added to your task. The port will be added when the drawing is executed for the first time. Thus they will not be available from the start but might pop up later depending on your code path.
+For each drawing a `debug_XXX` port will be added to your task.
 ```
 bool Task::configureHook()
 {
