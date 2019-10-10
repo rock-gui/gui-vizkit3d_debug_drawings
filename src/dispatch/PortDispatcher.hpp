@@ -13,6 +13,7 @@ namespace RTT
     }
 }
 
+//FIXME make threadsafe!
 
 namespace vizkit3dDebugDrawings
 {
@@ -22,19 +23,21 @@ class CommandBuffer;
 class PortDispatcher : public ICommandDispatcher
 {
 public:
-    PortDispatcher(RTT::TaskContext* taskContext);
+    PortDispatcher();
     virtual ~PortDispatcher();
     
     virtual void dispatch(const Command& cmd);
     
     virtual void flush();
+
+    virtual void registerDrawingNamesWithTask(RTT::TaskContext* taskContext, std::vector<std::string>drawingGroupNames);
     
 private:
     
     void writePort(const std::string& drawingGroupName, 
                    boost::shared_ptr<CommandBuffer> buffer);
     
-    RTT::TaskContext* taskContext;//context in which ports will be created
+    std::unordered_map<std::string, RTT::TaskContext*> drawingNames2Tasks; //maps each drawing name to a task
     std::unordered_map<std::string, RTT::base::OutputPortInterface*> ports; //drawing name to port mapping
     std::unordered_map<std::string, CommandBuffer>  cmdBuffer;
     std::chrono::system_clock::time_point lastSend;

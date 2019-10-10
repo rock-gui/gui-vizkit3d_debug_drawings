@@ -11,21 +11,34 @@
 namespace vizkit3dDebugDrawings
 {
 
-thread_local std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::dispatcher = nullptr;
+std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::dispatcher = nullptr;
+std::mutex CommandDispatcherFactory::createMutex;
     
 #ifdef USE_PORTS
-void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext)
+void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext, std::vector<std::string> drawingGroupNames)
 {
-    if(instanceExists())
+    //this is a little bit of a hack. 
+    //in reality there is only one port dispatcher. This dispatcher works for all ports across all task threads.
+    std::lock_guard<std::mutex> lock(createMutex);
+    if(!instanceExists())
     {
-        throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
+        dispatcher.reset(new PortDispatcher());
     }
-    dispatcher.reset(new PortDispatcher(taskContext));
+    
+    std::shared_ptr<PortDispatcher> portDisp = std::dynamic_pointer_cast<PortDispatcher>(dispatcher);
+    
+    if(!portDisp)
+    {
+        throw std::runtime_error("vizkit3d_debug_drawings: current dispatcher is not a port dispatcher");
+    }
+    portDisp->registerDrawingNamesWithTask(taskContext, drawingGroupNames);
+
 }
 #endif
 
 void CommandDispatcherFactory::createStandaloneDispatcher()
 {
+    std::lock_guard<std::mutex> lock(createMutex);
     if(instanceExists())
     {
         throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
@@ -36,6 +49,7 @@ void CommandDispatcherFactory::createStandaloneDispatcher()
 
 void CommandDispatcherFactory::createWidgetDispatcher(vizkit3d::Vizkit3DWidget* widget)
 {
+    std::lock_guard<std::mutex> lock(createMutex);
     if(instanceExists())
     {
         throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
@@ -43,7 +57,7 @@ void CommandDispatcherFactory::createWidgetDispatcher(vizkit3d::Vizkit3DWidget* 
     dispatcher.reset(new ExistingWidgetDispatcher(widget));
 }
 
-std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::getThreadLocalInstance()
+std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::getInstance()
 {
     if(dispatcher)
     {
