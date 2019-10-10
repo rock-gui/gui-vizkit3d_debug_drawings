@@ -2,6 +2,8 @@
 #include <memory>
 #include <mutex>
 #include "ICommandDispatcher.hpp"
+#include <vector>
+#include <string>
 
 namespace RTT
 {
@@ -22,21 +24,29 @@ namespace vizkit3dDebugDrawings
     public:
       
 #ifdef USE_PORTS
-        static void createPortDispatcher(RTT::TaskContext* taskContext);
+        /**Is thread safe
+         * @p drawingGroupNames names of all drawingGroups that should be routed to this task*/
+        static void createPortDispatcher(RTT::TaskContext* taskContext, std::vector<std::string> drawingGroupNames);
 #endif
+        /**Is thread safe */
         static void createStandaloneDispatcher();
+        
+        /**Is thread safe */
         static void createWidgetDispatcher(vizkit3d::Vizkit3DWidget* widget);
         
-        /** @return true if an instance has been created */
+        /** @return true if an instance has been created.
+         * Is thread safe*/
         static bool instanceExists();
         
         
-        /** @return a thread_local instance of the CommandDispatcher.
+        /** @return  instance of the CommandDispatcher.
          *  @throws std::runtime_error if no dispatcher has been created prior 
-         *                             to this call*/
-        static std::shared_ptr<ICommandDispatcher> getThreadLocalInstance();
+         *                             to this call
+         * Is thread safe*/
+        static std::shared_ptr<ICommandDispatcher> getInstance();
 
     private:
-        static thread_local std::shared_ptr<ICommandDispatcher> dispatcher;
+        static std::shared_ptr<ICommandDispatcher> dispatcher;
+        static std::mutex createMutex;
     };
 }

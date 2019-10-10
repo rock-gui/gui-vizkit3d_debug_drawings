@@ -101,20 +101,18 @@ namespace V3DD
  *  * via rock ports:
  *    In this mode rock ports will be created for all drawings.
  *    A vizkit3d plugin can be used to display the drawings.
- * 
- * NOTE: Everything debug drawing related is thread local. I.e. debug drawings are
- *       configured on a per thread basis. This is especially important when 
- *       using drawings from inside tasks because the hooks are not necessarily 
- *       executed in the same thread.  */
+ *    For this mode you need to configure which drawings belong to each task. 
+ *    See documentation!
+ *   */
 
     /**@throw std::runtime_error if already configured */
     void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
 
 #ifdef USE_PORTS    
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext); 
-    /**Same as above but does nothing if already configured. */
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
+    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
+        std::vector<std::string> drawingGroupNames); 
+
 #endif
     
     /**Same as above but does nothing if already configured */

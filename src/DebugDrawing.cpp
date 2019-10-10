@@ -28,7 +28,7 @@ void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector
                         const Eigen::Vector4d& colorRGBA)
 {
     DrawWireframeBoxCommand cmd(drawingGroupName, position, orientation, size, colorRGBA);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);     
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);     
 }
 
 void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
@@ -43,7 +43,7 @@ void DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& posi
                 const Eigen::Vector4d& colorRGBA)
 {
     DrawArrowCommand cmd(drawingGroupName, position, orientation, size, colorRGBA);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);   
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);   
 }
 
 
@@ -60,7 +60,7 @@ void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& posit
 { 
     DrawRingCommand cmd(drawingGroupName, position, orientation, height, thickness, radius,
                         colorRGBA);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);    
 }
 
 void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
@@ -74,7 +74,7 @@ void DRAW_SPHERE(const std::string& drawingGroupName, const Eigen::Vector3d& pos
                  double radius, const Eigen::Vector4d& colorRGBA)
 {
     DrawSphereCommand cmd(drawingGroupName, position, radius, colorRGBA);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);
 }
 
 void DRAW_SPHERE(const std::string& drawingGroupName, double posX, double posY, double posZ,
@@ -88,7 +88,7 @@ void DRAW_POLYLINE(const std::string& drawingGroupName, const Eigen::Vector3d& p
 {
     DrawPolyLineCommand cmd(drawingGroupName, position, colorRGBA);
     cmd.getPoints().insert(cmd.getPoints().begin(), points.begin(), points.end());
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);    
 }
 
 /** @param points realtive to (0, 0, 0) */
@@ -105,7 +105,7 @@ void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& posit
 {
     
     DrawTextCommand cmd(drawingGroupName, position, orientation, text, fontSize, colorRGBA);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);
 }
 
 void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
@@ -135,7 +135,7 @@ void DRAW_LINE(const std::string& drawingGroupName, const Eigen::Vector3d& from,
     DrawPolyLineCommand cmd(drawingGroupName, Eigen::Vector3d(0, 0, 0), colorRGBA);
     cmd.getPoints().push_back(from);
     cmd.getPoints().push_back(to);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);    
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);    
 }
 
 void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
@@ -143,7 +143,7 @@ void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& p
                    const Eigen::Vector4d& colorRGBA)
 {
     DrawCylinderCommand cmd(drawingGroupName, position, orientation, size, colorRGBA);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd); 
+    CommandDispatcherFactory::getInstance()->dispatch(cmd); 
 }
 
 void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
@@ -157,7 +157,7 @@ void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& posit
                const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size)
 {
     DrawAxesCommand cmd(drawingGroupName,position, orientation, size);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);
 }
 
 void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
@@ -176,37 +176,37 @@ void DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box,
 {
 
     DrawAABBCommand cmd(drawingGroupName, box.min(), box.max(), colorRGBA);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);
 }
 
 
 void PLOT_2D(const std::string& drawingGroupName, const Eigen::Vector2d& dataPoint)
 {
     PlotCommand cmd(drawingGroupName, dataPoint);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);
 }
 
 void CLEAR_PLOT(const std::string& plotName)
 {
     ClearPlotCommand cmd(plotName);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);
 }
 
 void REMOVE_DRAWING(const std::string& drawingGroupName)
 {
     RemoveDrawingCommand cmd(drawingGroupName);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);      
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);      
 }
 
 void CLEAR_DRAWING(const std::string& drawingGroupName)
 {
     ClearDrawingCommand cmd(drawingGroupName);
-    CommandDispatcherFactory::getThreadLocalInstance()->dispatch(cmd);  
+    CommandDispatcherFactory::getInstance()->dispatch(cmd);  
 }
 
 void FLUSH_DRAWINGS()
 {
-    CommandDispatcherFactory::getThreadLocalInstance()->flush(); 
+    CommandDispatcherFactory::getInstance()->flush(); 
 }
 
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
@@ -220,16 +220,13 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * wid
 }
 
 #ifdef USE_PORTS
-void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext)
+void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
+        std::vector<std::string> drawingGroupNames)
 {
-    CommandDispatcherFactory::createPortDispatcher(taskContext);
+    CommandDispatcherFactory::createPortDispatcher(taskContext, drawingGroupNames);
 }
 
-void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext)
-{
-    if(!CommandDispatcherFactory::instanceExists())
-        CommandDispatcherFactory::createPortDispatcher(taskContext);
-}
+
 #endif
 
 void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget)
