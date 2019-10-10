@@ -117,6 +117,8 @@ Once configured you can start adding drawing commands anywhere inside your code.
 The commands will be executed when the corresponding code path is executed.
 Take a look at `vizkit3d_debug_drawings/DebugDrawing.hpp` for an overview of all available commands.
 
+All drawing commands are part of the `V3DD` namespace.
+
 ```c++
 #include <vizkit3d_debug_drawings/DebugDrawing.hpp>
 #include <vizkit3d_debug_drawings/DebugDrawingColors.hpp> //only needed for named colors
@@ -124,7 +126,7 @@ Take a look at `vizkit3d_debug_drawings/DebugDrawing.hpp` for an overview of all
 Example:
 ```c++
 Eigen::Vector3d pos(-3, -3, -3);
-DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
+V3DD::DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
 ```
 
 All drawing commands follow the same structure. The first parameter is always the
@@ -157,8 +159,8 @@ COMPLEX_DRAWING(
 With a lot of drawings the visualization might get
 cluttered and laggy. To avoid that the user can clear drawings or remove them altogether. This is done by calling one of the following methods:
 ```c++
-void REMOVE_DRAWING(const std::string& drawingGroupName);
-void CLEAR_DRAWING(const std::string& drawingGroupName);
+void V3DD::REMOVE_DRAWING(const std::string& drawingGroupName);
+void V3DD::CLEAR_DRAWING(const std::string& drawingGroupName);
 ```
 
 `REMOVE_DRAWING` will remove all drawings belonging to the specified group. It will also unload the corresponding Vizkit3DPlugin. Thus `REMOVE_DRAWING` should be called
@@ -170,8 +172,8 @@ when you want to permanently remove a group.
 === Plotting 2D data
 In addition to 3D debug drawings, it is also possible to create simple 2D plots.
 ```
-void PLOT_2D(const std::string& plotName, const Eigen::Vector2d& dataPoint);
-void CLEAR_PLOT(const std::string& plotName);
+void V3DD::PLOT_2D(const std::string& plotName, const Eigen::Vector2d& dataPoint);
+void V3DD::CLEAR_PLOT(const std::string& plotName);
 
 ```
 
@@ -186,7 +188,7 @@ double x = 0.0;
 while(true)
 {
     x += 0.1;
-    PLOT_2D("sin", {x,std::sin(x)});
+    V3DD::PLOT_2D("sin", {x,std::sin(x)});
 }
 ```
 
@@ -198,9 +200,9 @@ task. If you do not flush manually the library will flush for you every 1.5 seco
 ```c++
 void SomeTask::updateHook()
 {
-    CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(this);
+    V3DD::CONFIGURE_DEBUG_DRAWINGS_USE_PORT(this, {"some_drawing"});
     //your code here
-    FLUSH_DRAWINGS();
+    V3DD::FLUSH_DRAWINGS();
     }
 ```
 
@@ -276,7 +278,7 @@ void Task::updateHook()
     TaskBase::updateHook();
     CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(this);
     //your code here
-    FLUSH_DRAWINGS();
+    V3DD::FLUSH_DRAWINGS();
 }
 ```
 The `NO_THROW` part is important, otherwise the library will throw an exception when the updateHook is called for the second time.
