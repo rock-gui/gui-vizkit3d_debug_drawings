@@ -131,7 +131,7 @@ V3DD::DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
 
 All drawing commands follow the same structure. The first parameter is always the
 name of the drawing group, the last parameter is always the color.
- A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.hpp`. If none of the named colors suits you, you can always define your own. A color is just a `Eigen::Vector4d` containing RGBA values.
+ A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.hpp`. If none of the named colors suits you, you can always define your own. A color is just an `Eigen::Vector4d` containing RGBA values.
 
 The drawing group has special relevance. All drawings that belong to a group
 will be visualized by the same instance of a Vizkit3DPlugin or send through the same
@@ -141,30 +141,29 @@ per group basis. Groups are __not__ limited to a certain type of drawing. They c
 
 === Complex Drawings
 Sometimes a lot of extra instructions (e.g. coordinate transformations) are needed before a drawing command can be issued. While the drawing command itself would be removed when debug drawings are disabled, the extra instructions would remain.
-TO avoid this the `COMPLEX_DRAWING` macro can be used. This macro should enclose all code that is only necessary to issue the drawing command. When debug drawings are disabled, the whole macro becomes a noop.
+TO avoid this the `COMPLEX_DRAWING` method can be used. This method takes a lambda that should contain the drawing code. When debug drawings are disabled the lambda is never executed.
 
 Example:
 ```c++
-COMPLEX_DRAWING(
-   Eigen::Vector3d size;
-   size.x() = std::abs(areaToExplore.getBox().max().x() - areaToExplore.getBox().min().x());
-   size.y() = std::abs(areaToExplore.getBox().max().y() - areaToExplore.getBox().min().y());
-   size.z() = std::abs(areaToExplore.getBox().max().z() - areaToExplore.getBox().min().z());
-   CLEAR_DRAWING("Exploration_Area");
-   DRAW_WIREFRAME_BOX("Exploration_Area", areaToExplore.getCenter(), areaToExplore.getOrientation(), size,vizkit3dDebugDrawings::Color::amber);
-);
+V3DD::COMPLEX_DRAWING([]()
+{
+    Eigen::Vector3d min, max;
+    min << -1, -1, -1;
+    max << 1, 1, 1;
+    Eigen::AlignedBox3d boundingBox(min, max);
+    V3DD::DRAW_AABB("Complex", boundingBox, V3DD::Color::alloy_orange);
+    V3DD::DRAW_SPHERE("Complex", -7, 1, 1, 1, V3DD::Color::magenta);
+});
 ```
 
 === Clearing and Removing Drawings
-With a lot of drawings the visualization might get
-cluttered and laggy. To avoid that the user can clear drawings or remove them altogether. This is done by calling one of the following methods:
+With a lot of drawings the visualization might get cluttered and laggy. To avoid that the user can clear drawings or remove them altogether. This is done by calling one of the following methods:
 ```c++
 void V3DD::REMOVE_DRAWING(const std::string& drawingGroupName);
 void V3DD::CLEAR_DRAWING(const std::string& drawingGroupName);
 ```
 
-`REMOVE_DRAWING` will remove all drawings belonging to the specified group. It will also unload the corresponding Vizkit3DPlugin. Thus `REMOVE_DRAWING` should be called
-when you want to permanently remove a group.
+`REMOVE_DRAWING` will remove all drawings belonging to the specified group. It will also unload the corresponding Vizkit3DPlugin. Thus `REMOVE_DRAWING` should be called when you want to permanently remove a group.
 
 `CLEAR_DRAWING` will also remove all drawings belonging to the specified group. But it will not remove the plugin. It should be used when you intended to use the same group name again (e.g. during a later iteration) but want a clean canvas to draw on.
 
@@ -188,7 +187,7 @@ double x = 0.0;
 while(true)
 {
     x += 0.1;
-    V3DD::PLOT_2D("sin", {x,std::sin(x)});
+    V3DD::PLOT_2D("sin", Eigen::Vector2d{x,std::sin(x)});
 }
 ```
 
@@ -197,10 +196,18 @@ When sending drawing commands through rock ports the user needs to flush the
 send queue regularly. This should be done in the update loop of the corresponding
 task. If you do not flush manually the library will flush for you every 1.5 seconds.
 
+When several tasks use debug drawings they will ultimatly all use the same internal drawing dispatcher. Thus flushing in one task will also flush the drawings of other tasks. This is in itself not a problem but could become a performance bottleneck if a lot of tasks are running.
+
 ```c++
+
+bool Task::configureHook()
+{
+    V3DD::CONFIGURE_DEBUG_DRAWINGS_USE_PORT(this, {"drawing1", "drawing2", "etc"});
+    //other config code here
+}
+
 void SomeTask::updateHook()
 {
-    V3DD::CONFIGURE_DEBUG_DRAWINGS_USE_PORT(this, {"some_drawing"});
     //your code here
     V3DD::FLUSH_DRAWINGS();
     }
@@ -228,7 +235,7 @@ Without this flag the commands for port output will not be available.
 
 
 Add dependencies::
-A minimal `manifest.xml` should look like this:
+A minimal `manifest.xml` of your tasks should look like this:
 ```
 <package>
   <depend package="base/cmake" />
@@ -245,14 +252,14 @@ pkg_check_modules(V3DD REQUIRED vizkit3d_debug_drawings)
 ```
 Add `${V3DD_LIBRARIES}` to `TARGET_LINK_LIBRARIES`:
 ```
-TARGET_LINK_LIBRARIES(${DEBUG_DRAWING_TEST_TASKLIB_NAME}
+TARGET_LINK_LIBRARIES(${YOUR_TASKNAME_HERE_TASKLIB_NAME}
     #other libs here
     ${V3DD_LIBRARIES})
 ```
 Add include directories and linker flags:
 ```
-target_include_directories(${DEBUG_DRAWING_TEST_TASKLIB_NAME} PUBLIC ${V3DD_INCLUDE_DIRS})    
-target_compile_options(${DEBUG_DRAWING_TEST_TASKLIB_NAME} PUBLIC ${V3DD_CFLAGS_OTHER}) 
+target_include_directories(${YOUR_TASKNAME_HERE_TASKLIB_NAME} PUBLIC ${V3DD_INCLUDE_DIRS})    
+target_compile_options(${YOUR_TASKNAME_HERE_TASKLIB_NAME} PUBLIC ${V3DD_CFLAGS_OTHER}) 
 ```
 
 Modify orogen file::
@@ -270,22 +277,26 @@ dynamic_output_port /^debug_/, "/boost/shared_ptr</vizkit3dDebugDrawings/Command
 ```
 
 Modify Task::
-Within the task the library has to be configured for port output. Keep in mind that the debug drawings are thread_local. I.e. you have to configure them for every thread that should output debug drawings. This is important because, depending on your configuration, the `configureHook()` and `updateHook()` are executed in different threads.
-Therefore you have to configure the debug drawings at the beginning of the `updateHook()`:
+You have to tell the library the debug drawings that should be associated with the current tasks.
+For each drawing a `debug_XXX` port will be added to your task. The port will be added when the drawing is executed for the first time. Thus they will not be available from the start but might pop up later depending on your code path.
 ```
+bool Task::configureHook()
+{
+    std::vector<std::string> allDrawings = {"drawing", "some other drawing", "etc"};
+    V3DD::CONFIGURE_DEBUG_DRAWINGS_USE_PORT(this, allDrawings);
+    
+    if (! TaskBase::configureHook())
+        return false;
+    return true;
+}
+
 void Task::updateHook()
 {
     TaskBase::updateHook();
-    CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(this);
     //your code here
     V3DD::FLUSH_DRAWINGS();
 }
 ```
-The `NO_THROW` part is important, otherwise the library will throw an exception when the updateHook is called for the second time.
-
-
-
-
 
 
 
@@ -301,9 +312,6 @@ Commands are serialized using boost to send them through rock ports as opaque ty
 
 Boost serialization was chosen over typekit serialization because typekit cannot handle virtual inheritance.
 
-
-=== Why is the Backend Thread-Local?
-As mentioned above the whole backend is thread-local. I.e. a separate instance of the backend exists for each thread. This design was chosen because this library is intended to be used inside the ROCK framework. Most of the time each ROCK task runs in its own thread. Thus to be able to distinguish between drawing commands from different tasks and attach the ports to the correct tasks the library needs to be thread local. Otherwise drawing commands from task *A* might be falsely send to a port on task *B*.
 
 === Why is the whole drawing state sent through ports every time?
 The way rock-display connects ports allows for message loss. I.e. when too may messages are sent, they are dropped. This happens regularly. Thus we have to send the whole drawing state every time. Sending only incremental updates might lead to a corrupt state due to message loss.
