@@ -115,11 +115,11 @@ In port mode the application expects to be running inside a rock task. The conte
 === Simple Drawing
 Once configured you can start adding drawing commands anywhere inside your code.
 The commands will be executed when the corresponding code path is executed.
-Take a look at `vizkit3d_debug_drawings/DebugDrawing.h` for an overview of all available commands.
+Take a look at `vizkit3d_debug_drawings/DebugDrawing.hpp` for an overview of all available commands.
 
 ```c++
-#include <vizkit3d_debug_drawings/DebugDrawing.h>
-#include <vizkit3d_debug_drawings/DebugDrawingColors.h> //only needed for named colors
+#include <vizkit3d_debug_drawings/DebugDrawing.hpp>
+#include <vizkit3d_debug_drawings/DebugDrawingColors.hpp> //only needed for named colors
 ```
 Example:
 ```c++
@@ -129,7 +129,7 @@ DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
 
 All drawing commands follow the same structure. The first parameter is always the
 name of the drawing group, the last parameter is always the color.
- A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.h`. If none of the named colors suits you, you can always define your own. A color is just a `Eigen::Vector4d` containing RGBA values.
+ A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.hpp`. If none of the named colors suits you, you can always define your own. A color is just a `Eigen::Vector4d` containing RGBA values.
 
 The drawing group has special relevance. All drawings that belong to a group
 will be visualized by the same instance of a Vizkit3DPlugin or send through the same
@@ -311,7 +311,7 @@ The way rock-display connects ports allows for message loss. I.e. when too may m
 
 This project was heavily inspired by the inline drawing macros that can be found
 in the [B-Human](https://b-human.de) framework.
-See: https://github.com/bhuman/BHumanCodeRelease/blob/master/Src/Tools/Debugging/DebugDrawings3D.h
+See: https://github.com/bhuman/BHumanCodeRelease/blob/master/Src/Tools/Debugging/DebugDrawings3D.hpp
 
 == Maintenance and development
 DFKI GmbH - Robotics Innovation Center
