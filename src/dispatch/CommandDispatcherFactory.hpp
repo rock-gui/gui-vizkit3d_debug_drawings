@@ -28,6 +28,7 @@ namespace vizkit3dDebugDrawings
          * @p drawingGroupNames names of all drawingGroups that should be routed to this task*/
         static void createPortDispatcher(RTT::TaskContext* taskContext, std::vector<std::string> drawingGroupNames);
 #endif
+        
         /**Is thread safe */
         static void createStandaloneDispatcher();
         

@@ -33,7 +33,6 @@ namespace V3DD
 
 #ifdef USE_PORTS    
     void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...){}
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(...){}
 #endif
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...){}
     void DRAW_WIREFRAME_BOX(...){}
@@ -101,8 +100,8 @@ namespace V3DD
  *  * via rock ports:
  *    In this mode rock ports will be created for all drawings.
  *    A vizkit3d plugin can be used to display the drawings.
- *    For this mode you need to configure which drawings belong to each task. 
- *    See documentation!
+ *    This mode requires some configuration steps. 
+ *    Please read the corresponding chapter of the documentation.
  *   */
 
     /**@throw std::runtime_error if already configured */
@@ -110,13 +109,11 @@ namespace V3DD
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
 
 #ifdef USE_PORTS    
+    /** Configure debug drawings to output the @p drawingGroupNames as ports on the given @p taskContext.*/
     void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
         std::vector<std::string> drawingGroupNames); 
 
 #endif
-    
-    /**Same as above but does nothing if already configured */
-    void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
 
     /** @param position center of the box  */
     void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
@@ -213,7 +210,7 @@ namespace V3DD
      * Use this if you want to animate movements.*/
     void CLEAR_DRAWING(const std::string& drawingGroupName);
     
-    /**Flush the drawing buffer */
+    /**Flush the drawing buffer.*/
     void FLUSH_DRAWINGS();
     
     /**Use this if debug drawings need additional code that is only required for the drawing.

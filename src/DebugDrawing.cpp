@@ -219,20 +219,14 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * wid
     CommandDispatcherFactory::createWidgetDispatcher(widget);
 }
 
+
 #ifdef USE_PORTS
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
         std::vector<std::string> drawingGroupNames)
 {
     CommandDispatcherFactory::createPortDispatcher(taskContext, drawingGroupNames);
 }
-
-
 #endif
 
-void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget)
-{
-    if(!CommandDispatcherFactory::instanceExists())
-        CommandDispatcherFactory::createWidgetDispatcher(widget);
-}
 
 }

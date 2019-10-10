@@ -39,22 +39,28 @@ void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContex
 void CommandDispatcherFactory::createStandaloneDispatcher()
 {
     std::lock_guard<std::mutex> lock(createMutex);
-    if(instanceExists())
+    if(!instanceExists())
     {
-        throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
+        dispatcher.reset(new StandaloneDispatcher());
     }
-    dispatcher.reset(new StandaloneDispatcher());
+    else
+    {
+        std::cout << "WARNING: CommandDispatcherFactory::createStandaloneDispatcher() called multiple times" << std::endl;
+    }
 }
 
 
 void CommandDispatcherFactory::createWidgetDispatcher(vizkit3d::Vizkit3DWidget* widget)
 {
     std::lock_guard<std::mutex> lock(createMutex);
-    if(instanceExists())
+    if(!instanceExists())
     {
-        throw std::runtime_error("vizkit3d_debug_drawings: dispatcher already created");
+        dispatcher.reset(new ExistingWidgetDispatcher(widget));
     }
-    dispatcher.reset(new ExistingWidgetDispatcher(widget));
+    else
+    {
+        std::cout << "WARNING: CommandDispatcherFactory::createWidgetDispatcher() called multiple times" << std::endl;
+    }
 }
 
 std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::getInstance()
