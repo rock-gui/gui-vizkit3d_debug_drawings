@@ -94,33 +94,23 @@ the drawings. This is done by executing one of the following methods at startup:
 ```c++
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
 void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
-void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext);
+void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext, const std::vector<std::string>&);
 ```
 
-__Configuration is thread local.__ I.e. one of the configuration methods has to be called
-at startup of every new thread if the thread contains drawing code.
-An exception will be thrown if any drawing code is executed while V3DD is not
-configured.
+The `STANDALONE` and `EXISTING_WIDGET` configurations cannot be changed once configured.
+The `PORT` configuration should be configured exactly once per task (although it can be configured several times without causing problems).
 
-The configuration cannot be changed. Thus calling `CONFIGURE()` multiple times results in an exception. However sometimes it is convenient from a code perspective (e.g. to avoid the `ìf`) to call 'CONFIGURE()' multiple times. Special `NO_THROW` versions of some configuration methods exists for that case.
 
-```c++
-void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(vizkit3d::Vizkit3DWidget* widget);
-void CONFIGURE_DEBUG_DRAWINGS_USE_PORT_NO_THROW(RTT::TaskContext* taskContext);
-```
-
-At the time of writing the following modes exist:
-==== CONFIGURE_DEBUG_DRAWINGS_STANDALONE
+==== STANDALONE Configuration
 In standalone mode a new QThread will be started containing a new QApplication context.
 This thread is used to display a Vizkit3DWidget which is used for visualization.
 
-==== CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET
-In embedded mode the application expects that there already is a QApplication context
+==== EXISTING_WIDGET Configuration
+In this mode the application expects that there already is a QApplication context
 and a Vizkit3DWidget already exists. The existing widget will be used for visualization.
 
-==== CONFIGURE_DEBUG_DRAWINGS_USE_PORT
-In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display.
-
+==== PORT Configuration
+In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display. Additional configuration is needed for this to work. See chapter below.
 
 === Simple Drawing
 Once configured you can start adding drawing commands anywhere inside your code.
