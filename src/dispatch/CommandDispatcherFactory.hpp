@@ -26,7 +26,7 @@ namespace vizkit3dDebugDrawings
 #ifdef USE_PORTS
         /**Is thread safe
          * @p drawingGroupNames names of all drawingGroups that should be routed to this task*/
-        static void createPortDispatcher(RTT::TaskContext* taskContext, std::vector<std::string> drawingGroupNames);
+        static void createPortDispatcher(RTT::TaskContext* taskContext, const std::vector<std::string>& drawingGroupNames);
 #endif
         
         /**Is thread safe */

@@ -15,7 +15,7 @@ std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::dispatcher = nullp
 std::mutex CommandDispatcherFactory::createMutex;
     
 #ifdef USE_PORTS
-void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext, std::vector<std::string> drawingGroupNames)
+void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext,const std::vector<std::string>& drawingGroupNames)
 {
     //this is a little bit of a hack. 
     //in reality there is only one port dispatcher. This dispatcher works for all ports across all task threads.

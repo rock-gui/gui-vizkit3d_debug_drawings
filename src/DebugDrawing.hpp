@@ -111,7 +111,7 @@ namespace V3DD
 #ifdef USE_PORTS    
     /** Configure debug drawings to output the @p drawingGroupNames as ports on the given @p taskContext.*/
     void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
-        std::vector<std::string> drawingGroupNames); 
+        const std::vector<std::string>& drawingGroupNames); 
 
 #endif
 

@@ -222,7 +222,7 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * wid
 
 #ifdef USE_PORTS
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
-        std::vector<std::string> drawingGroupNames)
+        const std::vector<std::string>& drawingGroupNames)
 {
     CommandDispatcherFactory::createPortDispatcher(taskContext, drawingGroupNames);
 }
