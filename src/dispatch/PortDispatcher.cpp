@@ -24,7 +24,7 @@ void PortDispatcher::registerDrawingNamesWithTask(RTT::TaskContext* taskContext,
         //     Is that even possible?
         if(drawingNames2Tasks.find(drawingName) != drawingNames2Tasks.end())
         {
-            throw std::runtime_error("Drawing '" + drawingName + "' has already been registerd to Task '" + taskContext->getName() + "'");
+            throw std::runtime_error("Drawing '" + drawingName + "' has already been registered to Task '" + taskContext->getName() + "'");
         }
         drawingNames2Tasks[drawingName] = taskContext;
     }
@@ -78,7 +78,7 @@ void PortDispatcher::writePort(const std::string& drawingGroupName, boost::share
     //TODO think about if there is a better way to handle this case?
     if(drawingNames2Tasks.find(drawingGroupName) == drawingNames2Tasks.end())
     {
-        std::cout << "WARNING: No task registed for debug drawing '" <<  drawingGroupName << "'. Drawing IGNORED!" << std::endl;
+        std::cout << "WARNING: No task registered for debug drawing '" <<  drawingGroupName << "'. Drawing IGNORED!" << std::endl;
         return;
     }
     
