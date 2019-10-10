@@ -4,7 +4,7 @@
 
 int main()
 {
-    V3DD_CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
+    V3DD::CONFIGURE_DEBUG_DRAWINGS_STANDALONE();
     draw();
     return 0;
 }
