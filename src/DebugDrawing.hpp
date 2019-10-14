@@ -79,10 +79,6 @@ namespace RTT
 
 
 
-#ifndef V3DD_CHANNEL_PREFIX
-    #define V3DD_CHANNEL_PREFIX "default_prefix"
-#endif
-
 namespace vizkit3dDebugDrawings
 {
     class CommandBuffer;
@@ -91,7 +87,7 @@ namespace vizkit3dDebugDrawings
     {
         public: StaticDeclareChannel(const std::string& name)
         { 
-            DeclaredChannels::getInstance()->declareChannel(V3DD_CHANNEL_PREFIX, name); 
+            DeclaredChannels::getInstance()->declareChannel(name); 
         }
     };
     
@@ -147,11 +143,7 @@ namespace V3DD
     
     /** Returns a list of all drawing channels that have been declared for the given @p prefix
      *  @param outChannels will contain the declared channels after this call*/
-    void GET_DECLARED_CHANNELS(const std::string& prefix, std::vector<std::string>& outChannels);
-    
-    /** Returns the list of all drawing prefixes that have been declared. */
-    void GET_DECLARED_CHANNEL_PREFIXES(std::vector<std::string>& outPrefixes);
-    
+    void GET_DECLARED_CHANNELS(std::vector<std::string>& outChannels);
 
     /** @param position center of the box  */
     void DRAW_WIREFRAME_BOX(const std::string& drawingChannel, const Eigen::Vector3d& position,

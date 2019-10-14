@@ -221,9 +221,9 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * wid
 
 }
 
-void GET_DECLARED_CHANNELS(const std::string& prefix, std::vector<std::string>& outChannels)
+void GET_DECLARED_CHANNELS(std::vector<std::string>& outChannels)
 {
-    const auto channels = DeclaredChannels::getInstance()->getChannels(prefix);
+    const auto channels = DeclaredChannels::getInstance()->getChannels();
     
     outChannels.clear();
     for(const std::string& channel : channels)
@@ -232,11 +232,6 @@ void GET_DECLARED_CHANNELS(const std::string& prefix, std::vector<std::string>& 
     }
 }
 
-void GET_DECLARED_CHANNEL_PREFIXES(std::vector<std::string>& outPrefixes)
-{
-    outPrefixes.clear();
-    outPrefixes = DeclaredChannels::getInstance()->getPrefixes();
-}
 
 #ifdef USE_PORTS
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
