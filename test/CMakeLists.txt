@@ -1,10 +1,11 @@
 
 
+
 rock_executable(draw_test_standalone draw_test_standalone.cpp
     DEPS 
         vizkit3d_debug_drawings
 )
-target_compile_definitions(draw_test_standalone PUBLIC -DENABLE_DEBUG_DRAWINGS)
+target_compile_definitions(draw_test_standalone PUBLIC -DENABLE_DEBUG_DRAWINGS -DV3DD_CHANNEL_PREFIX="drawStandalone")
 
 
 
@@ -14,7 +15,7 @@ rock_executable(draw_test_attach draw_test_attach.cpp
     DEPS 
         vizkit3d_debug_drawings
 )
-target_compile_definitions(draw_test_attach PUBLIC -DENABLE_DEBUG_DRAWINGS)
+target_compile_definitions(draw_test_attach PUBLIC -DENABLE_DEBUG_DRAWINGS -DV3DD_CHANNEL_PREFIX="drawStandalone")
 
 
 

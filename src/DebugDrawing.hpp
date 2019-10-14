@@ -35,6 +35,9 @@ namespace V3DD
     void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...){}
 #endif
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...){}
+    
+    #define V3DD_DECLARE_DEBUG_DRAWING_CHANNEL(...)
+    
     void DRAW_WIREFRAME_BOX(...){}
     void DRAW_ARROW(...){}
     void DRAW_RING(...){}
@@ -51,6 +54,7 @@ namespace V3DD
     void CLEAR_DRAWING(...){}
     void FLUSH_DRAWINGS(){}
     void COMPLEX_DRAWING(...){}
+    void GET_DECLARED_CHANNELS(...){}
 }
 #else
  
@@ -60,6 +64,7 @@ namespace V3DD
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include "DebugDrawingColors.hpp"
+#include "DeclaredChannels.hpp"
 
 
 namespace vizkit3d
@@ -72,12 +77,36 @@ namespace RTT
     class TaskContext;
 }
 
+
+
+#ifndef V3DD_CHANNEL_PREFIX
+    #define V3DD_CHANNEL_PREFIX "default_prefix"
+#endif
+
 namespace vizkit3dDebugDrawings
 {
     class CommandBuffer;
+    
+    class StaticDeclareChannel
+    {
+        public: StaticDeclareChannel(const std::string& name)
+        { 
+            DeclaredChannels::getInstance()->declareChannel(V3DD_CHANNEL_PREFIX, name); 
+        }
+    };
+    
 }
 
- 
+//FIXME cleanup and comments!
+#define V3DD_INTERNAL_CONCAT_(x,y) x##y
+#define V3DD_INTERNAL_CONCAT(x,y) V3DD_INTERNAL_CONCAT_(x,y)
+
+#define V3DD_DECLARE_DEBUG_DRAWING_CHANNEL(channel) \
+namespace vizkit3dDebugDrawings \
+{ \
+    static StaticDeclareChannel V3DD_INTERNAL_CONCAT(staticChannel, __COUNTER__) = StaticDeclareChannel(channel); \
+}
+
 namespace V3DD
 {
 /**
@@ -114,6 +143,15 @@ namespace V3DD
         const std::vector<std::string>& drawingChannels); 
 
 #endif
+    
+    
+    /** Returns a list of all drawing channels that have been declared for the given @p prefix
+     *  @param outChannels will contain the declared channels after this call*/
+    void GET_DECLARED_CHANNELS(const std::string& prefix, std::vector<std::string>& outChannels);
+    
+    /** Returns the list of all drawing prefixes that have been declared. */
+    void GET_DECLARED_CHANNEL_PREFIXES(std::vector<std::string>& outPrefixes);
+    
 
     /** @param position center of the box  */
     void DRAW_WIREFRAME_BOX(const std::string& drawingChannel, const Eigen::Vector3d& position,
@@ -129,7 +167,7 @@ namespace V3DD
     void DRAW_ARROW(const std::string& drawingChannel, const Eigen::Vector3d& position,
                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
                     const Eigen::Vector4d& colorRGBA);
-    
+
     /** @param position Position of the tip of the arrow */
     void DRAW_ARROW(const std::string& drawingChannel, const Eigen::Vector3d& position,
                     const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);

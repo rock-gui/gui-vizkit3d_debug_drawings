@@ -314,6 +314,10 @@ Commands are serialized using boost to send them through rock ports as opaque ty
 Boost serialization was chosen over typekit serialization because typekit cannot handle virtual inheritance.
 
 
+=== Namespaces
+There are two namespaces within V3DD. The user facing namespace is `V3DD`. All methods that should be used by the user are in this namespace.
+Internal stuff is in `vizkit3dDebugDrawings`. 
+
 === Why is the whole drawing state sent through ports every time?
 The way rock-display connects ports allows for message loss. I.e. when too may messages are sent, they are dropped. This happens regularly. Thus we have to send the whole drawing state every time. Sending only incremental updates might lead to a corrupt state due to message loss.
 

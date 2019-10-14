@@ -28,7 +28,9 @@ void PortDispatcher::registerDrawingChannelsWithTask(RTT::TaskContext* taskConte
         //     Is that even possible?
         if(drawingNames2Tasks.find(drawingName) != drawingNames2Tasks.end())
         {
-            throw std::runtime_error("Drawing '" + drawingName + "' has already been registered to Task '" + taskContext->getName() + "'");
+            std::cout << "ERROR: Drawing '" << drawingName << "' has already been registered to Task '" << taskContext->getName() << "'" << std::endl;
+//             throw std::runtime_error("Drawing '" + drawingName + "' has already been registered to Task '" + taskContext->getName() + "'");
+            return;
         }
         drawingNames2Tasks[drawingName] = taskContext;
         createPort(drawingName, taskContext);

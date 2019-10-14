@@ -16,6 +16,7 @@
 
 #include "dispatch/CommandDispatcherFactory.hpp"
 #include <vizkit3d/Vizkit3DWidget.hpp>
+#include "DeclaredChannels.hpp"
 
 
 using namespace vizkit3dDebugDrawings;
@@ -217,8 +218,25 @@ void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
 void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * widget)
 {
     CommandDispatcherFactory::createWidgetDispatcher(widget);
+
 }
 
+void GET_DECLARED_CHANNELS(const std::string& prefix, std::vector<std::string>& outChannels)
+{
+    const auto channels = DeclaredChannels::getInstance()->getChannels(prefix);
+    
+    outChannels.clear();
+    for(const std::string& channel : channels)
+    {
+        outChannels.emplace_back(channel);
+    }
+}
+
+void GET_DECLARED_CHANNEL_PREFIXES(std::vector<std::string>& outPrefixes)
+{
+    outPrefixes.clear();
+    outPrefixes = DeclaredChannels::getInstance()->getPrefixes();
+}
 
 #ifdef USE_PORTS
 void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
