@@ -15,7 +15,7 @@ std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::dispatcher = nullp
 std::mutex CommandDispatcherFactory::createMutex;
     
 #ifdef USE_PORTS
-void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext,const std::vector<std::string>& drawingGroupNames)
+void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContext,const std::vector<std::string>& drawingChannels)
 {
     //this is a little bit of a hack. 
     //in reality there is only one port dispatcher. This dispatcher works for all ports across all task threads.
@@ -31,7 +31,7 @@ void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContex
     {
         throw std::runtime_error("vizkit3d_debug_drawings: current dispatcher is not a port dispatcher");
     }
-    portDisp->registerDrawingNamesWithTask(taskContext, drawingGroupNames);
+    portDisp->registerDrawingChannelsWithTask(taskContext, drawingChannels);
 
 }
 #endif

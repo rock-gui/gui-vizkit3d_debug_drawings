@@ -26,24 +26,24 @@ namespace vizkit3dDebugDrawings
         DrawingManager(vizkit3d::Vizkit3DWidget* widget);
         ~DrawingManager();
         
-        /** Adds @p prim to the drawing named @p drawingGroupName.
-         * If @p drawingGroupName does not exist, it is created.
-         * @param drawingGroupName May not be empty*/
-        void addPrimitive(const std::string& drawingGroupName, const osg::ref_ptr<osgviz::Object>&);
+        /** Adds a drawing primitive to the @p drawingChannel.
+         * If @p drawingChannel does not exist, it is created.
+         * @param drawingChannel May not be empty*/
+        void addPrimitive(const std::string& drawingChannel, const osg::ref_ptr<osgviz::Object>&);
         
         void addPlotDataPoint(const std::string& plotName, const Eigen::Vector2d& dataPoint);
         
         void clearPlot(const std::string& plotName);
       
-        /** Removes the drawing.
+        /** Removes the drawing channel.
          * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
          * @note If you want to animate something, use CLEAR_DRAWING instead.*/
-        void removeDrawing(const std::string& drawingGroupName);
+        void removeDrawing(const std::string& drawingChannel);
         
-        /** Removes the content from a drawing but keeps the drawing itself.
+        /** Removes the content from a drawing channel but keeps the drawing itself.
          * I.e. the vizkit3d plugin will be kept and the users settings will be retained.
          * Use this if you want to animate movements.*/
-        void clearDrawing(const std::string& drawingGroupName);
+        void clearDrawing(const std::string& drawingChannel);
         
         /** Remove the content from all drawings but keep the plugins.
          *  Does not clear the plots*/

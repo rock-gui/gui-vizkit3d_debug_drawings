@@ -18,7 +18,7 @@ PortDispatcher::PortDispatcher() : lastSend(std::chrono::system_clock::now())
 {}
 
 
-void PortDispatcher::registerDrawingNamesWithTask(RTT::TaskContext* taskContext, std::vector<std::string>drawingGroupNames)
+void PortDispatcher::registerDrawingChannelsWithTask(RTT::TaskContext* taskContext, std::vector<std::string>drawingGroupNames)
 {
     std::lock_guard<std::mutex> lock(drawingNames2TasksMutex);
     

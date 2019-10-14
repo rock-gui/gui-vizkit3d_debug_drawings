@@ -110,7 +110,7 @@ In this mode the application expects that there already is a QApplication contex
 and a Vizkit3DWidget already exists. The existing widget will be used for visualization.
 
 ==== PORT Configuration
-In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display. Additional configuration is needed for this to work. See chapter below.
+In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing channel a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display. Additional configuration is needed for this to work. See chapter below.
 
 === Simple Drawing
 Once configured you can start adding drawing commands anywhere inside your code.
@@ -130,13 +130,13 @@ V3DD::DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
 ```
 
 All drawing commands follow the same structure. The first parameter is always the
-name of the drawing group, the last parameter is always the color.
+name of the drawing channel, the last parameter is always the color.
  A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.hpp`. If none of the named colors suits you, you can always define your own. A color is just an `Eigen::Vector4d` containing RGBA values.
 
-The drawing group has special relevance. All drawings that belong to a group
+The drawing channel has special relevance. All drawings that belong to a channel
 will be visualized by the same instance of a Vizkit3DPlugin or send through the same
 port. Thus a user can enable or disable the visualizations on a
-per group basis. Groups are __not__ limited to a certain type of drawing. They can contain any mix of drawing types.
+per channel basis. Channels are __not__ limited to a certain type of drawing. They can contain any mix of drawing types.
 
 
 === Complex Drawings
@@ -159,13 +159,13 @@ V3DD::COMPLEX_DRAWING([]()
 === Clearing and Removing Drawings
 With a lot of drawings the visualization might get cluttered and laggy. To avoid that the user can clear drawings or remove them altogether. This is done by calling one of the following methods:
 ```c++
-void V3DD::REMOVE_DRAWING(const std::string& drawingGroupName);
-void V3DD::CLEAR_DRAWING(const std::string& drawingGroupName);
+void V3DD::REMOVE_DRAWING(const std::string& drawingChannel);
+void V3DD::CLEAR_DRAWING(const std::string& drawingChannel);
 ```
 
-`REMOVE_DRAWING` will remove all drawings belonging to the specified group. It will also unload the corresponding Vizkit3DPlugin. Thus `REMOVE_DRAWING` should be called when you want to permanently remove a group.
+`REMOVE_DRAWING` will remove all drawings belonging to the specified channel. It will also unload the corresponding Vizkit3DPlugin. Thus `REMOVE_DRAWING` should be called when you want to permanently remove a channel.
 
-`CLEAR_DRAWING` will also remove all drawings belonging to the specified group. But it will not remove the plugin. It should be used when you intended to use the same group name again (e.g. during a later iteration) but want a clean canvas to draw on.
+`CLEAR_DRAWING` will also remove all drawings from the specified channel. But it will not remove the plugin. It should be used when you intended to use the same channelagain (e.g. during a later iteration) but want a clean canvas to draw on.
 
 
 === Plotting 2D data

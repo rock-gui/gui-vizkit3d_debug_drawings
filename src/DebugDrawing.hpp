@@ -109,108 +109,109 @@ namespace V3DD
     void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget* widget);
 
 #ifdef USE_PORTS    
-    /** Configure debug drawings to output the @p drawingGroupNames as ports on the given @p taskContext.*/
+    /** Configure debug drawings to output the @p drawingChannels as ports on the given @p taskContext.*/
     void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(RTT::TaskContext* taskContext,
-        const std::vector<std::string>& drawingGroupNames); 
+        const std::vector<std::string>& drawingChannels); 
 
 #endif
 
     /** @param position center of the box  */
-    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_WIREFRAME_BOX(const std::string& drawingChannel, const Eigen::Vector3d& position,
                             const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
                             const Eigen::Vector4d& colorRGBA);
     
     /** @param position center of the box*/
-    void DRAW_WIREFRAME_BOX(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_WIREFRAME_BOX(const std::string& drawingChannel, const Eigen::Vector3d& position,
                             const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
     
     /** @param position Position of the tip of the arrow
      *  @param orientation Identity points in z-direction*/
-    void DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_ARROW(const std::string& drawingChannel, const Eigen::Vector3d& position,
                     const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
                     const Eigen::Vector4d& colorRGBA);
     
     /** @param position Position of the tip of the arrow */
-    void DRAW_ARROW(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_ARROW(const std::string& drawingChannel, const Eigen::Vector3d& position,
                     const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
 
-    void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_RING(const std::string& drawingChannel, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation, double radius,
                    double height, double thickness, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_RING(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_RING(const std::string& drawingChannel, const Eigen::Vector3d& position,
                    double radius, double height, double thickness, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_SPHERE(const std::string& drawingGroupName, double posX, double posY, double posZ,
+    void DRAW_SPHERE(const std::string& drawingChannel, double posX, double posY, double posZ,
                      double radius, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_SPHERE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_SPHERE(const std::string& drawingChannel, const Eigen::Vector3d& position,
                      double radius, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_CYLINDER(const std::string& drawingChannel, const Eigen::Vector3d& position,
                        const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size,
                        const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_CYLINDER(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_CYLINDER(const std::string& drawingChannel, const Eigen::Vector3d& position,
                        const Eigen::Vector3d& size, const Eigen::Vector4d& colorRGBA);
     
     /** @param position origin of the line
      *  @param points relative to @p position.*/
-    void DRAW_POLYLINE(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_POLYLINE(const std::string& drawingChannel, const Eigen::Vector3d& position,
                        const std::vector<Eigen::Vector3d>& points, const Eigen::Vector4d& colorRGBA);
     
     /** @param points realtive to (0, 0, 0) */
-    void DRAW_POLYLINE(const std::string& drawingGroupName, const std::vector<Eigen::Vector3d>& points,
+    void DRAW_POLYLINE(const std::string& drawingChannel, const std::vector<Eigen::Vector3d>& points,
                        const Eigen::Vector4d& colorRGBA);
     
     /** @param from relative to (0, 0, 0)
      *  @param to   relative to (0, 0, 0) */
-    void DRAW_LINE(const std::string& drawingGroupName, const Eigen::Vector3d& from, const Eigen::Vector3d& to,
+    void DRAW_LINE(const std::string& drawingChannel, const Eigen::Vector3d& from, const Eigen::Vector3d& to,
                    const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_TEXT(const std::string& drawingChannel, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_TEXT(const std::string& drawingChannel, const Eigen::Vector3d& position,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
+    void DRAW_TEXT(const std::string& drawingChannel, double posX, double posY, double posZ,
                    double rotW, double rotX, double rotY, double rotZ,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
-    void DRAW_TEXT(const std::string& drawingGroupName, double posX, double posY, double posZ,
+    void DRAW_TEXT(const std::string& drawingChannel, double posX, double posY, double posZ,
                    const std::string& text, double fontSize, const Eigen::Vector4d& colorRGBA);
     
     
     /** @param position position of the center of the axes */
-    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_AXES(const std::string& drawingChannel, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation, const Eigen::Vector3d& size);
     
-    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    void DRAW_AXES(const std::string& drawingChannel, const Eigen::Vector3d& position,
                    const Eigen::Quaterniond& orientation);
     
-    void DRAW_AXES(const std::string& drawingGroupName, const Eigen::Vector3d& position);
+    void DRAW_AXES(const std::string& drawingChannel, const Eigen::Vector3d& position);
     
     /** draw axis aligned bounding box */
-    void DRAW_AABB(const std::string& drawingGroupName, Eigen::AlignedBox3d box,
+    void DRAW_AABB(const std::string& drawingChannel, Eigen::AlignedBox3d box,
                    const Eigen::Vector4d& colorRGBA);
 
     void PLOT_2D(const std::string& plotName, const Eigen::Vector2d& dataPoint);
     
     void CLEAR_PLOT(const std::string& plotName);
     
-    /** Removes the drawing.
-     * I.e. unloades the vizkit3d plugin responsible for rendering this drawing
+    /** Removes the drawing channel.
+     * I.e. unloades the vizkit3d plugin responsible for rendering this drawing and removes all drawings.
      * @note If you want to animate something, use CLEAR_DRAWING instead.*/
-    void REMOVE_DRAWING(const std::string& drawingGroupName);
+    void REMOVE_DRAWING(const std::string& drawingChannel);
     
-    /** Removes the content from a drawing but keeps the drawing itself.
-     * I.e. the vizkit3d plugin will be kept and the users settings will be retained.
+    /** Removes the content from a drawing channel but keeps the channel itself.
+     * I.e. the visualizer itself will be kept and the users settings will be retained.
      * Use this if you want to animate movements.*/
-    void CLEAR_DRAWING(const std::string& drawingGroupName);
+    void CLEAR_DRAWING(const std::string& drawingChannel);
     
-    /**Flush the drawing buffer.*/
+    /**Flush the drawing channel buffer.
+     * Flushing may not be needed depending on your use case. See documentation!*/
     void FLUSH_DRAWINGS();
     
     /**Use this if debug drawings need additional code that is only required for the drawing.
