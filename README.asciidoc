@@ -110,9 +110,33 @@ In this mode the application expects that there already is a QApplication contex
 and a Vizkit3DWidget already exists. The existing widget will be used for visualization.
 
 ==== PORT Configuration
-In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display. Additional configuration is needed for this to work. See chapter below.
+In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing channel a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display. Additional configuration is needed for this to work. See example below.
 
-=== Simple Drawing
+
+
+
+=== Usage
+
+
+==== Declaring Drawings
+For some use cases the drawing channels need to be known at static initialization time. Therefore all drawing channels need to be declared using the `V3DD_DECLARE_DEBUG_DRAWING_CHANNEL` macro.
+```c++
+V3DD_DECLARE_DEBUG_DRAWING_CHANNEL("channel_name");
+```
+The macro can be placed anywhere inside a cpp file outside of functions.
+Once a channel has been declared it can be used anywhere inside your code.
+If you have a lot of drawings it makes sense to create a dedicated `drawing_declarations.cpp` and link it.
+
+
+At runtime a list of all declared channel names is available using `GET_DECLARED_CHANNELS`.
+```c++
+std::vector<std::string> channels;
+V3DD::GET_DECLARED_CHANNELS(channels);
+```
+Note that `GET_DECLARED_CHANNELS` will return all declared channels known to the process. I.e. also the once that might have been defined in different libraries.
+It is adviced to use some sort of prefix for your channel names to be able to identify them later on.
+
+==== Drawing
 Once configured you can start adding drawing commands anywhere inside your code.
 The commands will be executed when the corresponding code path is executed.
 Take a look at `vizkit3d_debug_drawings/DebugDrawing.hpp` for an overview of all available commands.
@@ -130,20 +154,18 @@ V3DD::DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
 ```
 
 All drawing commands follow the same structure. The first parameter is always the
-name of the drawing group, the last parameter is always the color.
+name of the drawing channel, the last parameter is always the color.
  A list of named colors can be found in `vizkit3d_debug_drawings/DebugDrawingColors.hpp`. If none of the named colors suits you, you can always define your own. A color is just an `Eigen::Vector4d` containing RGBA values.
 
-The drawing group has special relevance. All drawings that belong to a group
-will be visualized by the same instance of a Vizkit3DPlugin or send through the same
+The drawing channel has special relevance. All drawings that belong to a channel
+will be visualized by the same instance of a visualizer or send through the same
 port. Thus a user can enable or disable the visualizations on a
-per group basis. Groups are __not__ limited to a certain type of drawing. They can contain any mix of drawing types.
+per channel basis. Channels are __not__ limited to a certain type of drawing. They can contain any mix of drawing types (even plots).
 
 
 === Complex Drawings
 Sometimes a lot of extra instructions (e.g. coordinate transformations) are needed before a drawing command can be issued. While the drawing command itself would be removed when debug drawings are disabled, the extra instructions would remain.
 TO avoid this the `COMPLEX_DRAWING` method can be used. This method takes a lambda that should contain the drawing code. When debug drawings are disabled the lambda is never executed.
-
-Example:
 ```c++
 V3DD::COMPLEX_DRAWING([]()
 {
@@ -159,13 +181,13 @@ V3DD::COMPLEX_DRAWING([]()
 === Clearing and Removing Drawings
 With a lot of drawings the visualization might get cluttered and laggy. To avoid that the user can clear drawings or remove them altogether. This is done by calling one of the following methods:
 ```c++
-void V3DD::REMOVE_DRAWING(const std::string& drawingGroupName);
-void V3DD::CLEAR_DRAWING(const std::string& drawingGroupName);
+void V3DD::REMOVE_DRAWING(const std::string& drawingChannel);
+void V3DD::CLEAR_DRAWING(const std::string& drawingChannel);
 ```
 
-`REMOVE_DRAWING` will remove all drawings belonging to the specified group. It will also unload the corresponding Vizkit3DPlugin. Thus `REMOVE_DRAWING` should be called when you want to permanently remove a group.
+`REMOVE_DRAWING` will remove all drawings belonging to the specified channel. It will also unload the corresponding Vizkit3DPlugin. Thus `REMOVE_DRAWING` should be called when you want to permanently remove a channel.
 
-`CLEAR_DRAWING` will also remove all drawings belonging to the specified group. But it will not remove the plugin. It should be used when you intended to use the same group name again (e.g. during a later iteration) but want a clean canvas to draw on.
+`CLEAR_DRAWING` will also remove all drawings from the specified channel. But it will not remove the plugin. It should be used when you intended to use the same channelagain (e.g. during a later iteration) but want a clean canvas to draw on.
 
 
 === Plotting 2D data
@@ -179,9 +201,8 @@ void V3DD::CLEAR_PLOT(const std::string& plotName);
 `PLOT_2D` will add a data point to an existing plot or create a new plot if
 the plot doesn't exist. Plots show up as docked widgets in the Vizkit3DWidget.
 
-At the time of writing plots can be cleared but not completely removed. This is likely to change in the future :)
+At the time of writing plots can be cleared but not completely removed.
 
-Example:
 ```c++
 double x = 0.0;
 while(true)
@@ -196,22 +217,11 @@ When sending drawing commands through rock ports the user needs to flush the
 send queue regularly. This should be done in the update loop of the corresponding
 task. If you do not flush manually the library will flush for you every 1.5 seconds.
 
+This is only relevant for port mode. In other modes there is no need to flush!
+
 When several tasks use debug drawings they will ultimatly all use the same internal drawing dispatcher. Thus flushing in one task will also flush the drawings of other tasks. This is in itself not a problem but could become a performance bottleneck if a lot of tasks are running.
 
-```c++
-
-bool Task::configureHook()
-{
-    V3DD::CONFIGURE_DEBUG_DRAWINGS_USE_PORT(this, {"drawing1", "drawing2", "etc"});
-    //other config code here
-}
-
-void SomeTask::updateHook()
-{
-    //your code here
-    V3DD::FLUSH_DRAWINGS();
-    }
-```
+See example below.
 
 == Examples
 
@@ -247,17 +257,19 @@ A minimal `manifest.xml` of your tasks should look like this:
 Modify CMakeLists::
 Modify the `src/CMakeLists.txt` and add the following:
 ```
+# enable debug drawings
+add_definitions(-DENABLE_DEBUG_DRAWINGS)
+
+# find v3dd
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(V3DD REQUIRED vizkit3d_debug_drawings)
-```
-Add `${V3DD_LIBRARIES}` to `TARGET_LINK_LIBRARIES`:
-```
+
+# link v3dd
 TARGET_LINK_LIBRARIES(${YOUR_TASKNAME_HERE_TASKLIB_NAME}
     #other libs here
     ${V3DD_LIBRARIES})
-```
-Add include directories and linker flags:
-```
+
+# add include directories and linker flags:
 target_include_directories(${YOUR_TASKNAME_HERE_TASKLIB_NAME} PUBLIC ${V3DD_INCLUDE_DIRS})    
 target_compile_options(${YOUR_TASKNAME_HERE_TASKLIB_NAME} PUBLIC ${V3DD_CFLAGS_OTHER}) 
 ```
@@ -277,13 +289,17 @@ dynamic_output_port /^debug_/, "/boost/shared_ptr</vizkit3dDebugDrawings/Command
 ```
 
 Modify Task::
-You have to tell the library the debug drawings that should be associated with the current tasks.
-For each drawing a `debug_XXX` port will be added to your task.
+You have to tell the library the drawing channels that should be associated with the current tasks.
+For each drawing a `debug_XXX` port will be added to your task. The port will be added at configuration time.
 ```
 bool Task::configureHook()
 {
-    std::vector<std::string> allDrawings = {"drawing", "some other drawing", "etc"};
-    V3DD::CONFIGURE_DEBUG_DRAWINGS_USE_PORT(this, allDrawings);
+    std::vector<std::string> channels;
+    V3DD::GET_DECLARED_CHANNELS(channels);
+    // ...
+    //filter channels somehow to decided which channels you care about in this task
+    // ...
+    V3DD::CONFIGURE_DEBUG_DRAWINGS_USE_PORT(this, channels);
     
     if (! TaskBase::configureHook())
         return false;
@@ -313,6 +329,10 @@ Commands are serialized using boost to send them through rock ports as opaque ty
 
 Boost serialization was chosen over typekit serialization because typekit cannot handle virtual inheritance.
 
+
+=== Namespaces
+There are two namespaces within V3DD. The user facing namespace is `V3DD`. All methods that should be used by the user are in this namespace.
+Internal stuff is in `vizkit3dDebugDrawings`. 
 
 === Why is the whole drawing state sent through ports every time?
 The way rock-display connects ports allows for message loss. I.e. when too may messages are sent, they are dropped. This happens regularly. Thus we have to send the whole drawing state every time. Sending only incremental updates might lead to a corrupt state due to message loss.

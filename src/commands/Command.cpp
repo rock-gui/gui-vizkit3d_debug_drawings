@@ -17,16 +17,16 @@ Command* Command::clone() const
     throw std::runtime_error("called base class clone()");
 }
 
-const std::string& Command::getDrawingName() const
+const std::string& Command::getDrawingChannel() const
 {
-    return drawingGroupName;
+    return drawingChannel;
 }
 
-Command::Command(const std::string& drawingGroupName) : drawingGroupName(drawingGroupName)
+Command::Command(const std::string& drawingChannel) : drawingChannel(drawingChannel)
 {
     
 }
-Command::Command() : drawingGroupName("default")
+Command::Command() : drawingChannel("default")
 {
 
 }

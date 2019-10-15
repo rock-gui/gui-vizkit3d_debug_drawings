@@ -4,8 +4,8 @@
 
 namespace vizkit3dDebugDrawings
 {
-ClearDrawingCommand::ClearDrawingCommand(const std::string& drawingGroupName) :
-        Command(drawingGroupName)
+ClearDrawingCommand::ClearDrawingCommand(const std::string& drawingChannel) :
+        Command(drawingChannel)
 {}
 
 ClearDrawingCommand::ClearDrawingCommand() : Command("default")
@@ -16,7 +16,7 @@ ClearDrawingCommand::ClearDrawingCommand() : Command("default")
 
 void ClearDrawingCommand::execute(DrawingManager* drawingManager) const
 {
-    drawingManager->clearDrawing(getDrawingName());
+    drawingManager->clearDrawing(getDrawingChannel());
 }
 
 ClearDrawingCommand::~ClearDrawingCommand()

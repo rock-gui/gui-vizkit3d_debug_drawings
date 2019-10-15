@@ -5,8 +5,10 @@ option(WITH_PORTS "Build with rock port support" ON)
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
+
 set(SOURCE_FILES
         DrawingManager.cpp
+        DeclaredChannels.cpp
         DebugDrawing.cpp
         DebugDrawingColors.cpp
         commands/DrawCommand.cpp
@@ -34,7 +36,9 @@ set(HEADER_FILES
         DebugDrawing.hpp
         Drawing.hpp
         DrawingManager.hpp
+        DeclaredChannels.hpp
         DebugDrawingColors.hpp
+        StaticDeclarationHelpers.hpp
         PlotDataPoint.hpp
         commands/DrawCommand.hpp
         commands/Command.hpp

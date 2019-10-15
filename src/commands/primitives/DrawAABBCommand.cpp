@@ -20,11 +20,11 @@ osg::ref_ptr< osgviz::Object > DrawAABBCommand::createPrimitive() const
     return prim;
 }
 
-DrawAABBCommand::DrawAABBCommand(const std::string& drawingGroupName,
+DrawAABBCommand::DrawAABBCommand(const std::string& drawingChannel,
                                  const Eigen::Vector3d& min,
                                  const Eigen::Vector3d& max,
                                  const Eigen::Vector4d& colorRGBA):
-        DrawCommand(drawingGroupName), min(min), max(max), colorRGBA(colorRGBA)
+        DrawCommand(drawingChannel), min(min), max(max), colorRGBA(colorRGBA)
 {}
  
 DrawAABBCommand::DrawAABBCommand(): DrawCommand("default")
