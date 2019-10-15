@@ -5,7 +5,7 @@
 namespace vizkit3dDebugDrawings
 {
     
-DrawCommand::DrawCommand(const std::string& drawingGroupName) : Command(drawingGroupName)
+DrawCommand::DrawCommand(const std::string& drawingChannel) : Command(drawingChannel)
 {
     
 }

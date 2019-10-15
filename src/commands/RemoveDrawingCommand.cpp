@@ -9,8 +9,8 @@ void RemoveDrawingCommand::execute(DrawingManager* drawingManager) const
     drawingManager->removeDrawing(getDrawingName());
 }
 
-RemoveDrawingCommand::RemoveDrawingCommand(const std::string& drawingGroupName) :
-        Command(drawingGroupName)
+RemoveDrawingCommand::RemoveDrawingCommand(const std::string& drawingChannel) :
+        Command(drawingChannel)
 {}
 
 RemoveDrawingCommand::RemoveDrawingCommand() : Command("default")

@@ -29,7 +29,7 @@ class DrawSphereCommand : public DrawCommand
 public:
     DrawSphereCommand();
     
-    DrawSphereCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position, double radius,
+    DrawSphereCommand(const std::string& drawingChannel, const Eigen::Vector3d& position, double radius,
                       const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;

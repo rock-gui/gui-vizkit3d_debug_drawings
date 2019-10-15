@@ -38,6 +38,7 @@ set(HEADER_FILES
         DrawingManager.hpp
         DeclaredChannels.hpp
         DebugDrawingColors.hpp
+        StaticDeclarationHelpers.hpp
         PlotDataPoint.hpp
         commands/DrawCommand.hpp
         commands/Command.hpp

@@ -27,7 +27,7 @@ class DrawAABBCommand : public DrawCommand
 public:
     DrawAABBCommand();
     
-    DrawAABBCommand(const std::string& drawingGroupName, const Eigen::Vector3d& min,
+    DrawAABBCommand(const std::string& drawingChannel, const Eigen::Vector3d& min,
                     const Eigen::Vector3d& max, const Eigen::Vector4d& colorRGBA);
     
     virtual osg::ref_ptr<osgviz::Object> createPrimitive() const;

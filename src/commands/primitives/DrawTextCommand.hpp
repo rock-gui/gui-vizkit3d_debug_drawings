@@ -31,7 +31,7 @@ class DrawTextCommand : public DrawCommand
 public:
     DrawTextCommand();
     
-    DrawTextCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    DrawTextCommand(const std::string& drawingChannel, const Eigen::Vector3d& position,
                     const Eigen::Quaterniond& orientation, const std::string& text,
                     double fontSize, const Eigen::Vector4d& colorRGBA);
     

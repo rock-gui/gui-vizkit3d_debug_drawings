@@ -6,7 +6,8 @@ namespace vizkit3dDebugDrawings
 {
     class DrawingManager;
 
-    /**A serializable command that can be sent to the DrawingManager */
+    /**A serializable command that can be sent to the DrawingManager.
+     * I.e. a drawing primitive that can be send over the wire*/
     class Command
     {
         friend class DrawingManager;
@@ -15,16 +16,16 @@ namespace vizkit3dDebugDrawings
         template<class Archive>
         void serialize(Archive & ar, const unsigned int version)
         {
-            ar & drawingGroupName;
+            ar & drawingChannel;
         }
         
-        /**The name (unique id) of the drawing that this primitive belongs to */
-        std::string drawingGroupName;
+        /**The channel of the drawing that this primitive belongs to */
+        std::string drawingChannel;
         
     public:
         /** Execute this command on the @p drawingManager*/
         virtual void execute(DrawingManager* drawingManager) const;
-        Command(const std::string& drawingGroupName);
+        Command(const std::string& drawingChannel);
         Command();
         
         virtual ~Command();
