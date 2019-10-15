@@ -41,12 +41,10 @@ Nothing special has to be done to compile inside ROCK. Just call *amake* and wai
 
 Install all system dependencies::
 ```
-sudo apt install TODO
-
-
+apt update && apt -y install build-essential gcc g++ cmake git wget  libboost-filesystem-dev libboost-serialization-dev libboost-system-dev pkg-config libeigen3-dev libopenscenegraph-dev  doxygen libqt4-dev ruby-dev libboost-thread-dev libboost-test-dev
 ```
 
-Install local depndencies::
+Install local dependencies::
 ```
 ./install_dependencies.sh <path_to_prefix>
 ```
