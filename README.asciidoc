@@ -113,12 +113,7 @@ and a Vizkit3DWidget already exists. The existing widget will be used for visual
 In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing channel a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display. Additional configuration is needed for this to work. See example below.
 
 
-
-
-=== Usage
-
-
-==== Declaring Drawings
+=== Declaring Drawings
 For some use cases the drawing channels need to be known at static initialization time. Therefore all drawing channels need to be declared using the `V3DD_DECLARE_DEBUG_DRAWING_CHANNEL` macro.
 ```c++
 V3DD_DECLARE_DEBUG_DRAWING_CHANNEL("channel_name");
@@ -136,7 +131,7 @@ V3DD::GET_DECLARED_CHANNELS(channels);
 Note that `GET_DECLARED_CHANNELS` will return all declared channels known to the process. I.e. also the once that might have been defined in different libraries.
 It is adviced to use some sort of prefix for your channel names to be able to identify them later on.
 
-==== Drawing
+=== Drawing
 Once configured you can start adding drawing commands anywhere inside your code.
 The commands will be executed when the corresponding code path is executed.
 Take a look at `vizkit3d_debug_drawings/DebugDrawing.hpp` for an overview of all available commands.
