@@ -65,37 +65,21 @@ namespace V3DD
 #include <Eigen/Geometry>
 #include "DebugDrawingColors.hpp"
 #include "DeclaredChannels.hpp"
+#include "StaticDeclarationHelpers.hpp"
 
 
 namespace vizkit3d
 {
     class Vizkit3DWidget;
 }
-
 namespace RTT
 {
     class TaskContext;
 }
-
-
-
 namespace vizkit3dDebugDrawings
 {
     class CommandBuffer;
-    
-    class StaticDeclareChannel
-    {
-        public: StaticDeclareChannel(const std::string& name)
-        { 
-            DeclaredChannels::getInstance()->declareChannel(name); 
-        }
-    };
-    
 }
-
-//FIXME cleanup and comments!
-#define V3DD_INTERNAL_CONCAT_(x,y) x##y
-#define V3DD_INTERNAL_CONCAT(x,y) V3DD_INTERNAL_CONCAT_(x,y)
 
 #define V3DD_DECLARE_DEBUG_DRAWING_CHANNEL(channel) \
 namespace vizkit3dDebugDrawings \

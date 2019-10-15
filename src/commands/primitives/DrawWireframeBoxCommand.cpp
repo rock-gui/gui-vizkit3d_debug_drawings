@@ -16,12 +16,12 @@ osg::ref_ptr<osgviz::Object> DrawWireframeBoxCommand::createPrimitive() const
     
 }
 
-DrawWireframeBoxCommand::DrawWireframeBoxCommand(const std::string& drawingGroupName,
+DrawWireframeBoxCommand::DrawWireframeBoxCommand(const std::string& drawingChannel,
                                                  const Eigen::Vector3d& position,
                                                  const Eigen::Quaterniond& orientation,
                                                  const Eigen::Vector3d& size,
                                                  const Eigen::Vector4d& colorRGBA):
-        DrawCommand(drawingGroupName), position(position), orientation(orientation),
+        DrawCommand(drawingChannel), position(position), orientation(orientation),
         size(size), colorRGBA(colorRGBA)
 {}
 

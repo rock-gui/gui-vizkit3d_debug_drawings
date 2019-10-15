@@ -11,11 +11,11 @@ ClearPlotCommand* ClearPlotCommand::clone() const
 
 void ClearPlotCommand::execute(DrawingManager* drawingManager) const
 {
-    drawingManager->clearPlot(getDrawingName());
+    drawingManager->clearPlot(getDrawingChannel());
 }
 
-ClearPlotCommand::ClearPlotCommand(const std::string& drawingGroupName) :
-        Command(drawingGroupName)
+ClearPlotCommand::ClearPlotCommand(const std::string& drawingChannel) :
+        Command(drawingChannel)
 {
     
 }

@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE(sphere_cmd_test)
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
     compare(a.radius, b.radius);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
 }
 // 
 BOOST_AUTO_TEST_CASE(arrow_cmd_test)
@@ -139,7 +139,7 @@ BOOST_AUTO_TEST_CASE(arrow_cmd_test)
     DrawArrowCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
     compare(a.orientation, b.orientation);
     compare(a.scale, b.scale);
 }
@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE(cylinder_cmd_test)
     DrawCylinderCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
     compare(a.orientation, b.orientation);
     compare(a.size, b.size);
 }
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE(polyline_cmd_test)
     DrawPolyLineCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
     compare(a.getPoints(), b.getPoints());
 }
 
@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE(ring_cmd_test)
     DrawRingCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
     compare(a.orientation, b.orientation);
     compare(a.height, b.height);
     compare(a.thickness, b.thickness);
@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE(text_cmd_test)
     DrawTextCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
     compare(a.orientation, b.orientation);
     compare(a.fontSize, b.fontSize);
     compare(a.text, b.text);
@@ -204,7 +204,7 @@ BOOST_AUTO_TEST_CASE(wireframe_cmd_test)
     DrawWireframeBoxCommand b = serializeAndDeserialize(a);
     compare(a.colorRGBA, b.colorRGBA);
     compare(a.position, b.position);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
     compare(a.orientation, b.orientation);
     compare(a.size, b.size);
 }
@@ -213,14 +213,14 @@ BOOST_AUTO_TEST_CASE(clear_cmd_test)
 {
     ClearDrawingCommand a("asdsadqweqwe");
     ClearDrawingCommand b = serializeAndDeserialize(a);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
 }
 
 BOOST_AUTO_TEST_CASE(remove_cmd_test)
 {
     RemoveDrawingCommand a("qwqewqeqwe565467dgfc");
     RemoveDrawingCommand b = serializeAndDeserialize(a);
-    compare(a.getDrawingName(), b.getDrawingName());
+    compare(a.getDrawingChannel(), b.getDrawingChannel());
 }
 
 

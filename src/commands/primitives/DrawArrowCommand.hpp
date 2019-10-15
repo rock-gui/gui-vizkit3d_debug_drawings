@@ -30,7 +30,7 @@ class DrawArrowCommand : public DrawCommand
 public:
     DrawArrowCommand();
     
-    DrawArrowCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position,
+    DrawArrowCommand(const std::string& drawingChannel, const Eigen::Vector3d& position,
                      const Eigen::Quaterniond& orientation, const Eigen::Vector3d& scale,
                       const Eigen::Vector4d& colorRGBA);
     

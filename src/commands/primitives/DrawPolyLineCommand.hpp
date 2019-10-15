@@ -29,7 +29,7 @@ class DrawPolyLineCommand : public DrawCommand
 public:
     DrawPolyLineCommand();
     
-    DrawPolyLineCommand(const std::string& drawingGroupName, const Eigen::Vector3d& position, const Eigen::Vector4d& colorRGBA);
+    DrawPolyLineCommand(const std::string& drawingChannel, const Eigen::Vector3d& position, const Eigen::Vector4d& colorRGBA);
         
     std::vector<Eigen::Vector3d>& getPoints();
     

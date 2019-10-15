@@ -18,11 +18,11 @@ PortDispatcher::PortDispatcher() : lastSend(std::chrono::system_clock::now())
 {}
 
 
-void PortDispatcher::registerDrawingChannelsWithTask(RTT::TaskContext* taskContext, std::vector<std::string>drawingGroupNames)
+void PortDispatcher::registerDrawingChannelsWithTask(RTT::TaskContext* taskContext, std::vector<std::string>drawingChannels)
 {
     std::lock_guard<std::mutex> lock(drawingNames2TasksMutex);
     
-    for(const std::string& drawingName : drawingGroupNames)
+    for(const std::string& drawingName : drawingChannels)
     {
         //TODO figure out a way to support multiple tasks using the same drawing name?
         //     Is that even possible?
@@ -50,7 +50,7 @@ void PortDispatcher::dispatch(const Command& cmd)
     
     {
         std::lock_guard<std::mutex> lock(cmdBufferMutex);
-        cmdBuffer[cmd.getDrawingName()].addCommand(pCmd);
+        cmdBuffer[cmd.getDrawingChannel()].addCommand(pCmd);
     }
     
     //by default we flush every 1.5 seconds
@@ -79,25 +79,25 @@ void PortDispatcher::flush()
 }
 
 
-void PortDispatcher::createPort(const std::string& drawingGroupName, RTT::TaskContext* taskContext)
+void PortDispatcher::createPort(const std::string& drawingChannel, RTT::TaskContext* taskContext)
 {
     
     //TODO think about if there is a better way to handle this case?
-    if(drawingNames2Tasks.find(drawingGroupName) == drawingNames2Tasks.end())
+    if(drawingNames2Tasks.find(drawingChannel) == drawingNames2Tasks.end())
     {
-        std::cout << "WARNING: No task registered for debug drawing '" <<  drawingGroupName << "'. Drawing IGNORED!" << std::endl;
+        std::cout << "WARNING: No task registered for debug drawing '" <<  drawingChannel << "'. Drawing IGNORED!" << std::endl;
         return;
     }
     
     //only create port if we havent created it before
     //FIXME this happens when multiple ports use the same drawing name
-    if(ports.find(drawingGroupName) != ports.end())
+    if(ports.find(drawingChannel) != ports.end())
     {
-        std::cout << "ERROR: Tried to create port for drawing '" << drawingGroupName << "' but port already exists" << std::endl;
+        std::cout << "ERROR: Tried to create port for drawing '" << drawingChannel << "' but port already exists" << std::endl;
         return;
     }
     
-    const std::string portName("debug_" + drawingGroupName);
+    const std::string portName("debug_" + drawingChannel);
     //check if someone else has created the port, the user might have created the port manually on the orogen file
     //if yes use it, if not create it
     RTT::base::OutputPortInterface* port =  dynamic_cast<RTT::base::OutputPortInterface*>(taskContext->ports()->getPort(portName));
@@ -107,17 +107,17 @@ void PortDispatcher::createPort(const std::string& drawingGroupName, RTT::TaskCo
         port = typedPort;
         taskContext->ports()->addPort(port->getName(), *(port));
     }
-    ports[drawingGroupName] = port;   
+    ports[drawingChannel] = port;   
 }
 
 
-void PortDispatcher::writePort(const std::string& drawingGroupName, boost::shared_ptr< CommandBuffer > buffer)
+void PortDispatcher::writePort(const std::string& drawingChannel, boost::shared_ptr< CommandBuffer > buffer)
 {   
-    const auto &it = ports.find(drawingGroupName);
+    const auto &it = ports.find(drawingChannel);
     //create port if it doesnt exist
     if(it == ports.end())
     {
-        std::cout << "ERROR: Port for drawing '" <<  drawingGroupName << "' does not exist" << std::endl;
+        std::cout << "ERROR: Port for drawing '" <<  drawingChannel << "' does not exist" << std::endl;
         return;
     }
     
