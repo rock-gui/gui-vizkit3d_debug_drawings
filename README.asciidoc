@@ -1,4 +1,4 @@
-= V3DD (vitkit3d_debug_drawings)
+= V3DD (vizkit3d_debug_drawings)
 :toc: macro
 :toclevels: 5
 
