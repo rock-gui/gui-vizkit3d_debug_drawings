@@ -25,8 +25,6 @@ class DrawWireframeBoxCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-
-    
 public:
     DrawWireframeBoxCommand();
     

@@ -4,7 +4,8 @@
  * It defines all required macros */
 
 #ifndef ENABLE_DEBUG_DRAWINGS
-
+#include <string>
+#include <vector>
 
 namespace vizkit3d
 {
@@ -54,7 +55,7 @@ namespace V3DD
     void CLEAR_DRAWING(...){}
     void FLUSH_DRAWINGS(){}
     void COMPLEX_DRAWING(...){}
-    void GET_DECLARED_CHANNELS(...){}
+    std::vector<std::string> GET_DECLARED_CHANNELS(){return std::vector<std::string>();}
 }
 #else
  
@@ -127,7 +128,7 @@ namespace V3DD
     
     /** Returns a list of all drawing channels that have been declared for the given @p prefix
      *  @param outChannels will contain the declared channels after this call*/
-    void GET_DECLARED_CHANNELS(std::vector<std::string>& outChannels);
+    std::vector<std::string> GET_DECLARED_CHANNELS();
 
     /** @param position center of the box  */
     void DRAW_WIREFRAME_BOX(const std::string& drawingChannel, const Eigen::Vector3d& position,

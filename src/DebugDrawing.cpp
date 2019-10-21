@@ -221,15 +221,15 @@ void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * wid
 
 }
 
-void GET_DECLARED_CHANNELS(std::vector<std::string>& outChannels)
+std::vector<std::string> GET_DECLARED_CHANNELS()
 {
     const auto channels = DeclaredChannels::getInstance()->getChannels();
-    
-    outChannels.clear();
+    std::vector<std::string> outChannels;
     for(const std::string& channel : channels)
     {
         outChannels.emplace_back(channel);
     }
+    return outChannels;
 }
 
 

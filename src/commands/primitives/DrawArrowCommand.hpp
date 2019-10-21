@@ -25,8 +25,6 @@ class DrawArrowCommand : public DrawCommand
         ar & colorRGBA;
     }
     
-    
-    
 public:
     DrawArrowCommand();
     

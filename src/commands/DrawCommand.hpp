@@ -28,7 +28,7 @@ public:
     DrawCommand(const std::string& drawingChannel);
     
     /**Creates an osgviz::Object that represents the drawing*/
-    virtual osg::ref_ptr<osgviz::Object> createPrimitive() const = 0;
+    virtual osg::ref_ptr<osgviz::Object> createPrimitive( )const = 0;
     
     virtual void execute(DrawingManager* drawingManager) const;
 
