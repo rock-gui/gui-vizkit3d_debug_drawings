@@ -123,8 +123,7 @@ If you have a lot of drawings it makes sense to create a dedicated `drawing_decl
 
 At runtime a list of all declared channel names is available using `GET_DECLARED_CHANNELS`.
 ```c++
-std::vector<std::string> channels;
-V3DD::GET_DECLARED_CHANNELS(channels);
+std::vector<std::string> channels = V3DD::GET_DECLARED_CHANNELS();
 ```
 Note that `GET_DECLARED_CHANNELS` will return all declared channels known to the process. I.e. also the once that might have been defined in different libraries.
 It is adviced to use some sort of prefix for your channel names to be able to identify them later on.
@@ -287,8 +286,7 @@ For each drawing a `debug_XXX` port will be added to your task. The port will be
 ```
 bool Task::configureHook()
 {
-    std::vector<std::string> channels;
-    V3DD::GET_DECLARED_CHANNELS(channels);
+    std::vector<std::string> channels = V3DD::GET_DECLARED_CHANNELS();
     // ...
     //filter channels somehow to decided which channels you care about in this task
     // ...
