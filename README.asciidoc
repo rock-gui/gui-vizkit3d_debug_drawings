@@ -203,6 +203,8 @@ while(true)
     V3DD::PLOT_2D("sin", Eigen::Vector2d{x,std::sin(x)});
 }
 ```
+image::https://github.com/rock-gui/gui-vizkit3d_debug_drawings/raw/master/doc/plots.gif[Logo]
+
 
 === FLUSHING
 When sending drawing commands through rock ports the user needs to flush the
