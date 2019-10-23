@@ -7,7 +7,7 @@ toc::[]
 == About
 A ROCK (http://rock-robotics.org) library that provides methods to create 3d drawings and plot data from inside any code for debugging purpose.
 
-
+image::https://github.com/rock-gui/gui-vizkit3d_debug_drawings/raw/master/doc/v3dd.gif[Logo]
 
 == Build and Test Status
 
