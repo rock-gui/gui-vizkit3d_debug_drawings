@@ -7,22 +7,6 @@
 #include <string>
 #include <vector>
 
-namespace vizkit3d
-{
-    class Vizkit3DWidget;
-}
-
-namespace RTT
-{
-    class TaskContext;
-}
-
-namespace v3dd_internal
-{
-    class CommandBuffer;
-}
-
-
 ///////////////////////
 // This block contains the disabled versions of the functions. They do nothing and will be optimized out.
 // See below for the real functions and documentation
