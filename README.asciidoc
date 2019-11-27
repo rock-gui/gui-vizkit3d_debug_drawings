@@ -64,6 +64,9 @@ make -j install
 
 Run *draw_test_standalone* in *build/test* to check if everything works.
 
+== Contribution
+If you want to contribute code please do so using pull requests.
+Requests should contain appropriate test cases.
 
 == Usage
 
