@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#define private public //HACK to compare members directly DrawSphereCommand
+#define private public //HACK to compare members directly 
 #include <vizkit3d_debug_drawings/commands/primitives/DrawSphereCommand.hpp>
 #include <vizkit3d_debug_drawings/commands/primitives/DrawArrowCommand.hpp>
 #include <vizkit3d_debug_drawings/commands/primitives/DrawCylinderCommand.hpp>
@@ -9,6 +9,7 @@
 #include <vizkit3d_debug_drawings/commands/primitives/DrawWireframeBoxCommand.hpp>
 #include <vizkit3d_debug_drawings/commands/ClearDrawingCommand.hpp>
 #include <vizkit3d_debug_drawings/commands/RemoveDrawingCommand.hpp>
+#include <vizkit3d_debug_drawings/commands/BoostSerializationExports.hpp>
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -96,16 +97,13 @@ BOOST_AUTO_TEST_CASE(serialize_base_test)
     Command* cmd = new DrawSphereCommand("test123", Eigen::Vector3d(1,42,0), 0.42, Eigen::Vector4d(1, 0, 0, 1));
     
     std::vector<char> buffer;
-    
     //the scope is important because the binary_oarchive does some magic in its destructor... 
     {
         iostreams::back_insert_device<std::vector<char>> sink{buffer};
         iostreams::stream<iostreams::back_insert_device<std::vector<char>>> os{sink};
         archive::binary_oarchive oa(os);
-        
         oa << cmd;
     }
-    
     BOOST_CHECK(buffer.size() > 0);
     
     iostreams::array_source source{buffer.data(), buffer.size()};
