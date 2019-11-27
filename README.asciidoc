@@ -15,7 +15,6 @@ image::https://github.com/rock-gui/gui-vizkit3d_debug_drawings/raw/master/doc/v3
 image::https://circleci.com/gh/rock-gui/gui-vizkit3d_debug_drawings.png[Build Status]
 
 
-
 == Features
 
 * Create and manipulate simple 3D drawings from inside any code
@@ -35,6 +34,7 @@ image::https://circleci.com/gh/rock-gui/gui-vizkit3d_debug_drawings.png[Build St
 
 == Compiling
 === Compiling inside ROCK
+The package is part of the rock-core packageset (https://github.com/rock-core/rock-package_set).
 Nothing special has to be done to compile inside ROCK. Just call *amake* and wait.
 
 === Compiling standalone
