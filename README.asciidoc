@@ -145,7 +145,7 @@ All drawing commands are part of the `V3DD` namespace.
 Example:
 ```c++
 Eigen::Vector3d pos(-3, -3, -3);
-V3DD::DRAW_SPHERE("some_pos", pos, 1, vizkit3dDebugDrawings::Color::red);
+V3DD::DRAW_SPHERE("some_pos", pos, 1, V3DD::Color::red);
 ```
 
 All drawing commands follow the same structure. The first parameter is always the
