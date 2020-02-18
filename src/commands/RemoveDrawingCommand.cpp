@@ -1,5 +1,5 @@
 #include "RemoveDrawingCommand.hpp"
-#include <vizkit3d_debug_drawings/DrawingManager.hpp>
+#include "DrawingManager.hpp"
 
 
 namespace vizkit3dDebugDrawings

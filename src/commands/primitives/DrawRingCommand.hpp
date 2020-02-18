@@ -1,10 +1,8 @@
 #pragma once
-#include <vizkit3d_debug_drawings/commands/DrawCommand.hpp>
-
-#pragma once
+#include "commands/DrawCommand.hpp"
 #include <string>
 #include <Eigen/Core>
-#include <vizkit3d_debug_drawings/commands/BoostSerializationHelpers.hpp>
+#include "commands/BoostSerializationHelpers.hpp"
 
 namespace osg
 {

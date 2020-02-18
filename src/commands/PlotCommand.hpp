@@ -3,7 +3,7 @@
 #include "Command.hpp"
 #include <boost/serialization/base_object.hpp>
 #include <Eigen/Core>
-#include <vizkit3d_debug_drawings/commands/BoostSerializationHelpers.hpp>
+#include "commands/BoostSerializationHelpers.hpp"
 
 
 namespace vizkit3dDebugDrawings

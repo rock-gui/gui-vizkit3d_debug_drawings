@@ -4,7 +4,7 @@
 #include "ClearDrawingCommand.hpp"
 #include "RemoveDrawingCommand.hpp"
 #include "ClearPlotCommand.hpp"
-#include "vizkit3d_debug_drawings/DrawingManager.hpp"
+#include "DrawingManager.hpp"
 
 //need to be included. otherwise BOOST_CLASS_EXPORT wont work (http://www.boost.org/doc/libs/1_46_1/libs/serialization/doc/special.html)
 #include <boost/archive/binary_oarchive.hpp>

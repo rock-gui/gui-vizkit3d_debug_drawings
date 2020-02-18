@@ -12,7 +12,7 @@
 #include "commands/ClearDrawingCommand.hpp"
 #include "commands/PlotCommand.hpp"
 #include "commands/ClearPlotCommand.hpp"
-#include <vizkit3d_debug_drawings/commands/CommandBuffer.hpp>
+#include "commands/CommandBuffer.hpp"
 
 #include "dispatch/CommandDispatcherFactory.hpp"
 #include <vizkit3d/Vizkit3DWidget.hpp>

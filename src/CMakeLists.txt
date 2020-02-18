@@ -1,9 +1,16 @@
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-option(WITH_PORTS "Build with rock port support" ON)
+find_package(PkgConfig REQUIRED) 
 
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
+
+find_package(Boost REQUIRED COMPONENTS serialization system)
+
+set(DEPSPLAIN Boost_SERIALIZATION BOOST_SYSTEM)
+
+pkg_check_modules(VIZKIT3D REQUIRED IMPORTED_TARGET vizkit3d)
+pkg_check_modules(OSGVIZ REQUIRED IMPORTED_TARGET osgViz)
+pkg_check_modules(PRIM_FACTORY REQUIRED IMPORTED_TARGET PrimitivesFactory)
 
 
 set(SOURCE_FILES
@@ -63,44 +70,55 @@ set(HEADER_FILES
         dispatch/ExistingWidgetDispatcher.hpp
 )
 
-set(DEPS 
-        vizkit3d
-        osgViz
-        PrimitivesFactory
-)
+# includes should be relative to the src folder
+include_directories(.)
 
-find_package(Boost REQUIRED COMPONENTS serialization system)
-set(DEPSPLAIN Boost_SERIALIZATION BOOST_SYSTEM)
+# TODO make this work again
+# if(WITH_PORTS)
 
-
-if(WITH_PORTS)
-
-  message("Building with port support")
+#   message("Building with port support")
   
-  set(OROCOS_TARGET "$ENV{OROCOS_TARGET}") #is needed when using orocos-rtt
+#   set(OROCOS_TARGET "$ENV{OROCOS_TARGET}") #is needed when using orocos-rtt
   
-  set(SOURCE_FILES ${SOURCE_FILES} dispatch/PortDispatcher.cpp)
-  set(HEADER_FILES ${HEADER_FILES} dispatch/PortDispatcher.hpp)
-  set(DEPS ${DEPS} orocos-rtt-${OROCOS_TARGET})
+#   set(SOURCE_FILES ${SOURCE_FILES} dispatch/PortDispatcher.cpp)
+#   set(HEADER_FILES ${HEADER_FILES} dispatch/PortDispatcher.hpp)
+#   set(DEPS ${DEPS} orocos-rtt-${OROCOS_TARGET})
    
-  add_definitions(-DUSE_PORTS)
-  set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
+#   add_definitions(-DUSE_PORTS)
+#   set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
   
-else()
+# else()
 
-  message("Building without port support")
+#   message("Building without port support")
   
-endif(WITH_PORTS)
+# endif(WITH_PORTS)
 
 
+add_library(vizkit3d_debug_drawings SHARED ${SOURCE_FILES})
 
-rock_library(vizkit3d_debug_drawings
-    SOURCES ${SOURCE_FILES}
-    HEADERS ${HEADER_FILES}
-    DEPS_PKGCONFIG ${DEPS}
-    DEPS_PLAIN ${DEPSPLAIN}
-)
+target_link_libraries(vizkit3d_debug_drawings 
+                      ${Boost_LIBRARIES}
+                      PkgConfig::VIZKIT3D
+                      PkgConfig::OSGVIZ
+                      PkgConfig::PRIM_FACTORY)
 
-target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES})
+
+configure_file(vizkit3d_debug_drawings.pc.in vizkit3d_debug_drawings.pc @ONLY)
+
+include(GNUInstallDirs)
+
+install(TARGETS vizkit3d_debug_drawings
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+#install headers
+install(DIRECTORY .
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vizkit3d_debug_drawings
+        FILES_MATCHING PATTERN "*.hpp")
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/vizkit3d_debug_drawings.pc
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+# TODO add pc.in configuration and installation stuff
 
 
