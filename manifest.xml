@@ -10,6 +10,7 @@
   <depend package="gui/vizkit3d" />
   <depend package="gui/osgviz" />
   <depend package="rtt" />
+  <depend package="eigen3" />
   <!-- gui/orogen/vizkit3d_debug_drawings is required if you need support for ports, however we cannot add it as dependency without causing a dependency cycle! -->
 <!--   <depend package="gui/orogen/vizkit3d_debug_drawings" optional="1" /> -->
   <stage>1</stage>
