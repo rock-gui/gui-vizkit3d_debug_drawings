@@ -11,6 +11,7 @@
 #include <boost/archive/binary_iarchive.hpp>
 
 #include "BoostSerializationExports.hpp"
+#include <iostream>
 
 using namespace vizkit3dDebugDrawings;
 
@@ -37,7 +38,7 @@ void CommandBuffer::addCommand(boost::shared_ptr<Command> cmd)
     if(commands.size() > maxBufferSize)
     {
         commands.pop_front();
-        std::cerr << "Commandbuffer is full. Dropping old commands."; 
+        std::cerr << "Commandbuffer is full. Dropping old commands." << std::endl; 
     }
 }
 
