@@ -35,5 +35,9 @@ namespace vizkit3d
         struct Data;
         Data* p;
     };
+
+    //Macro that makes this plugin loadable in ruby, this is optional.
+    VizkitQtPlugin(DebugDrawingVisualization)
+
 }
 

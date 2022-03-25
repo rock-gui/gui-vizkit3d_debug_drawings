@@ -31,4 +31,7 @@ namespace vizkit3d
         struct Data;
         Data* p;
     };
+
+    //Macro that makes this plugin loadable in ruby and rock-display, this is optional.
+    VizkitQtPlugin(DrawingVisualization);
 }
