@@ -99,6 +99,7 @@ rock_library(vizkit3d_debug_drawings
     HEADERS ${HEADER_FILES}
     DEPS_PKGCONFIG ${DEPS}
     DEPS_PLAIN ${DEPSPLAIN}
+    LIBS Qt::PrintSupport
 )
 
 target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES})

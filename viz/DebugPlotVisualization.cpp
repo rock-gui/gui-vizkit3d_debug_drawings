@@ -5,6 +5,8 @@
 #include <deque>
 #include <Eigen/Core>
 #include <QAction>
+#include <QDockWidget>
+#include <QMenu>
 #include <mutex>
 
 using namespace vizkit3d;

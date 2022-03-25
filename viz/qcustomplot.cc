@@ -3543,7 +3543,7 @@ void QCPAxis::setNumberFormat(const QString &formatCode)
   QString allowedFormatChars = "eEfgG";
   if (allowedFormatChars.contains(formatCode.at(0)))
   {
-    mNumberFormatChar = formatCode.at(0).toAscii();
+    mNumberFormatChar = formatCode.toUtf8().at(0);
   } else
   {
     qDebug() << FUNCNAME << "Invalid number format code (first char not in 'eEfgG'):" << formatCode;
@@ -5761,7 +5761,8 @@ void QCustomPlot::mousePressEvent(QMouseEvent *event)
   }
   
   // check if mouse press was on a legend item
-  int itemIdx = legend->getItemIndex(&event->pos());
+  QPoint p = event->pos();
+  int itemIdx = legend->getItemIndex(&p);
   
   if (itemIdx >= 0) 
   {
