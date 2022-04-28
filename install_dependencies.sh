@@ -25,7 +25,7 @@ function build {
   mkdir $3/build
   cd $3/build
   cmake .. $4
-  make install
+  make -j install
   cd ../../
 }
 
@@ -54,7 +54,8 @@ exit -1
 fi
 
 build https://github.com/rock-core/base-cmake.git master base-cmake "$PREFIX"
-build https://github.com/arneboe/base-types.git "feature/qt5" base-types "-DBINDINGS_RUBY=OFF -DUSE_SISL=OFF -DROCK_VIZ_ENABLED=TRUE $PREFIX"
+build https://github.com/rock-core/base-logging.git master base-logging "$PREFIX"
+build https://github.com/rock-core/base-types.git "feature/qt5" base-types "-DBINDINGS_RUBY=OFF -DUSE_SISL=OFF -DROCK_VIZ_ENABLED=TRUE $PREFIX"
 build https://github.com/rock-core/gui-osgviz.git master gui-osgviz "$PREFIX"
 build https://github.com/orocos-toolchain/rtt.git master rtt "$PREFIX"
 build https://github.com/rock-core/gui-vizkit3d.git "feature/qt5" gui-vizkit3d "$PREFIX"
