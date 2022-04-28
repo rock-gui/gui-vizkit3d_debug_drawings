@@ -6,7 +6,7 @@ jobs:
     steps:
       - run:
           name: apt-get
-          command: apt update && apt -y install build-essential gcc g++ cmake git wget  libboost-filesystem-dev libboost-serialization-dev libboost-system-dev pkg-config libeigen3-dev libopenscenegraph-dev  doxygen libqt5-dev ruby-dev libboost-thread-dev libboost-test-dev
+          command: apt update && apt -y install build-essential gcc g++ cmake git wget  libboost-filesystem-dev libboost-serialization-dev libboost-system-dev pkg-config libeigen3-dev libopenscenegraph-dev  doxygen qt5-default ruby-dev libboost-thread-dev libboost-test-dev
       - checkout
       - run:
           name: chmod install script
