@@ -25,7 +25,7 @@ function build {
   mkdir $3/build
   cd $3/build
   cmake .. $4
-  make -j install
+  make install
   cd ../../
 }
 
