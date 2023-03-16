@@ -1,4 +1,9 @@
-#include <rtt/TaskContext.hpp> //has to be included first FIXME why?
+/* rtt/TaskContext.hpp must be included first because it uses names
+ * that will be #defined by Qt and there is no guarantee that any other
+ * #include does not and will not #include Qt headers
+ */
+#include <rtt/TaskContext.hpp>
+
 #include "PortDispatcher.hpp"
 #include <rtt/OutputPort.hpp>
 #include <iostream>
