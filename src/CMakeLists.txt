@@ -5,12 +5,7 @@ option(WITH_PORTS "Build with rock port support" ON)
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-
-set(SOURCE_FILES
-        DrawingManager.cpp
-        DeclaredChannels.cpp
-        DebugDrawing.cpp
-        DebugDrawingColors.cpp
+set(COMMANDS_SOURCE_FILES
         commands/DrawCommand.cpp
         commands/Command.cpp
         commands/RemoveDrawingCommand.cpp
@@ -27,19 +22,9 @@ set(SOURCE_FILES
         commands/primitives/DrawCylinderCommand.cpp
         commands/primitives/DrawAxesCommand.cpp
         commands/primitives/DrawAABBCommand.cpp
-        dispatch/CommandDispatcherFactory.cpp
-        dispatch/StandaloneDispatcher.cpp
-        dispatch/ExistingWidgetDispatcher.cpp
-)
+        )
 
-set(HEADER_FILES
-        DebugDrawing.hpp
-        Drawing.hpp
-        DrawingManager.hpp
-        DeclaredChannels.hpp
-        DebugDrawingColors.hpp
-        StaticDeclarationHelpers.hpp
-        PlotDataPoint.hpp
+set(COMMANDS_HEADER_FILES
         commands/DrawCommand.hpp
         commands/Command.hpp
         commands/RemoveDrawingCommand.hpp
@@ -57,6 +42,26 @@ set(HEADER_FILES
         commands/primitives/DrawAxesCommand.hpp
         commands/primitives/DrawAABBCommand.hpp
         commands/BoostSerializationExports.hpp
+        )
+
+set(SOURCE_FILES
+        DrawingManager.cpp
+        DeclaredChannels.cpp
+        DebugDrawing.cpp
+        DebugDrawingColors.cpp
+        dispatch/CommandDispatcherFactory.cpp
+        dispatch/StandaloneDispatcher.cpp
+        dispatch/ExistingWidgetDispatcher.cpp
+)
+
+set(HEADER_FILES
+        DebugDrawing.hpp
+        Drawing.hpp
+        DrawingManager.hpp
+        DeclaredChannels.hpp
+        DebugDrawingColors.hpp
+        StaticDeclarationHelpers.hpp
+        PlotDataPoint.hpp
         dispatch/ICommandDispatcher.hpp
         dispatch/CommandDispatcherFactory.hpp
         dispatch/StandaloneDispatcher.hpp
@@ -66,7 +71,6 @@ set(HEADER_FILES
 set(DEPS 
         vizkit3d
         osgViz
-        PrimitivesFactory
 )
 
 find_package(Boost REQUIRED COMPONENTS serialization system)
@@ -92,6 +96,12 @@ else()
   
 endif(WITH_PORTS)
 
+rock_library(vizkit3d_debug_drawings-commands
+    SOURCES ${COMMANDS_SOURCE_FILES}
+    HEADERS ${COMMANDS_HEADER_FILES}
+    DEPS_PKGCONFIG PrimitivesFactory
+    LIBS ${Boost_LIBRARIES}
+    )
 
 
 rock_library(vizkit3d_debug_drawings
@@ -100,8 +110,8 @@ rock_library(vizkit3d_debug_drawings
     DEPS_PKGCONFIG ${DEPS}
     DEPS_PLAIN ${DEPSPLAIN}
     LIBS Qt5::PrintSupport
+    DEPS vizkit3d_debug_drawings-commands
 )
 
-target_link_libraries(vizkit3d_debug_drawings ${Boost_LIBRARIES})
 
 
