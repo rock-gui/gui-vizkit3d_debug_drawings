@@ -50,4 +50,6 @@ void DebugDrawingVisualization::updateDataIntern(boost::shared_ptr<vizkit3dDebug
     }
 }
 
-VizkitQtPlugin(DebugDrawingVisualization)
+namespace vizkit3d {
+VizkitQtPluginImpl(DebugDrawingVisualization)
+}

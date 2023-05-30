@@ -5765,12 +5765,8 @@ void QCustomPlot::mousePressEvent(QMouseEvent *event)
   }
   
   // check if mouse press was on a legend item
-#if QT_VERSION >= 0x050000
   QPoint p = event->pos();
   int itemIdx = legend->getItemIndex(&p);
-#else
-  int itemIdx = legend->getItemIndex(&event->pos());
-#endif
   
   if (itemIdx >= 0) 
   {

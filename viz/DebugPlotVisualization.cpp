@@ -172,5 +172,6 @@ void DebugPlotVisualization::createDockWidgets()
 }
 
 
-
-VizkitQtPlugin(DebugPlotVisualization)
+namespace vizkit3d {
+VizkitQtPluginImpl(DebugPlotVisualization)
+}

@@ -44,5 +44,6 @@ void DrawingVisualization::updateDataIntern(vizkit3dDebugDrawings::Drawing const
     }
 }
 
-
-VizkitQtPlugin(DrawingVisualization)
+namespace vizkit3d {
+VizkitQtPluginImpl(DrawingVisualization)
+}

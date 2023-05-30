@@ -68,10 +68,7 @@ set(HEADER_FILES
         dispatch/ExistingWidgetDispatcher.hpp
 )
 
-set(DEPS 
-        vizkit3d
-        osgViz
-)
+set(DEPS osgViz)
 
 find_package(Boost REQUIRED COMPONENTS serialization system)
 set(DEPSPLAIN Boost_SERIALIZATION BOOST_SYSTEM)
@@ -89,7 +86,8 @@ if(WITH_PORTS)
    
   add_definitions(-DUSE_PORTS)
   set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
-  
+  set(vizkit3d_debug_drawings-qt5_PKGCONFIG_CFLAGS -DUSE_PORTS)
+
 else()
 
   message("Building without port support")
@@ -107,7 +105,9 @@ if (ROCK_QT_VERSION_4)
     rock_library(vizkit3d_debug_drawings
         SOURCES ${SOURCE_FILES}
         HEADERS ${HEADER_FILES}
-        DEPS_PKGCONFIG ${DEPS}
+        DEPS_PKGCONFIG
+            ${DEPS}
+            vizkit3d
         DEPS_PLAIN ${DEPSPLAIN}
         DEPS vizkit3d_debug_drawings-commands
     )
@@ -117,7 +117,9 @@ if (ROCK_QT_VERSION_5)
     rock_library(vizkit3d_debug_drawings-qt5
         SOURCES ${SOURCE_FILES}
         HEADERS ${HEADER_FILES}
-        DEPS_PKGCONFIG ${DEPS}
+        DEPS_PKGCONFIG
+            ${DEPS}
+            vizkit3d-qt5
         DEPS_PLAIN ${DEPSPLAIN}
         LIBS Qt5::PrintSupport
         DEPS vizkit3d_debug_drawings-commands
