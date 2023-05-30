@@ -103,14 +103,25 @@ rock_library(vizkit3d_debug_drawings-commands
     LIBS ${Boost_LIBRARIES}
     )
 
+if (ROCK_QT_VERSION_4)
+    rock_library(vizkit3d_debug_drawings
+        SOURCES ${SOURCE_FILES}
+        HEADERS ${HEADER_FILES}
+        DEPS_PKGCONFIG ${DEPS}
+        DEPS_PLAIN ${DEPSPLAIN}
+        DEPS vizkit3d_debug_drawings-commands
+    )
+endif()
 
-rock_library(vizkit3d_debug_drawings
-    SOURCES ${SOURCE_FILES}
-    HEADERS ${HEADER_FILES}
-    DEPS_PKGCONFIG ${DEPS}
-    DEPS_PLAIN ${DEPSPLAIN}
-    DEPS vizkit3d_debug_drawings-commands
-)
-
+if (ROCK_QT_VERSION_5)
+    rock_library(vizkit3d_debug_drawings-qt5
+        SOURCES ${SOURCE_FILES}
+        HEADERS ${HEADER_FILES}
+        DEPS_PKGCONFIG ${DEPS}
+        DEPS_PLAIN ${DEPSPLAIN}
+        LIBS Qt5::PrintSupport
+        DEPS vizkit3d_debug_drawings-commands
+    )
+endif()
 
 

@@ -45,4 +45,8 @@ namespace vizkit3d
         struct Data;
         std::unique_ptr<Data> p;
     };
+
+    //Macro that makes this plugin loadable in ruby, this is optional.
+    VizkitQtPlugin(DebugPlotVisualization)
+
 }

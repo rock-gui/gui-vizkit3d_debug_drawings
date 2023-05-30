@@ -50,6 +50,4 @@ void DebugDrawingVisualization::updateDataIntern(boost::shared_ptr<vizkit3dDebug
     }
 }
 
-//Macro that makes this plugin loadable in ruby, this is optional.
 VizkitQtPlugin(DebugDrawingVisualization)
-
