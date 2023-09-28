@@ -3,7 +3,7 @@
 /**This is the main header that should be included to use debug drawings.
  * It defines all required macros */
 
-#ifndef ENABLE_DEBUG_DRAWINGS
+#if !defined(ENABLE_DEBUG_DRAWINGS) && !defined(DOXYGEN)
 #include <string>
 #include <vector>
 
