@@ -13,33 +13,36 @@
 ///////////////////////
 namespace V3DD
 {
-    void CONFIGURE_DEBUG_DRAWINGS_STANDALONE(){}
-    void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...){}
+    //These must be declared static so they do not create global symbols.
+    //Those global symbols would conflict with the symbols declared in other
+    //shared objects when ENABLE_DEBUG_DRAWINGS has been #defined there.
+    static void CONFIGURE_DEBUG_DRAWINGS_STANDALONE(){}
+    static void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...){}
 
 #ifdef USE_PORTS    
-    void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...){}
+    static void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...){}
 #endif
-    void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...){}
+    static void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...){}
     
     #define V3DD_DECLARE_DEBUG_DRAWING_CHANNEL(...)
     
-    void DRAW_WIREFRAME_BOX(...){}
-    void DRAW_ARROW(...){}
-    void DRAW_RING(...){}
-    void DRAW_SPHERE(...){}
-    void DRAW_CYLINDER(...){}
-    void DRAW_POLYLINE(...){}
-    void DRAW_LINE(...){}
-    void DRAW_TEXT(...){}
-    void DRAW_AXES(...){}
-    void DRAW_AABB(...){}
-    void PLOT_2D(...){}
-    void CLEAR_PLOT(...){}
-    void REMOVE_DRAWING(...){}
-    void CLEAR_DRAWING(...){}
-    void FLUSH_DRAWINGS(){}
-    void COMPLEX_DRAWING(...){}
-    std::vector<std::string> GET_DECLARED_CHANNELS(){return std::vector<std::string>();}
+    static void DRAW_WIREFRAME_BOX(...){}
+    static void DRAW_ARROW(...){}
+    static void DRAW_RING(...){}
+    static void DRAW_SPHERE(...){}
+    static void DRAW_CYLINDER(...){}
+    static void DRAW_POLYLINE(...){}
+    static void DRAW_LINE(...){}
+    static void DRAW_TEXT(...){}
+    static void DRAW_AXES(...){}
+    static void DRAW_AABB(...){}
+    static void PLOT_2D(...){}
+    static void CLEAR_PLOT(...){}
+    static void REMOVE_DRAWING(...){}
+    static void CLEAR_DRAWING(...){}
+    static void FLUSH_DRAWINGS(){}
+    static void COMPLEX_DRAWING(...){}
+    static std::vector<std::string> GET_DECLARED_CHANNELS(){return std::vector<std::string>();}
 }
 #else
  
