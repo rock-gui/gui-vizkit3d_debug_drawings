@@ -1,4 +1,4 @@
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 option(WITH_PORTS "Build with rock port support" ON)
 
@@ -74,7 +74,6 @@ set(DEPS
 )
 
 find_package(Boost REQUIRED COMPONENTS serialization system)
-set(DEPSPLAIN Boost_SERIALIZATION BOOST_SYSTEM)
 
 
 if(WITH_PORTS)
@@ -108,8 +107,7 @@ rock_library(vizkit3d_debug_drawings
     SOURCES ${SOURCE_FILES}
     HEADERS ${HEADER_FILES}
     DEPS_PKGCONFIG ${DEPS}
-    DEPS_PLAIN ${DEPSPLAIN}
-    LIBS Qt5::PrintSupport
+    LIBS Qt5::PrintSupport Boost::serialization Boost::system
     DEPS vizkit3d_debug_drawings-commands
 )
 
