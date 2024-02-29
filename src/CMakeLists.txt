@@ -72,7 +72,6 @@ set(DEPS
 )
 
 find_package(Boost REQUIRED COMPONENTS serialization system)
-set(DEPSPLAIN Boost_SERIALIZATION BOOST_SYSTEM)
 
 
 if(WITH_PORTS)
@@ -106,8 +105,7 @@ rock_library(vizkit3d_debug_drawings
     SOURCES ${SOURCE_FILES}
     HEADERS ${HEADER_FILES}
     DEPS_PKGCONFIG ${DEPS}
-    DEPS_PLAIN ${DEPSPLAIN}
-    DEPS vizkit3d_debug_drawings-commands
+    DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
 )
 
 
