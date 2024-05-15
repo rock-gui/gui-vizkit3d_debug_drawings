@@ -69,7 +69,7 @@ set(HEADER_FILES
 set(DEPS osgViz)
 
 find_package(Boost REQUIRED COMPONENTS serialization system)
-set(DEPSPLAIN Boost_SERIALIZATION BOOST_SYSTEM)
+set(DEPS_BOOST Boost::serialization Boost::system)
 
 
 if(WITH_PORTS)
@@ -96,7 +96,7 @@ rock_library(vizkit3d_debug_drawings-commands
     SOURCES ${COMMANDS_SOURCE_FILES}
     HEADERS ${COMMANDS_HEADER_FILES}
     DEPS_PKGCONFIG PrimitivesFactory
-    LIBS ${Boost_LIBRARIES}
+    DEPS ${DEPS_BOOST}
     )
 
 if (ROCK_QT_VERSION_4)
@@ -106,8 +106,7 @@ if (ROCK_QT_VERSION_4)
         DEPS_PKGCONFIG
             ${DEPS}
             vizkit3d
-        DEPS_PLAIN ${DEPSPLAIN}
-        DEPS vizkit3d_debug_drawings-commands
+        DEPS ${DEPS_BOOST} vizkit3d_debug_drawings-commands
     )
 endif()
 
@@ -118,9 +117,8 @@ if (ROCK_QT_VERSION_5)
         DEPS_PKGCONFIG
             ${DEPS}
             vizkit3d-qt5
-        DEPS_PLAIN ${DEPSPLAIN}
-        LIBS Qt5::PrintSupport
-        DEPS vizkit3d_debug_drawings-commands
+        LIBS Qt5::PrintSupport 
+        DEPS ${DEPS_BOOST} vizkit3d_debug_drawings-commands
     )
 endif()
 
