@@ -7,6 +7,18 @@
 #include <string>
 #include <vector>
 
+// If DEBUG_DRAWINGS are disabled, the static function declarations can lead to
+// defined-but-unused warnings. We mask these with an attribute.
+#if __cpp_attributes >= 200809L && __has_cpp_attribute(maybe_unused)
+// C++17 compatible way, but works on gcc>=7.1 and clang>=4.0 also in C++11 mode
+#  define V3DD_UNUSED [[maybe_unused]]
+#else
+// Everyone else has to accept the warnings
+#  define V3DD_UNUSED
+#endif
+
+
+
 ///////////////////////
 // This block contains the disabled versions of the functions. They do nothing and will be optimized out.
 // See below for the real functions and documentation
@@ -16,33 +28,33 @@ namespace V3DD
     //These must be declared static so they do not create global symbols.
     //Those global symbols would conflict with the symbols declared in other
     //shared objects when ENABLE_DEBUG_DRAWINGS has been #defined there.
-    static void CONFIGURE_DEBUG_DRAWINGS_STANDALONE(){}
-    static void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...){}
+    V3DD_UNUSED static void CONFIGURE_DEBUG_DRAWINGS_STANDALONE(){}
+    V3DD_UNUSED static void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(...){}
 
 #ifdef USE_PORTS    
-    static void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...){}
+    V3DD_UNUSED static void CONFIGURE_DEBUG_DRAWINGS_USE_PORT(...){}
 #endif
-    static void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...){}
+    V3DD_UNUSED static void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET_NO_THROW(...){}
     
     #define V3DD_DECLARE_DEBUG_DRAWING_CHANNEL(...)
     
-    static void DRAW_WIREFRAME_BOX(...){}
-    static void DRAW_ARROW(...){}
-    static void DRAW_RING(...){}
-    static void DRAW_SPHERE(...){}
-    static void DRAW_CYLINDER(...){}
-    static void DRAW_POLYLINE(...){}
-    static void DRAW_LINE(...){}
-    static void DRAW_TEXT(...){}
-    static void DRAW_AXES(...){}
-    static void DRAW_AABB(...){}
-    static void PLOT_2D(...){}
-    static void CLEAR_PLOT(...){}
-    static void REMOVE_DRAWING(...){}
-    static void CLEAR_DRAWING(...){}
-    static void FLUSH_DRAWINGS(){}
-    static void COMPLEX_DRAWING(...){}
-    static std::vector<std::string> GET_DECLARED_CHANNELS(){return std::vector<std::string>();}
+    V3DD_UNUSED static void DRAW_WIREFRAME_BOX(...){}
+    V3DD_UNUSED static void DRAW_ARROW(...){}
+    V3DD_UNUSED static void DRAW_RING(...){}
+    V3DD_UNUSED static void DRAW_SPHERE(...){}
+    V3DD_UNUSED static void DRAW_CYLINDER(...){}
+    V3DD_UNUSED static void DRAW_POLYLINE(...){}
+    V3DD_UNUSED static void DRAW_LINE(...){}
+    V3DD_UNUSED static void DRAW_TEXT(...){}
+    V3DD_UNUSED static void DRAW_AXES(...){}
+    V3DD_UNUSED static void DRAW_AABB(...){}
+    V3DD_UNUSED static void PLOT_2D(...){}
+    V3DD_UNUSED static void CLEAR_PLOT(...){}
+    V3DD_UNUSED static void REMOVE_DRAWING(...){}
+    V3DD_UNUSED static void CLEAR_DRAWING(...){}
+    V3DD_UNUSED static void FLUSH_DRAWINGS(){}
+    V3DD_UNUSED static void COMPLEX_DRAWING(...){}
+    V3DD_UNUSED static std::vector<std::string> GET_DECLARED_CHANNELS(){return std::vector<std::string>();}
 }
 #else
  
