@@ -102,7 +102,9 @@ rock_library(vizkit3d_debug_drawings-commands
     DEPS_PKGCONFIG PrimitivesFactory
     LIBS Boost::serialization Boost::system Eigen3::Eigen
     )
-
+if(WITH_PORTS)
+    target_compile_definitions(vizkit3d_debug_drawings-commands PUBLIC USE_PORTS)
+endif()
 target_compile_features(vizkit3d_debug_drawings-commands PRIVATE cxx_std_11)
 
 rock_library(vizkit3d_debug_drawings
