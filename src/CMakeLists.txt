@@ -87,7 +87,8 @@ if(WITH_PORTS)
   add_definitions(-DUSE_PORTS)
   set(vizkit3d_debug_drawings-commands_PKGCONFIG_CFLAGS -DUSE_PORTS)
   set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
-  
+  set(vizkit3d_debug_drawings-ports_PKGCONFIG_CFLAGS -DUSE_PORTS)
+
 else()
 
   message("Building without port support")
@@ -109,5 +110,23 @@ rock_library(vizkit3d_debug_drawings
     DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
 )
 
+if(WITH_PORTS)
+    rock_library(vizkit3d_debug_drawings-ports
+        SOURCES
+        DebugDrawing.cpp
+        DeclaredChannels.cpp
+        dispatch/CommandDispatcherFactory.cpp
+        dispatch/PortDispatcher.cpp
 
+        HEADERS
+        DebugDrawing.hpp
+        DeclaredChannels.hpp
+        dispatch/CommandDispatcherFactory.hpp
+        dispatch/ICommandDispatcher.hpp
+        dispatch/PortDispatcher.hpp
 
+        DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
+    )
+
+    target_compile_definitions(vizkit3d_debug_drawings-ports PRIVATE DISABLE_QT_BUILD)
+endif()

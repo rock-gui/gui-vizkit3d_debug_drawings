@@ -77,13 +77,21 @@ Every component that contains drawing code needs to link against *libvizkit3d_de
 DEPS_PKGCONFIG
     vizkit3d_debug_drawings
 ```
-If the component only needs to work with the command submission side and
+If the component only needs to work with the command creation side and
 wants to avoid actually linking against Qt libraries, they can link against
 *libvizkit3d_debug_drawings-commands* instead. (This is generally the case
-for rock orogen components.)
+for libraries.)
 ```
 DEPS_PKGCONFIG
     vizkit3d_debug_drawings-commands
+```
+If the component additionally wants to pass commands through rock ports
+but wants to avoid linking against Qt libraries, they can link against
+*libvizkit3d_debug_drawings-ports* instead. (This is generally the case
+for rock orogen components.)
+```
+DEPS_PKGCONFIG
+    vizkit3d_debug_drawings-ports
 ```
 
 By default all drawing code is disabled and will be removed by the compiler.
@@ -114,13 +122,16 @@ The `PORT` configuration should be configured exactly once per task (although it
 ==== STANDALONE Configuration
 In standalone mode a new QThread will be started containing a new QApplication context.
 This thread is used to display a Vizkit3DWidget which is used for visualization.
+This requires using the fully featured vizkit3d_debug_drawings library somewhere in the final application.
 
 ==== EXISTING_WIDGET Configuration
 In this mode the application expects that there already is a QApplication context
 and a Vizkit3DWidget already exists. The existing widget will be used for visualization.
+This requires using the fully featured vizkit3d_debug_drawings library somewhere in the final application.
 
 ==== PORT Configuration
 In port mode the application expects to be running inside a rock task. The context of that task has to be provided. For each drawing channel a new port will be added to the task and the corresponding drawing commands will be sent through that port. The drawings can be visualized using rock-display. Additional configuration is needed for this to work. See example below.
+This requires using the vizkit3d_debug_drawings-ports library in the task.
 
 
 === Declaring Drawings
