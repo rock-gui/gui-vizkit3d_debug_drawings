@@ -1,7 +1,7 @@
 option(WITH_PORTS "Build with rock port support" ON)
 
 find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
+find_package(Boost REQUIRED COMPONENTS serialization system)
 
 set(COMMANDS_SOURCE_FILES
         commands/DrawCommand.cpp
@@ -71,8 +71,6 @@ set(DEPS
         osgViz
 )
 
-find_package(Boost REQUIRED COMPONENTS serialization system)
-
 
 if(WITH_PORTS)
 
@@ -99,9 +97,10 @@ rock_library(vizkit3d_debug_drawings-commands
     SOURCES ${COMMANDS_SOURCE_FILES}
     HEADERS ${COMMANDS_HEADER_FILES}
     DEPS_PKGCONFIG PrimitivesFactory
-    LIBS ${Boost_LIBRARIES}
+    LIBS Boost::serialization Boost::system Eigen3::Eigen
     )
 
+target_compile_features(vizkit3d_debug_drawings-commands PRIVATE cxx_std_11)
 
 rock_library(vizkit3d_debug_drawings
     SOURCES ${SOURCE_FILES}
@@ -109,8 +108,12 @@ rock_library(vizkit3d_debug_drawings
     DEPS_PKGCONFIG ${DEPS}
     DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
 )
+target_compile_features(vizkit3d_debug_drawings PRIVATE cxx_std_11)
 
 if(WITH_PORTS)
+    # vizkit3d_debug_drawings without standalone and widget dispatchers,
+    # leaving just ports. It does not clash with the plain library and
+    # can be linked into the same executable.
     rock_library(vizkit3d_debug_drawings-ports
         SOURCES
         DebugDrawing.cpp
@@ -129,4 +132,5 @@ if(WITH_PORTS)
     )
 
     target_compile_definitions(vizkit3d_debug_drawings-ports PRIVATE DISABLE_QT_BUILD)
+    target_compile_features(vizkit3d_debug_drawings-ports PRIVATE cxx_std_11)
 endif()

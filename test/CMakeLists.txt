@@ -5,8 +5,8 @@ rock_executable(draw_test_standalone draw_test_standalone.cpp
     DEPS 
         vizkit3d_debug_drawings
 )
-target_compile_definitions(draw_test_standalone PUBLIC -DENABLE_DEBUG_DRAWINGS)
-
+target_compile_definitions(draw_test_standalone PRIVATE -DENABLE_DEBUG_DRAWINGS)
+target_compile_features(draw_test_standalone PRIVATE cxx_std_11)
 
 
 
@@ -15,12 +15,11 @@ rock_executable(draw_test_attach draw_test_attach.cpp
     DEPS 
         vizkit3d_debug_drawings
 )
-target_compile_definitions(draw_test_attach PUBLIC -DENABLE_DEBUG_DRAWINGS)
+target_compile_definitions(draw_test_attach PRIVATE -DENABLE_DEBUG_DRAWINGS)
+target_compile_features(draw_test_attach PRIVATE cxx_std_11)
 
 
 
-find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
 rock_testsuite(serialization_test 
     suite.cpp
     serialization_test.cpp
@@ -29,8 +28,8 @@ rock_testsuite(serialization_test
         Boost_SERIALIZATION
         Boost_IOSTREAMS
 )
-target_compile_definitions(serialization_test PUBLIC -DENABLE_DEBUG_DRAWINGS)
-target_link_libraries(serialization_test ${Boost_LIBRARIES} )
+target_compile_definitions(serialization_test PRIVATE -DENABLE_DEBUG_DRAWINGS)
+target_compile_features(serialization_test PRIVATE cxx_std_11)
 
 
 #draw_test_disabled does not set -DENABLE_DEBUG_DRAWINGS to test if everything is disabled correctly
@@ -38,3 +37,4 @@ rock_executable(draw_test_disabled draw_test_disable.cpp
     DEPS 
         vizkit3d_debug_drawings
 )
+target_compile_features(draw_test_disabled PRIVATE cxx_std_11)
