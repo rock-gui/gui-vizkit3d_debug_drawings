@@ -4,6 +4,9 @@ find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS serialization system)
 
 set(COMMANDS_SOURCE_FILES
+        DebugDrawingWeakNoops.cpp
+        DebugDrawingColors.cpp
+        StaticDeclarationHelpersWeakNoops.cpp
         commands/DrawCommand.cpp
         commands/Command.cpp
         commands/RemoveDrawingCommand.cpp
@@ -23,6 +26,9 @@ set(COMMANDS_SOURCE_FILES
         )
 
 set(COMMANDS_HEADER_FILES
+        DebugDrawing.hpp
+        DebugDrawingColors.hpp
+        StaticDeclarationHelpers.hpp
         commands/DrawCommand.hpp
         commands/Command.hpp
         commands/RemoveDrawingCommand.hpp
@@ -46,19 +52,16 @@ set(SOURCE_FILES
         DrawingManager.cpp
         DeclaredChannels.cpp
         DebugDrawing.cpp
-        DebugDrawingColors.cpp
+        StaticDeclarationHelpers.cpp
         dispatch/CommandDispatcherFactory.cpp
         dispatch/StandaloneDispatcher.cpp
         dispatch/ExistingWidgetDispatcher.cpp
 )
 
 set(HEADER_FILES
-        DebugDrawing.hpp
         Drawing.hpp
         DrawingManager.hpp
         DeclaredChannels.hpp
-        DebugDrawingColors.hpp
-        StaticDeclarationHelpers.hpp
         PlotDataPoint.hpp
         dispatch/ICommandDispatcher.hpp
         dispatch/CommandDispatcherFactory.hpp
