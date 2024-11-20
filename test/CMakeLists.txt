@@ -81,3 +81,7 @@ rock_executable(draw_test_lib_enabled_app_disabled draw_test_lib_app.cpp
         draw_test_library_enabled
 )
 target_compile_features(draw_test_lib_enabled_app_disabled PRIVATE cxx_std_11)
+
+if(WITH_PORTS)
+add_subdirectory(ports)
+endif(WITH_PORTS)
