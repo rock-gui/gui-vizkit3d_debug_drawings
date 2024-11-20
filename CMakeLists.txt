@@ -8,5 +8,8 @@ set(ROCK_TEST_ENABLED ON)
 
 rock_init()
 rock_find_qt4()
+
+option(WITH_PORTS "Build with rock port support" ON)
+
 rock_standard_layout()
 

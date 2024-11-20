@@ -1,5 +1,3 @@
-option(WITH_PORTS "Build with rock port support" ON)
-
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS serialization system)
 
