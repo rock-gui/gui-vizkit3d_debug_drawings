@@ -85,6 +85,7 @@ if(WITH_PORTS)
   set(DEPS ${DEPS} orocos-rtt-${OROCOS_TARGET})
    
   add_definitions(-DUSE_PORTS)
+  set(vizkit3d_debug_drawings-commands_PKGCONFIG_CFLAGS -DUSE_PORTS)
   set(vizkit3d_debug_drawings_PKGCONFIG_CFLAGS -DUSE_PORTS)
   
 else()

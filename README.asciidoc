@@ -77,6 +77,15 @@ Every component that contains drawing code needs to link against *libvizkit3d_de
 DEPS_PKGCONFIG
     vizkit3d_debug_drawings
 ```
+If the component only needs to work with the command submission side and
+wants to avoid actually linking against Qt libraries, they can link against
+*libvizkit3d_debug_drawings-commands* instead. (This is generally the case
+for rock orogen components.)
+```
+DEPS_PKGCONFIG
+    vizkit3d_debug_drawings-commands
+```
+
 By default all drawing code is disabled and will be removed by the compiler.
 To enable it *ENABLE_DEBUG_DRAWINGS* needs to be defined for every component
 containing debug drawing commands.
