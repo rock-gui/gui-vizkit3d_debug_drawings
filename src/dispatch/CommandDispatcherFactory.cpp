@@ -1,6 +1,8 @@
 #include "CommandDispatcherFactory.hpp"
+#ifndef DISABLE_QT_BUILD
 #include "StandaloneDispatcher.hpp"
 #include "ExistingWidgetDispatcher.hpp"
+#endif
 
 #ifdef USE_PORTS
   #include "PortDispatcher.hpp"
@@ -36,6 +38,7 @@ void CommandDispatcherFactory::createPortDispatcher(RTT::TaskContext* taskContex
 }
 #endif
 
+#ifndef DISABLE_QT_BUILD
 void CommandDispatcherFactory::createStandaloneDispatcher()
 {
     std::lock_guard<std::mutex> lock(createMutex);
@@ -62,6 +65,7 @@ void CommandDispatcherFactory::createWidgetDispatcher(vizkit3d::Vizkit3DWidget* 
         std::cout << "WARNING: CommandDispatcherFactory::createWidgetDispatcher() called multiple times" << std::endl;
     }
 }
+#endif
 
 std::shared_ptr<ICommandDispatcher> CommandDispatcherFactory::getInstance()
 {
