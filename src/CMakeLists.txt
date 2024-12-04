@@ -131,6 +131,7 @@ if(WITH_PORTS)
         dispatch/ICommandDispatcher.hpp
         dispatch/PortDispatcher.hpp
 
+        DEPS_PKGCONFIG orocos-rtt-${OROCOS_TARGET}
         DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
     )
 
