@@ -15,7 +15,9 @@
 #include <vizkit3d_debug_drawings/commands/CommandBuffer.hpp>
 
 #include "dispatch/CommandDispatcherFactory.hpp"
+#ifndef DISABLE_QT_BUILD
 #include <vizkit3d/Vizkit3DWidget.hpp>
+#endif
 #include "DeclaredChannels.hpp"
 
 
