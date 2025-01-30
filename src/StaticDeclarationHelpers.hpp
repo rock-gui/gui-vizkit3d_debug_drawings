@@ -1,4 +1,3 @@
-#include "DeclaredChannels.hpp"
 #include <string>
 
 #define V3DD_INTERNAL_CONCAT_(x,y) x##y
@@ -8,10 +7,8 @@ namespace vizkit3dDebugDrawings
 {
     class StaticDeclareChannel
     {
-        public: StaticDeclareChannel(const std::string& name)
-        { 
-            DeclaredChannels::getInstance()->declareChannel(name); 
-        }
+        public:
+            StaticDeclareChannel(const std::string& name);
     };
     
 }

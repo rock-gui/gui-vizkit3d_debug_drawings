@@ -15,7 +15,9 @@
 #include <vizkit3d_debug_drawings/commands/CommandBuffer.hpp>
 
 #include "dispatch/CommandDispatcherFactory.hpp"
+#ifndef DISABLE_QT_BUILD
 #include <vizkit3d/Vizkit3DWidget.hpp>
+#endif
 #include "DeclaredChannels.hpp"
 
 
@@ -210,6 +212,7 @@ void FLUSH_DRAWINGS()
     CommandDispatcherFactory::getInstance()->flush(); 
 }
 
+#ifndef DISABLE_QT_BUILD
 void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
 {
     CommandDispatcherFactory::createStandaloneDispatcher();
@@ -218,8 +221,8 @@ void CONFIGURE_DEBUG_DRAWINGS_STANDALONE()
 void CONFIGURE_DEBUG_DRAWINGS_USE_EXISTING_WIDGET(vizkit3d::Vizkit3DWidget * widget)
 {
     CommandDispatcherFactory::createWidgetDispatcher(widget);
-
 }
+#endif
 
 std::vector<std::string> GET_DECLARED_CHANNELS()
 {
