@@ -9,6 +9,8 @@ rock_feature(NOCURDIR)
 rock_find_qt5(OPTIONAL PrintSupport)
 rock_find_qt4(OPTIONAL)
 
+include(RockQt)
+
 option(WITH_PORTS "Build with rock port support" ON)
 
 rock_standard_layout()

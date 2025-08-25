@@ -102,28 +102,23 @@ if(WITH_PORTS)
 endif()
 target_compile_features(vizkit3d_debug_drawings-commands PRIVATE cxx_std_11)
 
-if (ROCK_QT_VERSION_4)
-    rock_library(vizkit3d_debug_drawings
-        SOURCES ${SOURCE_FILES}
-        HEADERS ${HEADER_FILES}
-        DEPS_PKGCONFIG
-            ${DEPS}
-            vizkit3d
-        DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
-    )
+rock_qt_library(
+    TARGETPREFIX vizkit3d_debug_drawings
+    QT4_SUFFIX ""
+    SOURCES ${SOURCE_FILES}
+    HEADERS ${HEADER_FILES}
+    DEPS_PKGCONFIG
+        ${DEPS}
+    DEPS_PKGCONFIG_QT
+        vizkit3d
+    LIBS_QT5 Qt5::PrintSupport
+    DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
+)
+
+if (TARGET vizkit3d_debug_drawings)
     target_compile_features(vizkit3d_debug_drawings PRIVATE cxx_std_11)
 endif()
-
-if (ROCK_QT_VERSION_5)
-    rock_library(vizkit3d_debug_drawings-qt5
-        SOURCES ${SOURCE_FILES}
-        HEADERS ${HEADER_FILES}
-        DEPS_PKGCONFIG
-            ${DEPS}
-            vizkit3d-qt5
-        LIBS Qt5::PrintSupport 
-        DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
-    )
+if (TARGET vizkit3d_debug_drawings-qt5)
     target_compile_features(vizkit3d_debug_drawings-qt5 PRIVATE cxx_std_11)
 endif()
 
