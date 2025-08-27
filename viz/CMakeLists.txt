@@ -5,6 +5,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 rock_qt_vizkit_plugin(
     TARGETPREFIX vizkit3d_debug_drawings-viz
     QT4_SUFFIX ""
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         DrawingVisualization.cpp
     DEPS_QT
@@ -18,6 +19,7 @@ rock_qt_vizkit_plugin(
 rock_qt_vizkit_plugin(
     TARGETPREFIX vizkit3d_debug_drawings_plot-viz
     QT4_SUFFIX ""
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         DebugPlotVisualization.cpp
         qcustomplot.cc
@@ -34,6 +36,7 @@ rock_qt_vizkit_plugin(
 rock_qt_vizkit_plugin(
     TARGETPREFIX vizkit3d_debug_drawings_command-viz
     QT4_SUFFIX ""
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         DebugDrawingVisualization.cpp
     DEPS_QT

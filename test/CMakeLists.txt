@@ -3,6 +3,7 @@
 
 rock_qt_executable(
     TARGETPREFIX draw_test_standalone
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         draw_test_standalone.cpp
     DEPS_QT5
@@ -25,6 +26,7 @@ endif()
 find_package(Boost COMPONENTS serialization iostreams)
 rock_qt_executable(
     TARGETPREFIX draw_test_attach
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         draw_test_attach.cpp
     DEPS_QT4
@@ -42,7 +44,7 @@ if(TARGET draw_test_attach-qt5)
     target_compile_features(draw_test_attach-qt5 PRIVATE cxx_std_11)
 endif()
 
-if (ROCK_QT_VERSION_4)
+if(TARGET vizkit3d_debug_drawings)
     rock_testsuite(serialization_test
         suite.cpp
         serialization_test.cpp
@@ -57,7 +59,7 @@ if (ROCK_QT_VERSION_4)
     target_compile_features(serialization_test PRIVATE cxx_std_11)
 endif()
 
-if (ROCK_QT_VERSION_5)
+if(TARGET vizkit3d_debug_drawings-qt5)
     rock_testsuite(serialization_test-qt5
         suite.cpp
         serialization_test.cpp
@@ -75,6 +77,7 @@ endif()
 #draw_test_disabled does not set -DENABLE_DEBUG_DRAWINGS to test if everything is disabled correctly
 rock_qt_executable(
     TARGETPREFIX draw_test_disabled
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         draw_test_disable.cpp
     DEPS_QT4
@@ -107,6 +110,7 @@ target_compile_features(draw_test_library_disabled PRIVATE cxx_std_11)
 
 rock_qt_executable(
     TARGETPREFIX draw_test_lib_enabled_app_enabled
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         draw_test_lib_app.cpp
     DEPS_QT4
@@ -128,6 +132,7 @@ endif()
 
 rock_qt_executable(
     TARGETPREFIX draw_test_lib_disabled_app_enabled
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         draw_test_lib_app.cpp
     DEPS_QT4
@@ -149,6 +154,7 @@ endif()
 
 rock_qt_executable(
     TARGETPREFIX draw_test_lib_disabled_app_disabled
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         draw_test_lib_app.cpp
     DEPS_QT4
@@ -168,6 +174,7 @@ endif()
 
 rock_qt_executable(
     TARGETPREFIX draw_test_lib_enabled_app_disabled
+    MISSINGQTDEPS_NOBUILD
     SOURCES
         draw_test_lib_app.cpp
     DEPS_QT4
