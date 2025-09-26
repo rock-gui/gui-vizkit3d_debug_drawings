@@ -55,11 +55,11 @@ fi
 
 build https://github.com/rock-core/base-cmake.git master base-cmake "$PREFIX"
 build https://github.com/rock-core/base-logging.git master base-logging "$PREFIX"
-build https://github.com/rock-core/base-types.git "feature/qt4-qt5" base-types "-DBINDINGS_RUBY=OFF -DUSE_SISL=OFF -DROCK_VIZ_ENABLED=TRUE $PREFIX"
+build https://github.com/rock-core/base-types.git master base-types "-DBINDINGS_RUBY=OFF -DUSE_SISL=OFF -DROCK_VIZ_ENABLED=FALSE $PREFIX"
 build https://github.com/rock-core/gui-osgviz.git master gui-osgviz "$PREFIX"
 build https://github.com/orocos-toolchain/rtt.git master rtt "$PREFIX"
 build https://github.com/rock-core/gui-QtPropertyBrowser master qtpropertybrowser "$PREFIX"
-build https://github.com/rock-core/gui-vizkit3d.git "feature/qt4-qt5" gui-vizkit3d "$PREFIX"
+build https://github.com/rock-core/gui-vizkit3d.git master gui-vizkit3d "$PREFIX"
 
 
 
