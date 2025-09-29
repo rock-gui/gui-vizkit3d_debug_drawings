@@ -44,7 +44,6 @@ void DrawingVisualization::updateDataIntern(vizkit3dDebugDrawings::Drawing const
     }
 }
 
-
-//Macro that makes this plugin loadable in ruby, this is optional.
-VizkitQtPlugin(DrawingVisualization)
-
+namespace vizkit3d {
+VizkitQtPluginImpl(DrawingVisualization)
+}

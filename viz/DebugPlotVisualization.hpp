@@ -45,4 +45,7 @@ namespace vizkit3d
         struct Data;
         std::unique_ptr<Data> p;
     };
+
+    VizkitQtPluginHeaderDecls(DebugPlotVisualization)
+
 }

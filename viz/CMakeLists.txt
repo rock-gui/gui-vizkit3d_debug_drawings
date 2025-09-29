@@ -2,10 +2,13 @@
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-
-rock_vizkit_plugin(vizkit3d_debug_drawings-viz
-    DrawingVisualization.cpp
-    DEPS
+rock_qt_vizkit_plugin(
+    TARGETPREFIX vizkit3d_debug_drawings-viz
+    QT4_SUFFIX ""
+    MISSINGQTDEPS_NOBUILD
+    SOURCES
+        DrawingVisualization.cpp
+    DEPS_QT
         vizkit3d_debug_drawings
     MOC
         DrawingVisualization.hpp
@@ -13,10 +16,14 @@ rock_vizkit_plugin(vizkit3d_debug_drawings-viz
         DrawingVisualization.hpp
 )
 
-rock_vizkit_plugin(vizkit3d_debug_drawings_plot-viz
-    DebugPlotVisualization.cpp
-    qcustomplot.cc
-    DEPS
+rock_qt_vizkit_plugin(
+    TARGETPREFIX vizkit3d_debug_drawings_plot-viz
+    QT4_SUFFIX ""
+    MISSINGQTDEPS_NOBUILD
+    SOURCES
+        DebugPlotVisualization.cpp
+        qcustomplot.cc
+    DEPS_QT
         vizkit3d_debug_drawings
     MOC
         DebugPlotVisualization.hpp
@@ -25,12 +32,14 @@ rock_vizkit_plugin(vizkit3d_debug_drawings_plot-viz
         DebugPlotVisualization.hpp
         qcustomplot.h
 )
-  
-        
-        
-rock_vizkit_plugin(vizkit3d_debug_drawings_command-viz
-    DebugDrawingVisualization.cpp
-    DEPS
+
+rock_qt_vizkit_plugin(
+    TARGETPREFIX vizkit3d_debug_drawings_command-viz
+    QT4_SUFFIX ""
+    MISSINGQTDEPS_NOBUILD
+    SOURCES
+        DebugDrawingVisualization.cpp
+    DEPS_QT
         vizkit3d_debug_drawings
         vizkit3d_debug_drawings-viz
     MOC
@@ -38,4 +47,3 @@ rock_vizkit_plugin(vizkit3d_debug_drawings_command-viz
     HEADERS
         DebugDrawingVisualization.hpp
 )
-         

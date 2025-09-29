@@ -35,5 +35,8 @@ namespace vizkit3d
         struct Data;
         Data* p;
     };
+
+    VizkitQtPluginHeaderDecls(DebugDrawingVisualization)
+
 }
 

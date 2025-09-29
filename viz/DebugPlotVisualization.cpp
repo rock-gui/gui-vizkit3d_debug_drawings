@@ -5,6 +5,8 @@
 #include <deque>
 #include <Eigen/Core>
 #include <QAction>
+#include <QDockWidget>
+#include <QMenu>
 #include <mutex>
 
 using namespace vizkit3d;
@@ -170,7 +172,6 @@ void DebugPlotVisualization::createDockWidgets()
 }
 
 
-
-//Macro that makes this plugin loadable in ruby, this is optional.
-VizkitQtPlugin(DebugPlotVisualization)
-
+namespace vizkit3d {
+VizkitQtPluginImpl(DebugPlotVisualization)
+}
