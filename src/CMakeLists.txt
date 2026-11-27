@@ -1,5 +1,5 @@
 find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED COMPONENTS serialization system)
+find_package(Boost REQUIRED COMPONENTS serialization)
 
 set(COMMANDS_SOURCE_FILES
         DebugDrawingWeakNoops.cpp
@@ -95,7 +95,7 @@ rock_library(vizkit3d_debug_drawings-commands
     SOURCES ${COMMANDS_SOURCE_FILES}
     HEADERS ${COMMANDS_HEADER_FILES}
     DEPS_PKGCONFIG PrimitivesFactory
-    LIBS Boost::serialization Boost::system Eigen3::Eigen
+    LIBS Boost::serialization Eigen3::Eigen
     )
 if(WITH_PORTS)
     target_compile_definitions(vizkit3d_debug_drawings-commands PUBLIC USE_PORTS)
@@ -112,7 +112,7 @@ rock_qt_library(
     DEPS_PKGCONFIG_QT
         vizkit3d
     LIBS_QT5 Qt5::PrintSupport
-    DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
+    DEPS vizkit3d_debug_drawings-commands Boost::serialization
 )
 
 if (TARGET vizkit3d_debug_drawings)
@@ -141,7 +141,7 @@ if(WITH_PORTS)
         dispatch/PortDispatcher.hpp
 
         DEPS_PKGCONFIG orocos-rtt-${OROCOS_TARGET}
-        DEPS vizkit3d_debug_drawings-commands Boost::serialization Boost::system
+        DEPS vizkit3d_debug_drawings-commands Boost::serialization
     )
 
     target_compile_definitions(vizkit3d_debug_drawings-ports PRIVATE DISABLE_QT_BUILD)
